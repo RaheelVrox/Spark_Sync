@@ -15,6 +15,9 @@ import NewPassword from "./Screens/Password Recovery/NewPassword";
 import ForgotPassword from "./Screens/Password Recovery/ForgotPassword";
 import LodingPage from "./Screens/LodingPage/LodingPage";
 import DataPage from "./Screens/DataPage/DataPage";
+import EditDataPage from "./Screens/DataPage/EditDataPage";
+
+
 // import * as SplashScreen from 'expo-splash-screen';
 // SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
@@ -91,6 +94,11 @@ const App = () => {
           options={{ headerShown: false }}
           name="DataPage"
           component={DataPage}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="EditDataPage"
+          component={EditDataPage}
         />
       </Stack.Navigator>
     </NavigationContainer>
