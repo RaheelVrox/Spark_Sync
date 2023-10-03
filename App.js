@@ -14,6 +14,7 @@ import PhoneRecovery from "./Screens/Password Recovery/PhoneRecovery";
 import NewPassword from "./Screens/Password Recovery/NewPassword";
 import ForgotPassword from "./Screens/Password Recovery/ForgotPassword";
 import LodingPage from "./Screens/LodingPage/LodingPage";
+import DataPage from "./Screens/DataPage/DataPage";
 // import * as SplashScreen from 'expo-splash-screen';
 // SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
@@ -85,6 +86,11 @@ const App = () => {
           options={{ headerShown: false }}
           name="LodingPage"
           component={LodingPage}
+        />
+         <Stack.Screen
+          options={{ headerShown: false }}
+          name="DataPage"
+          component={DataPage}
         />
       </Stack.Navigator>
     </NavigationContainer>

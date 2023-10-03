@@ -1,14 +1,23 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image,KeyboardAvoidingView,TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  KeyboardAvoidingView,
+  TextInput,
+} from "react-native";
 import React from "react";
 import { useState } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
+import { useNavigation } from "@react-navigation/native";
 const NewPassword = () => {
-    const [newpassword, setNewPassword] = useState("");
-    const [password, setPassword] = useState("");
+  const [newpassword, setNewPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -38,7 +47,7 @@ const NewPassword = () => {
               color: "#0D3559",
             }}
           >
-          Enter your new password
+            Enter your new password
           </Text>
         </View>
       </View>
@@ -49,7 +58,6 @@ const NewPassword = () => {
           alignItems: "center",
         }}
       >
-       
         <KeyboardAvoidingView
           enabled
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -81,19 +89,18 @@ const NewPassword = () => {
           enabled
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-      
-            <Text
-              style={{
-                marginBottom: 10,
-                color: "#0D3559",
-                fontWeight: "600",
-                fontSize: 16,
-                fontFamily: "Roboto-Regular",
-              }}
-            >
-              Enter Again
-            </Text>
-            <TouchableOpacity>
+          <Text
+            style={{
+              marginBottom: 10,
+              color: "#0D3559",
+              fontWeight: "600",
+              fontSize: 16,
+              fontFamily: "Roboto-Regular",
+            }}
+          >
+            Enter Again
+          </Text>
+          <TouchableOpacity>
             <TextInput
               placeholder="Your Password"
               style={styles.inputField}
@@ -105,8 +112,21 @@ const NewPassword = () => {
             />
           </TouchableOpacity>
         </KeyboardAvoidingView>
-
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate("DataPage")}>
+        <View style={styles.button}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "600",
+              fontFamily: "Roboto-Regular",
+              color: "#fff",
+            }}
+          >
+            Send OPT
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -136,5 +156,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Roboto-Regular",
   },
- 
+  button: {
+    width: wp("85%"),
+    height: hp("7%"),
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#346AFE",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#346AFE",
+    alignSelf: "center",
+    marginTop: 20,
+  },
 });
