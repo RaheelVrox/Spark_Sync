@@ -162,7 +162,7 @@ const DataPage = () => {
           </View>
         </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("FrontPageScan")}>
           <View style={styles.button}>
             <Text
               style={{

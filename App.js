@@ -16,6 +16,7 @@ import ForgotPassword from "./Screens/Password Recovery/ForgotPassword";
 import LodingPage from "./Screens/LodingPage/LodingPage";
 import DataPage from "./Screens/DataPage/DataPage";
 import EditDataPage from "./Screens/DataPage/EditDataPage";
+import FrontPageScan from "./Screens/ScanPages/FrontPageScan";
 
 
 // import * as SplashScreen from 'expo-splash-screen';
@@ -99,6 +100,11 @@ const App = () => {
           options={{ headerShown: false }}
           name="EditDataPage"
           component={EditDataPage}
+        />
+         <Stack.Screen
+          options={{ headerShown: false }}
+          name="FrontPageScan"
+          component={FrontPageScan}
         />
       </Stack.Navigator>
     </NavigationContainer>
