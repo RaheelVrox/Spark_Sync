@@ -1,206 +1,178 @@
-// import React, { useState, useEffect, useRef } from "react";
-// import {
-//   View,
-//   Text,
-//   TouchableOpacity,
-//   Image,
-//   PermissionsAndroid,
-//   Platform,
-// } from "react-native";
-// import { Camera } from "expo-camera";
-// import TesseractOcr, {
-//   LANG_ENGLISH,
-//   LEVEL_WORD,
-// } from "react-native-tesseract-ocr";
-
-// const FrontPageScan = () => {
-//   const [imageUri, setImageUri] = useState(null);
-//   const [detectedText, setDetectedText] = useState("");
-//   const cameraRef = useRef(null);
-
-//   useEffect(() => {
-//     requestCameraPermission();
-//   }, []);
-
-//   const requestCameraPermission = async () => {
-//     if (Platform.OS === "android") {
-//       try {
-//         const granted = await PermissionsAndroid.request(
-//           PermissionsAndroid.PERMISSIONS.CAMERA,
-//           {
-//             title: "Camera Permission",
-//             message: "App needs access to your camera.",
-//           }
-//         );
-//         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-//           console.log("Camera permission granted");
-//         } else {
-//           console.log("Camera permission denied");
-//         }
-//       } catch (err) {
-//         console.warn(err);
-//       }
-//     }
-//   };
-
-//   const takePicture = async () => {
-//     if (cameraRef.current) {
-//       const options = { quality: 0.5, base64: true };
-//       const data = await cameraRef.current.takePictureAsync(options);
-//       setImageUri(data.uri);
-//       detectText(data.uri);
-//     }
-//   };
-
-//   // const detectText = async (uri) => {
-//   //   try {
-//   //     const ocrResult = await TesseractOcr?.recognize(uri, LANG_ENGLISH, {
-//   //       level: LEVEL_WORD,
-//   //     });
-//   //     setDetectedText(ocrResult);
-//   //   } catch (e) {
-//   //     console.error(e);
-//   //   }
-//   // };
-
-//   const detectText = async (uri) => {
-//     console.log("uri", uri);
-//     try {
-//       console.log("Detecting text...");
-//       const ocrResult = await TesseractOcr?.recognize(uri, LANG_ENGLISH, {
-//         level: LEVEL_WORD,
-//       });
-//       console.log("OCR Result:", ocrResult); // Log the OCR result
-//       setDetectedText(ocrResult);
-//     } catch (e) {
-//       console.error("Error in text detection:", e);
-//     }
-//   };
-
-//   return (
-//     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//       <Camera
-//         ref={cameraRef}
-//         style={{ width: 300, height: 300 }}
-//         captureAudio={false}
-//       />
-//       <TouchableOpacity onPress={takePicture} style={{ marginTop: 10 }}>
-//         <Text>Capture Image</Text>
-//       </TouchableOpacity>
-//       {imageUri && (
-//         <Image
-//           source={{ uri: imageUri }}
-//           style={{ width: 200, height: 200, marginTop: 20 }}
-//         />
-//       )}
-//       {detectedText !== "" && (
-//         <Text style={{ marginTop: 20 }}>Detected Text: {detectedText}</Text>
-//       )}
-//     </View>
-//   );
-// };
-// export default FrontPageScan;
-
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { Camera } from "expo-camera";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  ToastAndroid,
+  ActivityIndicator,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import * as Permissions from "expo-permissions";
-import TesseractOcr, { LANG_ENGLISH } from "react-native-tesseract-ocr";
+import * as FileSystem from "expo-file-system";
+import callGoogleVisionAsync from "../../GoogleVision.js";
+import { useNavigation } from "@react-navigation/native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
-const FrontPageScan = () => {
-  const [isCameraOpen, setIsCameraOpen] = useState(false);
-  const [detectedText, setDetectedText] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
+export default function FrontPageScan() {
+  const navigation = useNavigation();
+  const [language, setLanguage] = useState(null);
+  const [subtitle, setSubtitle] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // Initialize TesseractOcr when the app starts
-    initializeTesseract();
-  }, []);
-
-  const initializeTesseract = async () => {
-    const { status } = await Permissions.askAsync(
-      Permissions.CAMERA,
-      Permissions.MEDIA_LIBRARY
-    );
-
-    if (status === "granted") {
-      TesseractOcr.initialize();
-    } else {
-      console.warn("Camera and media library permissions not granted.");
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      if (status !== "granted") {
-        alert("Camera permission not granted");
-      }
-
-      const { status: mediaStatus } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (mediaStatus !== "granted") {
-        alert("Media Library permission not granted");
-      }
-    })();
-  }, []);
-
-  const takePicture = async () => {
-    if (!isCameraOpen) return;
-
-    const photo = await ImagePicker.launchCameraAsync({});
-
-    if (!photo.canceled) {
-      setSelectedImage(photo.uri);
-      recognizeText(photo.uri);
-    }
-  };
-
-  const recognizeText = async (imageUri) => {
+  async function SelectPhoto() {
+    setLoading(true);
     try {
-      const result = await TesseractOcr.recognize(imageUri, LANG_ENGLISH);
-      setDetectedText(result || "No text detected");
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        const uri = result.uri;
+        const base64 = await FileSystem.readAsStringAsync(uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        callGoogleVisionAsync(base64)
+          .then((data) => {
+            console.log("data", data?.responses);
+            console.log("HERE");
+            console.log("data", data?.responses.textAnnotations);
+            var text = "";
+            var locale = null;
+            data.responses.forEach((response) => {
+              response.textAnnotations.forEach((textAnnotation) => {
+                text = text + " " + textAnnotation.description;
+                if (locale === null) {
+                  locale = textAnnotation.locale;
+                }
+              });
+            });
+
+            setLanguage(locale);
+            setSubtitle(text);
+            setLoading(false);
+          })
+          .catch((error) => {
+            ToastAndroid.showWithGravity(
+              "Error",
+              ToastAndroid.SHORT,
+              ToastAndroid.CENTER
+            );
+            setLoading(false);
+          });
+      } else {
+        // User cancelled taking a photo
+        ToastAndroid.showWithGravity(
+          "Photo capture cancelled",
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER
+        );
+        setLoading(false);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Camera capture error:", error);
+      ToastAndroid.showWithGravity(
+        "Could not capture or process the photo",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+      setLoading(false);
     }
-  };
+  }
 
   return (
-    <View style={{ flex: 1 }}>
-      {isCameraOpen ? (
-        <Camera
-          style={{ flex: 1, justifyContent: "center" }}
-          type={Camera.Constants.Type.back}
-        >
-          <TouchableOpacity onPress={takePicture}>
+    <ScrollView contentContainerStyle={styles.screen}>
+      <Text style={styles.subtitle}>
+        Get the text from a document's image after capturing it
+      </Text>
+      <View>
+        <TouchableOpacity style={styles.button} onPress={SelectPhoto}>
+          <Text style={styles.buttonText}>Open Camera</Text>
+        </TouchableOpacity>
+        {loading === false ? (
+          subtitle !== null ? (
             <View>
-              <Text
-                style={{ color: "#fff", alignSelf: "center", fontSize: 16 }}
-              >
-                Take Picture
-              </Text>
+              <Text style={styles.languagetitle}>{language}</Text>
+              <Text style={styles.subtitle}>{subtitle}</Text>
             </View>
-          </TouchableOpacity>
-        </Camera>
-      ) : (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          ) : (
+            <></>
+          )
+        ) : (
+          <ActivityIndicator size="large" />
+        )}
+      </View>
+      <TouchableOpacity onPress={() => navigation.navigate("HomepageOne")}>
+      <View style={styles.startbutton}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "600",
+            fontFamily: "Roboto-Regular",
+            color: "#fff",
+          }}
         >
-          {selectedImage && (
-            <Image
-              source={{ uri: selectedImage }}
-              style={{ width: 200, height: 200 }}
-            />
-          )}
-          <Text>{detectedText}</Text>
-          <TouchableOpacity onPress={() => setIsCameraOpen(true)}>
-            <Text>Open Camera</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+          Next
+        </Text>
+      </View>
+      </TouchableOpacity>
+    </ScrollView>
   );
-};
-
-export default FrontPageScan;
+}
+const styles = StyleSheet.create({
+  screen: {
+    alignItems: "center",
+    padding: 80,
+  },
+  title: {
+    fontSize: 35,
+    marginVertical: 40,
+  },
+  subtitle: {
+    fontSize: 15,
+    marginVertical: 10,
+    // textAlign: "center",
+  },
+  languagetitle: {
+    fontSize: 30,
+    marginVertical: 10,
+    textAlign: "center",
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderWidth: 2,
+    borderRadius: 75,
+  },
+  button: {
+    backgroundColor: "#47477b",
+    color: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 50,
+    marginTop: 20,
+    marginBottom:80
+  },
+  buttonText: {
+    color: "#fff",
+  },
+  startbutton: {
+    width: wp("80%"),
+    height: hp("7%"),
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#346AFE",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#346AFE",
+    alignSelf: "center",
+  },
+});

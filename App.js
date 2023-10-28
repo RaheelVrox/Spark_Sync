@@ -17,6 +17,9 @@ import LodingPage from "./Screens/LodingPage/LodingPage";
 import DataPage from "./Screens/DataPage/DataPage";
 import EditDataPage from "./Screens/DataPage/EditDataPage";
 import FrontPageScan from "./Screens/ScanPages/FrontPageScan";
+import HomepageOne from "./Screens/HomePage/HomepageOne";
+import HomepageTwo from "./Screens/HomePage/HomepageTwo";
+import HomepageThree from "./Screens/HomePage/HomepageThree";
 
 
 // import * as SplashScreen from 'expo-splash-screen';
@@ -40,7 +43,7 @@ const App = () => {
   }
   return (
     <NavigationContainer onLayout={onLayoutRootView} >
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="FrontPage">
         <Stack.Screen
           options={{ headerShown: false }}
           name="FrontPage"
@@ -105,6 +108,21 @@ const App = () => {
           options={{ headerShown: false }}
           name="FrontPageScan"
           component={FrontPageScan}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="HomepageOne"
+          component={HomepageOne}
+        />
+         <Stack.Screen
+          options={{ headerShown: false }}
+          name="HomepageTwo"
+          component={HomepageTwo}
+        />
+         <Stack.Screen
+          options={{ headerShown: false }}
+          name="HomepageThree"
+          component={HomepageThree}
         />
       </Stack.Navigator>
     </NavigationContainer>
