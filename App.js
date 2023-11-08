@@ -20,6 +20,9 @@ import FrontPageScan from "./Screens/ScanPages/FrontPageScan";
 import HomepageOne from "./Screens/HomePage/HomepageOne";
 import HomepageTwo from "./Screens/HomePage/HomepageTwo";
 import HomepageThree from "./Screens/HomePage/HomepageThree";
+import Profile from "./Screens/Profile/Profile";
+import EditProfile from "./Screens/Profile/EditProfile";
+import BackPageScan from "./Screens/ScanPages/BackPageScan";
 
 
 // import * as SplashScreen from 'expo-splash-screen';
@@ -123,6 +126,21 @@ const App = () => {
           options={{ headerShown: false }}
           name="HomepageThree"
           component={HomepageThree}
+        />
+         <Stack.Screen
+          options={{ headerShown: false }}
+          name="Profile"
+          component={Profile}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="EditProfile"
+          component={EditProfile}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="BackPageScan"
+          component={BackPageScan}
         />
       </Stack.Navigator>
     </NavigationContainer>

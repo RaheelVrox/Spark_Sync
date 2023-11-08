@@ -9,7 +9,7 @@ const FrontPage = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("../../assets/logo.png")} />
+      <Image style={styles.image} source={require("../../assets/newlogo.png")} />
       <View style={{ paddingTop: wp(40) }}>
         <Text style={styles.heading}>Spark Sync</Text>
       </View>
@@ -58,12 +58,10 @@ export default FrontPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
   },
   image: {
-    resizeMode: "contain",
     width: wp("40%"),
     height: wp("50%"),
     top: 120,

@@ -13,8 +13,14 @@ import {
 } from "react-native-responsive-screen";
 import { Entypo } from "@expo/vector-icons";
 import Modal from "react-native-modal";
-
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from "expo-linear-gradient";
 const HomepageOne = () => {
+  const goBack = () => {
+    navigation.goBack();
+  };
+  const navigation = useNavigation();
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const toggleBottomSheet = () => {
@@ -24,42 +30,49 @@ const HomepageOne = () => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <TouchableOpacity>
-              <Image
-                style={{ resizeMode: "contain", marginBottom: 10 }}
-                source={require("../../assets/back.png")}
-              />
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 24,
-                fontWeight: "600",
-                color: "#0D3559",
-                marginBottom: 5,
-              }}
-            >
-              Welcome Faris
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 16,
-                fontWeight: "400",
-                color: "#0D3559",
-              }}
-            >
-              Explore the offers available in your area
-            </Text>
+        <LinearGradient
+          colors={["#EEF7FE", "#FCEEFE"]}
+          start={{ x: 0, y: 0.3 }}
+          end={{ x: 0.6, y: 0.6 }}
+          style={{
+            borderBottomRightRadius: 30,
+            borderBottomLeftRadius: 30,
+          }}
+        >
+          <View style={styles.headerContainer}>
+            <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+              <TouchableOpacity style={styles.backbut} onPress={goBack}>
+                <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 24,
+                  fontWeight: "600",
+                  color: "#0D3559",
+                  marginBottom: 5,
+                }}
+              >
+                Welcome Faris
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 16,
+                  fontWeight: "400",
+                  color: "#0D3559",
+                }}
+              >
+                Explore the offers available in your area
+              </Text>
+            </View>
           </View>
-        </View>
+        </LinearGradient>
         <View
           style={{
             marginHorizontal: 24,
             paddingTop: wp(10),
-            marginBottom: 25,
+            marginBottom: 30,
           }}
         >
           <Text
@@ -85,7 +98,7 @@ const HomepageOne = () => {
               height: hp("40%"),
               width: wp("100%"),
             }}
-            source={require("../../assets/map.png")}
+            source={require("../../assets/Blank_map.png")}
           />
         </View>
         <View
@@ -103,10 +116,10 @@ const HomepageOne = () => {
               color: "#0D3559",
             }}
           >
-            Our recommended deals for you
+            Your properties
           </Text>
         </View>
-        <TouchableOpacity onPress={toggleBottomSheet}>
+        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
           <View style={styles.containerbox}>
             <View style={styles.leftBox}>
               <Text
@@ -160,7 +173,7 @@ const HomepageOne = () => {
       </View>
 
       {/* Bottom Sheet */}
-      <Modal
+      {/* <Modal
         isVisible={isBottomSheetVisible}
         animationIn="slideInUp"
         animationOut="slideOutDown"
@@ -171,7 +184,7 @@ const HomepageOne = () => {
           <Text>This is your customized bottom sheet content.</Text>
           <Button title="Close" onPress={toggleBottomSheet} />
         </View>
-      </Modal>
+      </Modal> */}
     </>
   );
 };
@@ -184,11 +197,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   headerContainer: {
-    backgroundColor: "#EEF7FE",
-    height: hp("23%"),
+    height: hp("25%"),
     width: wp("100%"),
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
+  },
+  backbut: {
+    height: hp("5.5%"),
+    width: wp("11%"),
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10
   },
   containerbox: {
     backgroundColor: "#F3F4FF",

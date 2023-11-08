@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image,KeyboardAvoidingView,TextInput } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from "react-native";
 import React from "react";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -6,43 +6,54 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from '@expo/vector-icons';
 const PhoneRecovery = () => {
-    const navigation = useNavigation();
-    const [phoneNumber, setPhoneNumber] = useState("");
+  const goBack = () => {
+    navigation.goBack();
+  };
+  const navigation = useNavigation();
+  const [phoneNumber, setPhoneNumber] = useState("");
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={{ marginHorizontal: 24, paddingTop: wp(20) }}>
-          <TouchableOpacity>
-            <Image
-              style={{ resizeMode: "contain", marginBottom: 10 }}
-              source={require("../../assets/back.png")}
-            />
-          </TouchableOpacity>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 24,
-              fontWeight: "600",
-              color: "#0D3559",
-              marginBottom: 5,
-            }}
-          >
-            Reset Password
-          </Text>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 16,
-              fontWeight: "400",
-              color: "#0D3559",
-            }}
-          >
-       Enter your new password
-          </Text>
+      <LinearGradient
+        colors={["#EEF7FE", "#FCEEFE"]}
+        start={{ x: 0, y: 0.3 }}
+        end={{ x: 0.6, y: 0.6 }}
+        style={{
+          borderBottomRightRadius: 30,
+          borderBottomLeftRadius: 30,
+        }}
+      >
+        <View style={styles.headerContainer}>
+          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+            <TouchableOpacity style={styles.backbut} onPress={goBack}>
+              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 24,
+                fontWeight: "600",
+                color: "#0D3559",
+                marginBottom: 5,
+              }}
+            >
+              Reset Password
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 16,
+                fontWeight: "400",
+                color: "#0D3559",
+              }}
+            >
+              Enter your new password
+            </Text>
+          </View>
         </View>
-      </View>
+      </LinearGradient>
       <View
         style={{
           paddingTop: wp(15),
@@ -50,7 +61,7 @@ const PhoneRecovery = () => {
           alignItems: "center",
         }}
       >
-       
+
         <KeyboardAvoidingView
           enabled
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -105,19 +116,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   headerContainer: {
-    backgroundColor: "#EEF7FE",
-    height: hp("26%"),
+    height: hp("25%"),
     width: wp("100%"),
+  },
+  backbut: {
+    height: hp("5.5%"),
+    width: wp("11%"),
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10
   },
   inputField: {
     height: hp("7%"),
     width: wp("85%"),
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#EEF7FE",
+    borderColor: "#F3F4FF",
     marginBottom: wp("5%"),
     paddingLeft: wp(4),
-    backgroundColor: "#EEF7FE",
+    backgroundColor: "#F3F4FF",
     fontWeight: "600",
     fontSize: 16,
     fontFamily: "Roboto-Regular",

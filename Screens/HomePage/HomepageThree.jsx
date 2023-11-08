@@ -264,21 +264,22 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     justifyContent: "center",
     alignSelf: "center",
+    gap: 4,
   },
   detailContainer: {
-    height: hp("24%"),
+    height: hp("19.5%"),
     backgroundColor: "#F3F4FF",
-    padding: 20,
+    padding: 12,
     borderRadius: 10,
-    // marginTop: 10,
+    marginTop: 10,
     marginHorizontal: 24,
-    margin: 15,
+    // margin: 8,
   },
   rowContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 6,
+    padding: 4,
   },
   textBold: {
     flex: 1,
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginHorizontal: 24,
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   boxleft: {
     backgroundColor: "#fff",
@@ -318,5 +319,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     justifyContent: "center",
     alignSelf: "center",
+    gap: 4,
   },
 });

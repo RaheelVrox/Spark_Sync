@@ -18,8 +18,7 @@ import {
 } from "react-native-responsive-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from '@expo/vector-icons';
-
-export default function FrontPageScan() {
+export default function BackPageScan() {
   const goBack = () => {
     navigation.goBack();
   };
@@ -71,7 +70,6 @@ export default function FrontPageScan() {
             );
             setLoading(false);
           });
-
       } else {
         // User cancelled taking a photo
         ToastAndroid.showWithGravity(
@@ -137,7 +135,7 @@ export default function FrontPageScan() {
           width: wp("100%"), height: wp("100%"),
           resizeMode: "contain", alignSelf: "center", marginBottom: 25, marginTop: 15
         }}
-          source={require("../../assets/FrontPage.png")} />
+          source={require("../../assets/backpage.png")} />
       </View>
       <View>
         <TouchableOpacity style={styles.camerabut} onPress={SelectPhoto}>
@@ -148,20 +146,20 @@ export default function FrontPageScan() {
           }}
             source={require("../../assets/iroundcamera.png")} />
         </TouchableOpacity>
-        {/* {loading === false ? (
-          subtitle !== null ? ( */}
-        <View>
-          {/* <Text style={styles.languagetitle}>{language}</Text>
+        {loading === false ? (
+          subtitle !== null ? (
+            <View>
+              {/* <Text style={styles.languagetitle}>{language}</Text>
               <Text style={styles.subtitle}>{subtitle}</Text> */}
-        </View>
-        {/* ) : (
-            <></> */}
-        {/* )
+            </View>
+          ) : (
+            <></>
+          )
         ) : (
           <ActivityIndicator size="large" />
-        )} */}
+        )}
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("BackPageScan")}>
+      <TouchableOpacity onPress={() => navigation.navigate("HomepageOne")}>
         <View style={styles.startbutton}>
           <Text
             style={{
@@ -171,7 +169,7 @@ export default function FrontPageScan() {
               color: "#fff",
             }}
           >
-            Next
+            Send to analyze
           </Text>
         </View>
       </TouchableOpacity>
@@ -179,7 +177,6 @@ export default function FrontPageScan() {
 
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

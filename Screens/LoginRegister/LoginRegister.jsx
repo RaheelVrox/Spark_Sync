@@ -9,6 +9,7 @@ import {
 import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -80,17 +81,17 @@ const LoginRegister = () => {
   //     setUserInfo(user);
   //   } catch (error) {}
   // };
-  
+
   async function getUserInfo(token) {
     if (!token) return;
-  
+
     console.log("token", token);
-  
+
     try {
       const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       if (response.ok) {
         const user = await response.json();
         await AsyncStorage.setItem("@user", JSON.stringify(user));
@@ -102,7 +103,7 @@ const LoginRegister = () => {
       console.error("Error fetching user info:", error);
     }
   }
-  
+
 
   // async function handlesSignInwithGoogle() {
   //   const user = await AsyncStorage.getItem("@user");
@@ -115,11 +116,11 @@ const LoginRegister = () => {
   //   }
   // }
   // console.log("userInfo:-", userInfo);
-  
+
   async function handlesSignInwithGoogle() {
     console.log("Handling Google Sign-In");
     console.log("Response:", response);
-  
+
     const user = await AsyncStorage.getItem("@user");
     if (!user) {
       if (response?.type === "success") {
@@ -131,14 +132,14 @@ const LoginRegister = () => {
   }
   async function getUserInfo(token) {
     if (!token) return;
-  
+
     console.log("token", token);
-  
+
     try {
       const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       if (response.ok) {
         const user = await response.json();
         await AsyncStorage.setItem("@user", JSON.stringify(user));
@@ -150,17 +151,19 @@ const LoginRegister = () => {
       console.error("Error fetching user info:", error);
     }
   }
-  
+
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Image source={require("../../assets/faviconn.png")} />
+      <View >
+        <Image style={styles.image} source={require("../../assets/newlogo.png")} />
         <Text
           style={{
             fontFamily: "Roboto-Regular",
-            fontSize: 32,
+            fontSize: 24,
             fontWeight: "600",
-            color: "#0D3559",
+            color: "#122359",
+            textAlign: "center",
+            // marginTop: 20,
           }}
         >
           Welcome To
@@ -170,94 +173,130 @@ const LoginRegister = () => {
             fontFamily: "Roboto-Regular",
             fontSize: 32,
             fontWeight: "600",
-            color: "#0D3559",
+            color: "#002896",
+            textAlign: "center",
+            // marginBottom: 20,
           }}
         >
           Spark Sync
         </Text>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("SignUP")}>
-        <View style={{ paddingTop: wp(30) }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 50,
-              backgroundColor: "#EEF7FE",
-              paddingVertical: 5,
-              borderRadius: 10,
-              marginLeft: 24,
-              marginRight: 24,
-            }}
-          >
-            <MaterialIcons
-              style={{ marginLeft: 24 }}
-              name="email"
-              size={35}
-              color="#0D3559"
-            />
+      <View style={{ paddingTop: 60 }}>
+        <TouchableOpacity onPress={() => navigation.navigate("SignUP")}>
+          <View >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 50,
+                backgroundColor: "#EEF7FE",
+                paddingVertical: 5,
+                borderRadius: 10,
+                marginLeft: 24,
+                marginRight: 24,
+              }}
+            >
+              <AntDesign style={{ marginLeft: 24 }} name="apple1" size={35} color="black" />
 
-            <TextInput
-              style={{
-                marginVertical: 10,
-                width: wp("50%"),
-                height: hp("4%"),
-                fontWeight: "600",
-                fontSize: 16,
-                fontFamily: "Roboto-Regular",
-              }}
-              placeholder="Continue with Email"
-              placeholderTextColor="#0D3559"
-              editable={false}
-            />
+              <TextInput
+                style={{
+                  marginVertical: 10,
+                  width: wp("50%"),
+                  height: hp("4%"),
+                  fontWeight: "600",
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                }}
+                placeholder="Continue with Apple"
+                placeholderTextColor="#0D3559"
+                editable={false}
+              />
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-      {/* <TouchableOpacity onPress={signInWithGoogle}> */}
-      <TouchableOpacity onPress={promptAsync}>
-        <View style={{ paddingTop: wp(6) }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 40,
-              backgroundColor: "#EEF7FE",
-              paddingVertical: 5,
-              borderRadius: 10,
-              marginLeft: 24,
-              marginRight: 24,
-            }}
-          >
-            <Image
+        </TouchableOpacity>
+        {/* <TouchableOpacity onPress={signInWithGoogle}> */}
+        <TouchableOpacity onPress={promptAsync} >
+          <View style={{ paddingTop: 21 }}>
+            <View
               style={{
-                marginLeft: 20,
-                resizeMode: "contain",
-                width: wp("12%"),
-                height: wp("12%"),
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 40,
+                backgroundColor: "#EEF7FE",
+                paddingVertical: 5,
+                borderRadius: 10,
+                marginLeft: 24,
+                marginRight: 24,
               }}
-              source={require("../../assets/googleicon.png")}
-            />
-            <TextInput
-              style={{
-                marginVertical: 10,
-                width: wp("50%"),
-                height: hp("4%"),
-                fontWeight: "600",
-                fontSize: 16,
-                fontFamily: "Roboto-Regular",
-              }}
-              placeholder="Continue with Google"
-              placeholderTextColor="#0D3559"
-              editable={false}
-            />
+            >
+              <Image
+                style={{
+                  marginLeft: 20,
+                  resizeMode: "contain",
+                  width: wp("12%"),
+                  height: wp("12%"),
+                }}
+                source={require("../../assets/googleicon.png")}
+              />
+              <TextInput
+                style={{
+                  marginVertical: 10,
+                  width: wp("50%"),
+                  height: hp("4%"),
+                  fontWeight: "600",
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                }}
+                placeholder="Continue with Google"
+                placeholderTextColor="#0D3559"
+                editable={false}
+              />
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+        <TouchableOpacity >
+          <View style={{ paddingTop: 21 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 50,
+                backgroundColor: "#EEF7FE",
+                paddingVertical: 5,
+                borderRadius: 10,
+                marginLeft: 24,
+                marginRight: 24,
+              }}
+            >
+              <MaterialIcons
+                style={{ marginLeft: 24 }}
+                name="email"
+                size={35}
+                color="#002896"
+              />
+
+              <TextInput
+                style={{
+                  marginVertical: 10,
+                  width: wp("50%"),
+                  height: hp("4%"),
+                  fontWeight: "600",
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                }}
+                placeholder="Continue with Email"
+                placeholderTextColor="#0D3559"
+                editable={false}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-          paddingTop: 42,
+          marginTop: 21,
           flexDirection: "row",
         }}
       >
@@ -289,7 +328,7 @@ const LoginRegister = () => {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          paddingTop: wp(30),
+          paddingTop: wp(25),
           marginHorizontal: 24,
         }}
       >
@@ -338,12 +377,14 @@ export default LoginRegister;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#fff",
+    paddingTop: wp(30)
   },
-  headerContainer: {
-    marginHorizontal: 24,
-    paddingTop: wp(40),
+  image: {
+    width: wp("30%"),
+    height: wp("40%"),
+    alignItems: "center",
+    alignSelf: 'center'
   },
 });

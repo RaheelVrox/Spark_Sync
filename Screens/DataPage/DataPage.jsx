@@ -12,19 +12,29 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
-
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from '@expo/vector-icons'
 const DataPage = () => {
+  const goBack = () => {
+    navigation.goBack();
+  };
     const navigation = useNavigation();
   return (
     <View style={styles.container}>
+      <LinearGradient
+        colors={["#EEF7FE", "#FCEEFE"]}
+        start={{ x: 0, y: 0.3 }}
+        end={{ x: 0.6, y: 0.6 }}
+        style={{
+          borderBottomRightRadius: 30,
+          borderBottomLeftRadius: 30,
+        }}
+      >
       <View style={styles.headerContainer}>
-        <View style={{ marginHorizontal: 24, paddingTop: wp(20) }}>
-          <TouchableOpacity>
-            <Image
-              style={{ resizeMode: "contain", marginBottom: 10 }}
-              source={require("../../assets/back.png")}
-            />
-          </TouchableOpacity>
+        <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+        <TouchableOpacity style={styles.backbut} onPress={goBack}>
+            <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+            </TouchableOpacity>
           <Text
             style={{
               fontFamily: "Roboto-Regular",
@@ -48,6 +58,7 @@ const DataPage = () => {
           </Text>
         </View>
       </View>
+      </LinearGradient>
       <ScrollView>
         <View style={styles.detailContainer}>
           <View>
@@ -191,9 +202,17 @@ const styles = StyleSheet.create({
     //     alignItems: "center",
   },
   headerContainer: {
-    backgroundColor: "#EEF7FE",
-    height: hp("26%"),
+    height: hp("25%"),
     width: wp("100%"),
+  },
+  backbut: {
+    height: hp("5.5%"),
+    width: wp("11%"),
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10
   },
   detailContainer: {
     height: hp("73%"),

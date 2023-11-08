@@ -122,45 +122,45 @@ const HomepageTwo = () => {
         </Text>
       </View>
       <TouchableOpacity>
-      <View style={styles.boxcontainer}>
-        <View style={styles.boxleft}>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 24,
-              fontWeight: "600",
-              color: "#670097",
-            }}
-          >
-            16.2¢
-          </Text>
-        </View>
-        <View style={styles.textright}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Entypo name="location-pin" size={20} color="#670097" />
+        <View style={styles.boxcontainer}>
+          <View style={styles.boxleft}>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 24,
+                fontWeight: "600",
+                color: "#670097",
+              }}
+            >
+              16.2¢
+            </Text>
+          </View>
+          <View style={styles.textright}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Entypo name="location-pin" size={20} color="#670097" />
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 14,
+                  fontWeight: "400",
+                  color: "#122359",
+                }}
+              >
+                1234 Street Dallas, TX
+              </Text>
+            </View>
             <Text
               style={{
                 fontFamily: "Roboto-Regular",
                 fontSize: 14,
                 fontWeight: "400",
-                color: "#122359",
+                color: "#346AFE",
               }}
             >
-              1234 Street Dallas, TX
+              Pending
             </Text>
           </View>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 14,
-              fontWeight: "400",
-              color: "#346AFE",
-            }}
-          >
-            Pending
-          </Text>
         </View>
-      </View>
       </TouchableOpacity>
       <View style={styles.boxcontainer}>
         <View style={styles.boxleft}>
@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     justifyContent: "center",
     alignSelf: "center",
+    gap: 4,
   },
   boxcontainer: {
     backgroundColor: "#F3F4FF",
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginHorizontal: 24,
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   boxleft: {
     backgroundColor: "#fff",
@@ -269,5 +270,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     justifyContent: "center",
     alignSelf: "center",
+    gap: 4,
   },
 });
