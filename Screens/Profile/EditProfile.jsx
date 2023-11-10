@@ -113,19 +113,17 @@ const EditProfile = () => {
                         </KeyboardAvoidingView>
                     </View>
                 </View>
-                <TouchableOpacity>
-                    <View style={styles.Editbutton}>
-                        <Text
-                            style={{
-                                fontSize: 12,
-                                fontWeight: "600",
-                                fontFamily: "Roboto-Regular",
-                                color: "#fff",
-                            }}
-                        >
-                            Save
-                        </Text>
-                    </View>
+                <TouchableOpacity style={styles.Editbutton}>
+                    <Text
+                        style={{
+                            fontSize: 12,
+                            fontWeight: "600",
+                            fontFamily: "Roboto-Regular",
+                            color: "#fff",
+                        }}
+                    >
+                        Save
+                    </Text>
                 </TouchableOpacity>
             </View>
         </View>

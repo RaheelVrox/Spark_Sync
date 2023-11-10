@@ -159,19 +159,17 @@ export default function BackPageScan() {
           <ActivityIndicator size="large" />
         )}
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("HomepageOne")}>
-        <View style={styles.startbutton}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "600",
-              fontFamily: "Roboto-Regular",
-              color: "#fff",
-            }}
-          >
-            Send to analyze
-          </Text>
-        </View>
+      <TouchableOpacity style={styles.startbutton} onPress={() => navigation.navigate("HomepageOne")}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "600",
+            fontFamily: "Roboto-Regular",
+            color: "#fff",
+          }}
+        >
+          Send to analyze
+        </Text>
       </TouchableOpacity>
     </View>
 
@@ -214,6 +212,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: 85,
+    marginTop: 85
   },
 });

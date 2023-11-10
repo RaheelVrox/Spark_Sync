@@ -183,30 +183,13 @@ const LoginRegister = () => {
       </View>
       <View style={{ paddingTop: 60 }}>
         <TouchableOpacity onPress={() => navigation.navigate("SignUP")}>
-          <View >
+          <View>
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 50,
-                backgroundColor: "#EEF7FE",
-                paddingVertical: 5,
-                borderRadius: 10,
-                marginLeft: 24,
-                marginRight: 24,
-              }}
+              style={styles.registerContainer}
             >
               <AntDesign style={{ marginLeft: 24 }} name="apple1" size={35} color="black" />
-
               <TextInput
-                style={{
-                  marginVertical: 10,
-                  width: wp("50%"),
-                  height: hp("4%"),
-                  fontWeight: "600",
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                }}
+                style={styles.textInput}
                 placeholder="Continue with Apple"
                 placeholderTextColor="#0D3559"
                 editable={false}
@@ -218,35 +201,19 @@ const LoginRegister = () => {
         <TouchableOpacity onPress={promptAsync} >
           <View style={{ paddingTop: 21 }}>
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 40,
-                backgroundColor: "#EEF7FE",
-                paddingVertical: 5,
-                borderRadius: 10,
-                marginLeft: 24,
-                marginRight: 24,
-              }}
+              style={styles.registerContainer}
             >
               <Image
                 style={{
                   marginLeft: 20,
                   resizeMode: "contain",
-                  width: wp("12%"),
-                  height: wp("12%"),
+                  width: wp("10%"),
+                  height: wp("10%"),
                 }}
                 source={require("../../assets/googleicon.png")}
               />
               <TextInput
-                style={{
-                  marginVertical: 10,
-                  width: wp("50%"),
-                  height: hp("4%"),
-                  fontWeight: "600",
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                }}
+                style={styles.textInput}
                 placeholder="Continue with Google"
                 placeholderTextColor="#0D3559"
                 editable={false}
@@ -257,16 +224,7 @@ const LoginRegister = () => {
         <TouchableOpacity >
           <View style={{ paddingTop: 21 }}>
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 50,
-                backgroundColor: "#EEF7FE",
-                paddingVertical: 5,
-                borderRadius: 10,
-                marginLeft: 24,
-                marginRight: 24,
-              }}
+              style={styles.registerContainer}
             >
               <MaterialIcons
                 style={{ marginLeft: 24 }}
@@ -276,14 +234,7 @@ const LoginRegister = () => {
               />
 
               <TextInput
-                style={{
-                  marginVertical: 10,
-                  width: wp("50%"),
-                  height: hp("4%"),
-                  fontWeight: "600",
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                }}
+                style={styles.textInput}
                 placeholder="Continue with Email"
                 placeholderTextColor="#0D3559"
                 editable={false}
@@ -379,12 +330,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: "#fff",
-    paddingTop: wp(30)
+    paddingTop: 40
   },
   image: {
-    width: wp("30%"),
-    height: wp("40%"),
+    width: wp("40%"),
+    height: wp("50%"),
     alignItems: "center",
+    resizeMode: "contain",
     alignSelf: 'center'
   },
+  registerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 50,
+    backgroundColor: "#EEF7FE",
+    // paddingVertical: 5,
+    borderRadius: 10,
+    marginHorizontal: 24
+  },
+  textInput: {
+    flex: 1,
+    width: wp("50%"),
+    height: hp("4%"),
+    fontWeight: "600",
+    fontSize: 16,
+    fontFamily: "Roboto-Regular",
+    marginVertical: 15,
+  }
 });

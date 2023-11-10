@@ -39,7 +39,7 @@ const EditDataPage = () => {
   };
   return (
     <View style={styles.container}>
-       <LinearGradient
+      <LinearGradient
         colors={["#EEF7FE", "#FCEEFE"]}
         start={{ x: 0, y: 0.3 }}
         end={{ x: 0.6, y: 0.6 }}
@@ -48,55 +48,55 @@ const EditDataPage = () => {
           borderBottomLeftRadius: 30,
         }}
       >
-      <View style={styles.headerContainer}>
-        <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-        <TouchableOpacity style={styles.backbut} onPress={goBack}>
-            <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+        <View style={styles.headerContainer}>
+          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+            <TouchableOpacity style={styles.backbut} onPress={goBack}>
+              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
             </TouchableOpacity>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 24,
-              fontWeight: "600",
-              color: "#0D3559",
-              marginBottom: 5,
-            }}
-          >
-            Welcome Faris
-          </Text>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 16,
-              fontWeight: "400",
-              color: "#0D3559",
-            }}
-          >
-            Please check your data before go forward
-          </Text>
-        </View>
-      </View>
-      </LinearGradient>
-      <ScrollView>
-      <View style={styles.detailContainer}>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Name</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 24,
+                fontWeight: "600",
+                color: "#0D3559",
+                marginBottom: 5,
+              }}
             >
-              <TextInput
-                placeholder="Your Name"
-                style={styles.inputField}
-                value={name}
-                onChangeText={(text) => setName(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+              Welcome Faris
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 16,
+                fontWeight: "400",
+                color: "#0D3559",
+              }}
+            >
+              Please check your data before go forward
+            </Text>
           </View>
         </View>
-        {/* <View
+      </LinearGradient>
+      <ScrollView>
+        <View style={styles.detailContainer}>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Name</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Your Name"
+                  style={styles.inputField}
+                  value={name}
+                  onChangeText={(text) => setName(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
+          </View>
+          {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -117,267 +117,267 @@ const EditDataPage = () => {
             />
           </KeyboardAvoidingView>
         </View> */}
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Address</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Your Address"
-                style={styles.inputField}
-                value={address}
-                onChangeText={(text) => setAddres(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Address</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Your Address"
+                  style={styles.inputField}
+                  value={address}
+                  onChangeText={(text) => setAddres(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
           </View>
-        </View>
-        <View style={{ paddingTop: wp(7) }}>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Total amount due by 31/01/2023:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Total Amount"
-                style={styles.inputField}
-                value={amount}
-                onChangeText={(text) => setAmount(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+          <View style={{ paddingTop: wp(7) }}>
+            <View style={styles.rowContainer}>
+              <Text style={styles.textBold}>Total amount due by 31/01/2023:</Text>
+              <View>
+                <KeyboardAvoidingView
+                  enabled
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <TextInput
+                    placeholder="Total Amount"
+                    style={styles.inputField}
+                    value={amount}
+                    onChangeText={(text) => setAmount(text)}
+                    placeholderTextColor="#3D3D3D"
+                  />
+                </KeyboardAvoidingView>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-      <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Current month Usage:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Current Month Usage"
-                style={styles.inputField}
-                value={current}
-                onChangeText={(text) => setCurrent(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Current month Usage:</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Current Month Usage"
+                  style={styles.inputField}
+                  value={current}
+                  onChangeText={(text) => setCurrent(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
           </View>
-        </View>
-        <View style={{ paddingTop: wp(7) }}>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Energy From</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Cirro Energy"
-                style={styles.inputField}
-                value={energy}
-                onChangeText={(text) => setEnergy(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+          <View style={{ paddingTop: wp(7) }}>
+            <View style={styles.rowContainer}>
+              <Text style={styles.textBold}>Energy From</Text>
+              <View>
+                <KeyboardAvoidingView
+                  enabled
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <TextInput
+                    placeholder="Cirro Energy"
+                    style={styles.inputField}
+                    value={energy}
+                    onChangeText={(text) => setEnergy(text)}
+                    placeholderTextColor="#3D3D3D"
+                  />
+                </KeyboardAvoidingView>
+              </View>
+            </View>
           </View>
-        </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Plan:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Plan"
-                style={styles.inputField}
-                value={plan}
-                onChangeText={(text) => setPlan(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Plan:</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Plan"
+                  style={styles.inputField}
+                  value={plan}
+                  onChangeText={(text) => setPlan(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
           </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>CNE Account ID:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Account ID"
-                style={styles.inputField}
-                value={amountId}
-                onChangeText={(text) => setAmountId(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>CNE Account ID:</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Account ID"
+                  style={styles.inputField}
+                  value={amountId}
+                  onChangeText={(text) => setAmountId(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
           </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Utility Number:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Utility Number"
-                style={styles.inputField}
-                value={utilitynumber}
-                onChangeText={(text) => setUtilityNumber(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Utility Number:</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Utility Number"
+                  style={styles.inputField}
+                  value={utilitynumber}
+                  onChangeText={(text) => setUtilityNumber(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
           </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Service Periods:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Service Periods"
-                style={styles.inputField}
-                value={service}
-                onChangeText={(text) => setService(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Service Periods:</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Service Periods"
+                  style={styles.inputField}
+                  value={service}
+                  onChangeText={(text) => setService(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
           </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Statement Number:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Statement Number"
-                style={styles.inputField}
-                value={statement}
-                onChangeText={(text) => setStatement(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Statement Number:</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Statement Number"
+                  style={styles.inputField}
+                  value={statement}
+                  onChangeText={(text) => setStatement(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
           </View>
-        </View>
-        <View style={{ paddingTop: wp(7) }}>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Taxes:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Taxes"
-                style={styles.inputField}
-                value={statement}
-                onChangeText={(taxes) => setTaxes(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Adjustment</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Adjustment"
-                style={styles.inputField}
-                value={adjustment}
-                onChangeText={(taxes) => setAdjustment(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Trijunction line losses:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Trijunction line losses"
-                style={styles.inputField}
-                value={trijunction}
-                onChangeText={(taxes) => setTrijunction(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Electric Supply Charges:</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Electric Supply Charges"
-                style={styles.inputField}
-                value={electric }
-                onChangeText={(taxes) => setElectric (text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Market Charges</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Market Charges"
-                style={styles.inputField}
-                value={marketcharges }
-                onChangeText={(taxes) => setMarketCharges (text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>UDC Charges</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="UDC Charges"
-                style={styles.inputField}
-                value={charges }
-                onChangeText={(taxes) => setCharges (text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <TouchableOpacity>
+          <View style={{ paddingTop: wp(7) }}>
+            <View style={styles.rowContainer}>
+              <Text style={styles.textBold}>Taxes:</Text>
+              <View>
+                <KeyboardAvoidingView
+                  enabled
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <TextInput
+                    placeholder="Taxes"
+                    style={styles.inputField}
+                    value={statement}
+                    onChangeText={(taxes) => setTaxes(text)}
+                    placeholderTextColor="#3D3D3D"
+                  />
+                </KeyboardAvoidingView>
+              </View>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.textBold}>Adjustment</Text>
+              <View>
+                <KeyboardAvoidingView
+                  enabled
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <TextInput
+                    placeholder="Adjustment"
+                    style={styles.inputField}
+                    value={adjustment}
+                    onChangeText={(taxes) => setAdjustment(text)}
+                    placeholderTextColor="#3D3D3D"
+                  />
+                </KeyboardAvoidingView>
+              </View>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.textBold}>Trijunction line losses:</Text>
+              <View>
+                <KeyboardAvoidingView
+                  enabled
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <TextInput
+                    placeholder="Trijunction line losses"
+                    style={styles.inputField}
+                    value={trijunction}
+                    onChangeText={(taxes) => setTrijunction(text)}
+                    placeholderTextColor="#3D3D3D"
+                  />
+                </KeyboardAvoidingView>
+              </View>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.textBold}>Electric Supply Charges:</Text>
+              <View>
+                <KeyboardAvoidingView
+                  enabled
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <TextInput
+                    placeholder="Electric Supply Charges"
+                    style={styles.inputField}
+                    value={electric}
+                    onChangeText={(taxes) => setElectric(text)}
+                    placeholderTextColor="#3D3D3D"
+                  />
+                </KeyboardAvoidingView>
+              </View>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.textBold}>Market Charges</Text>
+              <View>
+                <KeyboardAvoidingView
+                  enabled
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <TextInput
+                    placeholder="Market Charges"
+                    style={styles.inputField}
+                    value={marketcharges}
+                    onChangeText={(taxes) => setMarketCharges(text)}
+                    placeholderTextColor="#3D3D3D"
+                  />
+                </KeyboardAvoidingView>
+              </View>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.textBold}>UDC Charges</Text>
+              <View>
+                <KeyboardAvoidingView
+                  enabled
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <TextInput
+                    placeholder="UDC Charges"
+                    style={styles.inputField}
+                    value={charges}
+                    onChangeText={(taxes) => setCharges(text)}
+                    placeholderTextColor="#3D3D3D"
+                  />
+                </KeyboardAvoidingView>
+              </View>
+            </View>
+            <TouchableOpacity>
               <View style={styles.Editbutton}>
                 <Text
                   style={{
@@ -391,8 +391,8 @@ const EditDataPage = () => {
                 </Text>
               </View>
             </TouchableOpacity>
+          </View>
         </View>
-      </View>
       </ScrollView>
     </View>
   );
@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 40,
     alignSelf: "center",
-    marginBottom:50
+    marginBottom: 50
   },
   rowContainer: {
     flexDirection: "row",

@@ -18,7 +18,7 @@ const DataPage = () => {
   const goBack = () => {
     navigation.goBack();
   };
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -30,34 +30,34 @@ const DataPage = () => {
           borderBottomLeftRadius: 30,
         }}
       >
-      <View style={styles.headerContainer}>
-        <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-        <TouchableOpacity style={styles.backbut} onPress={goBack}>
-            <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+        <View style={styles.headerContainer}>
+          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+            <TouchableOpacity style={styles.backbut} onPress={goBack}>
+              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
             </TouchableOpacity>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 24,
-              fontWeight: "600",
-              color: "#0D3559",
-              marginBottom: 5,
-            }}
-          >
-            Welcome Faris
-          </Text>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 16,
-              fontWeight: "400",
-              color: "#0D3559",
-            }}
-          >
-            Please check your data before go forward
-          </Text>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 24,
+                fontWeight: "600",
+                color: "#0D3559",
+                marginBottom: 5,
+              }}
+            >
+              Welcome Faris
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 16,
+                fontWeight: "400",
+                color: "#0D3559",
+              }}
+            >
+              Please check your data before go forward
+            </Text>
+          </View>
         </View>
-      </View>
       </LinearGradient>
       <ScrollView>
         <View style={styles.detailContainer}>
