@@ -198,7 +198,8 @@ const LoginRegister = () => {
           </View>
         </TouchableOpacity>
         {/* <TouchableOpacity onPress={signInWithGoogle}> */}
-        <TouchableOpacity onPress={promptAsync} >
+        {/* <TouchableOpacity onPress={promptAsync} > */}
+        <TouchableOpacity>
           <View style={{ paddingTop: 21 }}>
             <View
               style={styles.registerContainer}
