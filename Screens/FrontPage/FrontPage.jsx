@@ -10,13 +10,14 @@ const FrontPage = () => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require("../../assets/newlogo.png")} />
-      <View style={{ paddingTop: wp(40) }}>
+      <View style={{ paddingTop: wp(30) }}>
         <Text style={styles.heading}>Spark Sync</Text>
       </View>
       <View
         style={{
           marginTop: 32,
           marginHorizontal: 24,
+          flex: 1,
         }}
       >
         <Text
@@ -28,26 +29,23 @@ const FrontPage = () => {
             fontWeight: "400",
             textAlign: "center",
             lineHeight: 30,
-            marginBottom: 200,
           }}
         >
           Wholesale electric price is yours with Spark Sync. See how our
           advanced algorithm can help you save by uploading your bill now!
         </Text>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("LoginRegister")}>
-        <View style={styles.startbutton}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "600",
-              fontFamily: "Roboto-Regular",
-              color: "#fff",
-            }}
-          >
-            Get Started
-          </Text>
-        </View>
+      <TouchableOpacity style={styles.startbutton} onPress={() => navigation.navigate("LoginRegister")}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "600",
+            fontFamily: "Roboto-Regular",
+            color: "#fff",
+          }}
+        >
+          Get Started
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -62,9 +60,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   image: {
-    width: wp("40%"),
-    height: wp("50%"),
-    top: 120,
+    width: wp("50%"),
+    height: wp("60%"),
+    top: 80,
+    resizeMode: "contain"
   },
   heading: {
     fontSize: 60,
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
     color: "#0D3559",
   },
   startbutton: {
-    width: wp("80%"),
+    width: wp("88%"),
     height: hp("7%"),
     borderRadius: 10,
     borderWidth: 1,
@@ -83,5 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
+    margin: 25
+
   },
 });

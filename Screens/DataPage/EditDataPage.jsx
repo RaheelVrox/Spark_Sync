@@ -421,10 +421,11 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   detailContainer: {
-    height: hp("148%"),
+    // height: hp("148%"),
     width: wp("90%"),
     borderWidth: 1,
-    borderColor: "#B2C3D1",
+    borderColor: "#EEF7FE",
+    backgroundColor:"#EEF7FE",
     padding: 15,
     borderRadius: 10,
     marginTop: 40,
@@ -451,7 +452,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#EEF7FE",
     paddingLeft: wp(4),
-    backgroundColor: "#EEF7FE",
+    backgroundColor: "#fff",
     fontWeight: "400",
     fontSize: 14,
     fontFamily: "Roboto-Regular",
@@ -468,5 +469,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#346AFE",
     alignSelf: "center",
     marginTop: 30,
+    marginBottom:10
   },
 });

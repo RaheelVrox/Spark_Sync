@@ -15,14 +15,19 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 const NewPassword = () => {
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [newpassword, setNewPassword] = useState("");
+  const navigation = useNavigation();
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   const goBack = () => {
     navigation.goBack();
   };
-  const [newpassword, setNewPassword] = useState("");
-  const [password, setPassword] = useState("");
-  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -34,38 +39,38 @@ const NewPassword = () => {
           borderBottomLeftRadius: 30,
         }}
       >
-      <View style={styles.headerContainer}>
-        <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-        <TouchableOpacity style={styles.backbut} onPress={goBack}>
-            <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+        <View style={styles.headerContainer}>
+          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+            <TouchableOpacity style={styles.backbut} onPress={goBack}>
+              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
             </TouchableOpacity>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 24,
-              fontWeight: "600",
-              color: "#0D3559",
-              marginBottom: 5,
-            }}
-          >
-            Reset Password
-          </Text>
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 16,
-              fontWeight: "400",
-              color: "#0D3559",
-            }}
-          >
-            Enter your new password
-          </Text>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 24,
+                fontWeight: "600",
+                color: "#0D3559",
+                marginBottom: 5,
+              }}
+            >
+              Reset Password
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 16,
+                fontWeight: "400",
+                color: "#0D3559",
+              }}
+            >
+              Enter your new password
+            </Text>
+          </View>
         </View>
-      </View>
       </LinearGradient>
       <View
         style={{
-          paddingTop: wp(15),
+          paddingTop: wp(13),
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -74,28 +79,34 @@ const NewPassword = () => {
           enabled
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <TouchableOpacity>
-            <Text
-              style={{
-                marginBottom: 10,
-                color: "#0D3559",
-                fontWeight: "600",
-                fontSize: 16,
-                fontFamily: "Roboto-Regular",
-              }}
-            >
-              New Password
-            </Text>
+          <Text
+            style={{
+              marginBottom: 10,
+              color: "#122359",
+              fontWeight: "600",
+              fontSize: 16,
+              fontFamily: "Roboto-Regular",
+            }}
+          >
+            New Password
+          </Text>
+          <View>
             <TextInput
-              placeholder="Your Password"
+              secureTextEntry={!showPassword}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
               style={styles.inputField}
-              value={newpassword}
-              onChangeText={(text) => setNewPassword(text)}
+              placeholder="Your Password"
               placeholderTextColor="#3D3D3D"
-              // keyboardType="phone-pad"
-              // maxLength={11}
             />
-          </TouchableOpacity>
+            <MaterialCommunityIcons
+              name={showPassword ? 'eye-off' : 'eye'}
+              size={26}
+              color="#346AFE"
+              style={{ position: "absolute", alignSelf: "flex-end", padding: 18 }}
+              onPress={toggleShowPassword}
+            />
+          </View>
         </KeyboardAvoidingView>
         <KeyboardAvoidingView
           enabled
@@ -104,7 +115,7 @@ const NewPassword = () => {
           <Text
             style={{
               marginBottom: 10,
-              color: "#0D3559",
+              color: "#122359",
               fontWeight: "600",
               fontSize: 16,
               fontFamily: "Roboto-Regular",
@@ -112,32 +123,36 @@ const NewPassword = () => {
           >
             Enter Again
           </Text>
-          <TouchableOpacity>
+          <View>
             <TextInput
-              placeholder="Your Password"
+              secureTextEntry={!showPassword}
+              value={newpassword}
+              onChangeText={(text) => setNewPassword(text)}
               style={styles.inputField}
-              value={password}
-              onChangeText={(text) => setPassword(text)}
+              placeholder="Your Password"
               placeholderTextColor="#3D3D3D"
-              // keyboardType="phone-pad"
-              // maxLength={11}
             />
-          </TouchableOpacity>
+            <MaterialCommunityIcons
+              name={showPassword ? 'eye-off' : 'eye'}
+              size={26}
+              color="#346AFE"
+              style={{ position: "absolute", alignSelf: "flex-end", padding: 18 }}
+              onPress={toggleShowPassword}
+            />
+          </View>
         </KeyboardAvoidingView>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("DataPage")}>
-        <View style={styles.button}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "600",
-              fontFamily: "Roboto-Regular",
-              color: "#fff",
-            }}
-          >
-            Send OPT
-          </Text>
-        </View>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("FrontPageScan")}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "600",
+            fontFamily: "Roboto-Regular",
+            color: "#fff",
+          }}
+        >
+          Send OPT
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -165,7 +180,7 @@ const styles = StyleSheet.create({
   },
   inputField: {
     height: hp("7%"),
-    width: wp("85%"),
+    width: wp("88%"),
     borderWidth: 1,
     borderRadius: 10,
     borderColor: "#F3F4FF",
@@ -175,9 +190,10 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 16,
     fontFamily: "Roboto-Regular",
+    flexDirection: "row",
   },
   button: {
-    width: wp("85%"),
+    width: wp("88%"),
     height: hp("7%"),
     borderRadius: 10,
     borderWidth: 1,

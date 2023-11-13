@@ -1,27 +1,32 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
   KeyboardAvoidingView,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { LinearGradient } from "expo-linear-gradient";
+
 const WelcomeBack = () => {
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const navigation = useNavigation();
   const goBack = () => {
     navigation.goBack();
   };
-  const navigation = useNavigation();
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -107,25 +112,34 @@ const WelcomeBack = () => {
           >
             Password
           </Text>
-          <TextInput
-            placeholder="Your Password"
-            style={styles.inputField}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            placeholderTextColor="#3D3D3D"
-            keyboardType="phone-pad"
-          />
+          <View>
+            <TextInput
+              secureTextEntry={!showPassword}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              style={styles.inputField}
+              placeholder="Your Password"
+              placeholderTextColor="#3D3D3D"
+            />
+            <MaterialCommunityIcons
+              name={showPassword ? 'eye-off' : 'eye'}
+              size={26}
+              color="#346AFE"
+              style={{ position: "absolute", alignSelf: "flex-end", padding: 18 }}
+              onPress={toggleShowPassword}
+            />
+          </View>
         </KeyboardAvoidingView>
       </View>
-      <TouchableOpacity>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            marginHorizontal: 35,
-          }}
-        >
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          marginHorizontal: 26,
+        }}
+      >
+        <TouchableOpacity>
           <Text
             style={{
               marginBottom: 10,
@@ -137,21 +151,19 @@ const WelcomeBack = () => {
           >
             Forgot Password
           </Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("VerifyLogin")}>
-        <View style={styles.button}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "600",
-              fontFamily: "Roboto-Regular",
-              color: "#fff",
-            }}
-          >
-            Log In
-          </Text>
-        </View>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("VerifyLogin")} f>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "600",
+            fontFamily: "Roboto-Regular",
+            color: "#fff",
+          }}
+        >
+          Log In
+        </Text>
       </TouchableOpacity>
       <View
         style={{
@@ -189,8 +201,6 @@ const WelcomeBack = () => {
   );
 };
 
-export default WelcomeBack;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -210,8 +220,9 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   inputField: {
+    flexDirection: "row",
     height: hp("7%"),
-    width: wp("85%"),
+    width: wp("88%"),
     borderWidth: 1,
     borderRadius: 10,
     borderColor: "#F3F4FF",
@@ -220,10 +231,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#F3F4FF",
     fontWeight: "600",
     fontSize: 16,
-    fontFamily: "Roboto-Regular",
+    fontFamily: "Roboto-Regular"
   },
   button: {
-    width: wp("85%"),
+    width: wp("88%"),
     height: hp("7%"),
     borderRadius: 10,
     borderWidth: 1,
@@ -232,6 +243,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: 230,
+    marginTop: wp(55)
   },
 });
+
+export default WelcomeBack;

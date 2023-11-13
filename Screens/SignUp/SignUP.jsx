@@ -171,8 +171,7 @@ const SignUP = () => {
           />
         </KeyboardAvoidingView>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("WelcomeBack")}>
-        <View style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("WelcomeBack")}>
           <Text
             style={{
               fontSize: 18,
@@ -183,7 +182,6 @@ const SignUP = () => {
           >
             Create Account
           </Text>
-        </View>
       </TouchableOpacity>
       <View
         style={{
@@ -243,7 +241,7 @@ const styles = StyleSheet.create({
   },
   inputField: {
     height: hp("7%"),
-    width: wp("85%"),
+    width: wp("88%"),
     borderWidth: 1,
     borderRadius: 10,
     borderColor: "#EEF7FE",
@@ -255,7 +253,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Regular",
   },
   button: {
-    width: wp("85%"),
+    width: wp("88%"),
     height: hp("7%"),
     borderRadius: 10,
     borderWidth: 1,

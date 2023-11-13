@@ -173,7 +173,7 @@ const DataPage = () => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate("FrontPageScan")}>
+        <TouchableOpacity onPress={() => navigation.navigate("HomepageOne")}>
           <View style={styles.button}>
             <Text
               style={{
@@ -215,15 +215,16 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   detailContainer: {
-    height: hp("73%"),
+    // height: hp("73%"),
     width: wp("88%"),
     borderWidth: 1,
-    borderColor: "#B2C3D1",
+    borderColor: "#EEF7FE",
+    backgroundColor: "#EEF7FE",
     padding: 15,
     borderRadius: 10,
     marginTop: 40,
     alignSelf: "center",
-    marginBottom: 65,
+    marginBottom: 60,
   },
   rowContainer: {
     flexDirection: "row",
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   button: {
-    width: wp("85%"),
+    width: wp("88%"),
     height: hp("7%"),
     borderRadius: 10,
     borderWidth: 1,
@@ -267,6 +268,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginBottom: 50,
+    marginBottom: 20,
   },
 });

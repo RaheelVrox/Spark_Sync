@@ -147,19 +147,19 @@ export default function BackPageScan() {
             source={require("../../assets/iroundcamera.png")} />
         </TouchableOpacity>
         {/* {loading === false ? ( */}
-        {/* subtitle !== null ? ( */}
-        <View>
-          {/* <Text style={styles.languagetitle}>{language}</Text>
+          {/* subtitle !== null ? ( */}
+            <View>
+              {/* <Text style={styles.languagetitle}>{language}</Text>
               <Text style={styles.subtitle}>{subtitle}</Text> */}
-        </View>
+            </View>
+          {/* ) : ( */}
+            <></>
+          {/* ) */}
         {/* ) : ( */}
-        <></>
-        {/* ) */}
-        {/* ) : ( */}
-        {/* <ActivityIndicator size="large" /> */}
+          {/* <ActivityIndicator size="large" /> */}
         {/* )} */}
       </View>
-      <TouchableOpacity style={styles.startbutton} onPress={() => navigation.navigate("HomepageOne")}>
+      <TouchableOpacity style={styles.startbutton} onPress={() => navigation.navigate("DataPage")}>
         <Text
           style={{
             fontSize: 18,
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   startbutton: {
-    width: wp("80%"),
+    width: wp("88%"),
     height: hp("7%"),
     borderRadius: 10,
     borderWidth: 1,
@@ -212,6 +212,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: 85
+    marginTop: 90
   },
 });

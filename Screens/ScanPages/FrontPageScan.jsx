@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   startbutton: {
-    width: wp("80%"),
+    width: wp("88%"),
     height: hp("7%"),
     borderRadius: 10,
     borderWidth: 1,
@@ -216,6 +216,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: 85,
+    marginTop: 90,
   },
 });
