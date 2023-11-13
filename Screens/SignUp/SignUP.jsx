@@ -68,7 +68,7 @@ const SignUP = () => {
       </LinearGradient>
       <View
         style={{
-          paddingTop: wp(15),
+          paddingTop: wp(11),
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -172,23 +172,24 @@ const SignUP = () => {
         </KeyboardAvoidingView>
       </View>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("WelcomeBack")}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "600",
-              fontFamily: "Roboto-Regular",
-              color: "#fff",
-            }}
-          >
-            Create Account
-          </Text>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "600",
+            fontFamily: "Roboto-Regular",
+            color: "#fff",
+          }}
+        >
+          Create Account
+        </Text>
       </TouchableOpacity>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-          paddingTop: 30,
+          paddingTop: wp(5),
           flexDirection: "row",
+          flex: 1
         }}
       >
         <Text
