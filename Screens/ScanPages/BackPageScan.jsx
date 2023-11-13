@@ -146,18 +146,18 @@ export default function BackPageScan() {
           }}
             source={require("../../assets/iroundcamera.png")} />
         </TouchableOpacity>
-        {loading === false ? (
-          subtitle !== null ? (
-            <View>
-              {/* <Text style={styles.languagetitle}>{language}</Text>
+        {/* {loading === false ? ( */}
+        {/* subtitle !== null ? ( */}
+        <View>
+          {/* <Text style={styles.languagetitle}>{language}</Text>
               <Text style={styles.subtitle}>{subtitle}</Text> */}
-            </View>
-          ) : (
-            <></>
-          )
-        ) : (
-          <ActivityIndicator size="large" />
-        )}
+        </View>
+        {/* ) : ( */}
+        <></>
+        {/* ) */}
+        {/* ) : ( */}
+        {/* <ActivityIndicator size="large" /> */}
+        {/* )} */}
       </View>
       <TouchableOpacity style={styles.startbutton} onPress={() => navigation.navigate("HomepageOne")}>
         <Text

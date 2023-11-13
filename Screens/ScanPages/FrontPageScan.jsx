@@ -176,7 +176,6 @@ export default function FrontPageScan() {
         </View>
       </TouchableOpacity>
     </View>
-
   );
 }
 
