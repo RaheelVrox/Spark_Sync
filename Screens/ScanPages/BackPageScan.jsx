@@ -137,7 +137,7 @@ export default function BackPageScan() {
         }}
           source={require("../../assets/backpage.png")} />
       </View>
-      <View>
+      <View style={{ flex: 1 }}>
         <TouchableOpacity style={styles.camerabut} onPress={SelectPhoto}>
           <Image style={{
             width: wp("10%"),
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: 90
+    // marginTop: 90
+    margin: 30
   },
 });

@@ -83,6 +83,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#346AFE",
     alignSelf: "center",
     margin: 25
-
   },
 });

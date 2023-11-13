@@ -139,7 +139,7 @@ export default function FrontPageScan() {
         }}
           source={require("../../assets/FrontPage.png")} />
       </View>
-      <View>
+      <View style={{ flex: 1 }}>
         <TouchableOpacity style={styles.camerabut} onPress={SelectPhoto}>
           <Image style={{
             width: wp("10%"),
@@ -216,6 +216,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: 90,
+    // marginTop: 50,
+    margin: 30
   },
 });
