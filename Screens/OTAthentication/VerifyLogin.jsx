@@ -39,9 +39,9 @@ const VerifyLogin = () => {
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
             <TouchableOpacity>
-            <TouchableOpacity style={styles.backbut} onPress={goBack}>
-            <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.backbut} onPress={goBack}>
+                <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+              </TouchableOpacity>
             </TouchableOpacity>
             <Text
               style={{
@@ -144,7 +144,7 @@ const VerifyLogin = () => {
         >
           Didn’t received the code?
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("EmailRecovery")}>
+        <TouchableOpacity>
           <Text
             style={{
               fontFamily: "Roboto-Regular",
@@ -153,11 +153,22 @@ const VerifyLogin = () => {
               color: "#346AFE",
             }}
           >
-            {" "}
             Resend Code
           </Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("EmailRecovery")}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "600",
+            fontFamily: "Roboto-Regular",
+            color: "#fff",
+          }}
+        >
+          Save
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -194,5 +205,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Roboto-Regular",
     textAlign: "center",
+  },
+  button: {
+    width: wp("88%"),
+    height: hp("7%"),
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#346AFE",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#346AFE",
+    alignSelf: "center",
+    marginTop: 40,
   },
 });
