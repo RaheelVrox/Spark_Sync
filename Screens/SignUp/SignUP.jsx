@@ -1,31 +1,59 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
-  Text,
   View,
-  KeyboardAvoidingView,
-  TextInput,
+  Text,
   TouchableOpacity,
-  Image,
-  ScrollView,
+  TextInput,
+  KeyboardAvoidingView,
 } from "react-native";
-import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+
 
 const SignUP = () => {
-  const goBack = () => {
-    navigation.goBack();
-  };
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phone_number, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSignUp = async () => {
+    try {
+      const apiUrl = "http://192.168.18.140:4000/api/v1/user/register/";
+      const requestData = {
+        name,
+        email,
+        phone_number,
+        password,
+      };
+      // const response = await axios.post(apiUrl, requestData, { timeout: 1000000 });
+      console.log("requestData", requestData);
+
+      await axios
+        .post(apiUrl, requestData)
+        .then((response) => {
+          console.log(response.data);
+          navigation.navigate("VerifyLogin");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const goBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -40,7 +68,11 @@ const SignUP = () => {
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
             <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+              <Ionicons
+                name="ios-chevron-back-sharp"
+                size={28}
+                color="#670097"
+              />
             </TouchableOpacity>
             <Text
               style={{
@@ -139,7 +171,7 @@ const SignUP = () => {
           <TextInput
             placeholder="Your Phone Number"
             style={styles.inputField}
-            value={phoneNumber}
+            value={phone_number}
             onChangeText={(text) => setPhoneNumber(text)}
             maxLength={11}
             placeholderTextColor="#3D3D3D"
@@ -171,7 +203,7 @@ const SignUP = () => {
           />
         </KeyboardAvoidingView>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("WelcomeBack")}>
+      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text
           style={{
             fontSize: 18,
@@ -189,7 +221,7 @@ const SignUP = () => {
           alignItems: "center",
           paddingTop: wp(5),
           flexDirection: "row",
-          flex: 1
+          flex: 1,
         }}
       >
         <Text
@@ -235,10 +267,10 @@ const styles = StyleSheet.create({
     height: hp("5.5%"),
     width: wp("11%"),
     borderRadius: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
   inputField: {
     height: hp("7%"),

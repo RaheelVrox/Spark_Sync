@@ -15,21 +15,52 @@ import {
 } from "react-native-responsive-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import axios from "axios";
 
 const VerifyLogin = () => {
-  const goBack = () => {
-    navigation.goBack();
-  };
-
   const navigation = useNavigation();
   const [otp1, setOtp1] = useState("");
   const [otp2, setOtp2] = useState("");
   const [otp3, setOtp3] = useState("");
   const [otp4, setOtp4] = useState("");
 
+  const handleVerify = async () => {
+    try {
+      const apiUrl = "http://192.168.18.140:4000/api/v1/user/verify/";
+      const requestData = {
+        otp: otp1 + otp2 + otp3 + otp4,
+      };
+
+      await axios
+        .post(apiUrl, requestData)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.success) {
+            navigation.navigate("HomepageOne");
+          } else {
+            console.log("Incorrect OTP");
+            setOtp1("");
+            setOtp2("");
+            setOtp3("");
+            setOtp4("");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const goBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <KeyboardAvoidingView
+      enabled
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
@@ -45,7 +76,11 @@ const VerifyLogin = () => {
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
             <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+              <Ionicons
+                name="ios-chevron-back-sharp"
+                size={28}
+                color="#670097"
+              />
             </TouchableOpacity>
             <Text
               style={{
@@ -161,7 +196,7 @@ const VerifyLogin = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("EmailRecovery")}>
+      <TouchableOpacity style={styles.button} onPress={handleVerify}>
         <Text
           style={{
             fontSize: 18,
@@ -192,10 +227,10 @@ const styles = StyleSheet.create({
     height: hp("5.5%"),
     width: wp("11%"),
     borderRadius: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
   inputField: {
     height: hp("8%"),
