@@ -1,11 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  Image,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 import {
@@ -15,10 +16,12 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
+
 const VerifyLogin = () => {
   const goBack = () => {
     navigation.goBack();
   };
+
   const navigation = useNavigation();
   const [otp1, setOtp1] = useState("");
   const [otp2, setOtp2] = useState("");
@@ -26,7 +29,10 @@ const VerifyLogin = () => {
   const [otp4, setOtp4] = useState("");
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <LinearGradient
         colors={["#EEF7FE", "#FCEEFE"]}
         start={{ x: 0, y: 0.3 }}
@@ -38,10 +44,8 @@ const VerifyLogin = () => {
       >
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <TouchableOpacity>
-              <TouchableOpacity style={styles.backbut} onPress={goBack}>
-                <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
-              </TouchableOpacity>
+            <TouchableOpacity style={styles.backbut} onPress={goBack}>
+              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
             </TouchableOpacity>
             <Text
               style={{
@@ -62,7 +66,7 @@ const VerifyLogin = () => {
                 color: "#0D3559",
               }}
             >
-              Enter OTP Code send to your email.
+              Enter OTP Code sent to your email.
             </Text>
             <Text
               style={{
@@ -142,7 +146,7 @@ const VerifyLogin = () => {
             color: "#3D3D3D",
           }}
         >
-          Didn’t received the code?
+          Didn’t receive the code?
         </Text>
         <TouchableOpacity>
           <Text
@@ -169,7 +173,7 @@ const VerifyLogin = () => {
           Save
         </Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
