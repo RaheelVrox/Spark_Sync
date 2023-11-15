@@ -15,7 +15,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignUP = () => {
   const navigation = useNavigation();
@@ -38,8 +38,9 @@ const SignUP = () => {
 
       await axios
         .post(apiUrl, requestData)
-        .then((response) => {
+        .then(async (response) => {
           console.log(response.data);
+          await AsyncStorage.setItem("userData", JSON.stringify(response.data));
           navigation.navigate("VerifyLogin");
         })
         .catch((error) => {
@@ -234,7 +235,7 @@ const SignUP = () => {
         >
           Already have an account?
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
           <Text
             style={{
               fontFamily: "Roboto-Regular",

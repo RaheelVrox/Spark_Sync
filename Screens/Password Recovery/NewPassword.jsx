@@ -15,9 +15,9 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 const NewPassword = () => {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [newpassword, setNewPassword] = useState("");
   const navigation = useNavigation();
@@ -42,7 +42,11 @@ const NewPassword = () => {
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
             <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+              <Ionicons
+                name="ios-chevron-back-sharp"
+                size={28}
+                color="#670097"
+              />
             </TouchableOpacity>
             <Text
               style={{
@@ -70,7 +74,7 @@ const NewPassword = () => {
       </LinearGradient>
       <View
         style={{
-          paddingTop: wp(13),
+          paddingTop: wp(9),
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -100,10 +104,14 @@ const NewPassword = () => {
               placeholderTextColor="#3D3D3D"
             />
             <MaterialCommunityIcons
-              name={showPassword ? 'eye-off' : 'eye'}
+              name={showPassword ? "eye-off" : "eye"}
               size={26}
               color="#346AFE"
-              style={{ position: "absolute", alignSelf: "flex-end", padding: 18 }}
+              style={{
+                position: "absolute",
+                alignSelf: "flex-end",
+                padding: 18,
+              }}
               onPress={toggleShowPassword}
             />
           </View>
@@ -133,16 +141,23 @@ const NewPassword = () => {
               placeholderTextColor="#3D3D3D"
             />
             <MaterialCommunityIcons
-              name={showPassword ? 'eye-off' : 'eye'}
+              name={showPassword ? "eye-off" : "eye"}
               size={26}
               color="#346AFE"
-              style={{ position: "absolute", alignSelf: "flex-end", padding: 18 }}
+              style={{
+                position: "absolute",
+                alignSelf: "flex-end",
+                padding: 18,
+              }}
               onPress={toggleShowPassword}
             />
           </View>
         </KeyboardAvoidingView>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("FrontPageScan")}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("FrontPageScan")}
+      >
         <Text
           style={{
             fontSize: 18,
@@ -173,10 +188,10 @@ const styles = StyleSheet.create({
     height: hp("5.5%"),
     width: wp("11%"),
     borderRadius: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
   inputField: {
     height: hp("7%"),

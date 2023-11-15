@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  KeyboardAvoidingView,
+  TextInput,
+} from "react-native";
 import React from "react";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -7,13 +15,37 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import axios from "axios";
+
 const PhoneRecovery = () => {
   const goBack = () => {
     navigation.goBack();
   };
   const navigation = useNavigation();
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phone_number, setPhoneNumber] = useState("");
+  const handleResetPassword = async () => {
+    try {
+      // const apiUrl = "http://192.168.18.140:4000/api/v1/user/forgot-password/";
+      const requestData = {
+        phone_number,
+      };
+      console.log("requestData", requestData);
+
+      await axios
+        .post(apiUrl, requestData)
+        .then((response) => {
+          console.log(response.data);
+          navigation.navigate("NewPassword");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -28,7 +60,11 @@ const PhoneRecovery = () => {
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
             <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+              <Ionicons
+                name="ios-chevron-back-sharp"
+                size={28}
+                color="#670097"
+              />
             </TouchableOpacity>
             <Text
               style={{
@@ -49,48 +85,46 @@ const PhoneRecovery = () => {
                 color: "#0D3559",
               }}
             >
-              Enter your new password
+              Enter your phone number and we will send you a code to reset your
+              password.
             </Text>
           </View>
         </View>
       </LinearGradient>
       <View
         style={{
-          paddingTop: wp(15),
+          paddingTop: wp(9),
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-
         <KeyboardAvoidingView
           enabled
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <TouchableOpacity>
-            <Text
-              style={{
-                marginBottom: 10,
-                color: "#0D3559",
-                fontWeight: "600",
-                fontSize: 16,
-                fontFamily: "Roboto-Regular",
-              }}
-            >
-              Phone Number
-            </Text>
-            <TextInput
-              placeholder="Your Phone Number"
-              style={styles.inputField}
-              value={phoneNumber}
-              onChangeText={(text) => setPhoneNumber(text)}
-              placeholderTextColor="#3D3D3D"
-              keyboardType="phone-pad"
-              maxLength={11}
-            />
-          </TouchableOpacity>
+          <Text
+            style={{
+              marginBottom: 10,
+              color: "#0D3559",
+              fontWeight: "600",
+              fontSize: 16,
+              fontFamily: "Roboto-Regular",
+            }}
+          >
+            Phone Number
+          </Text>
+          <TextInput
+            placeholder="Your Phone Number"
+            style={styles.inputField}
+            value={phone_number}
+            onChangeText={(text) => setPhoneNumber(text)}
+            placeholderTextColor="#3D3D3D"
+            keyboardType="phone-pad"
+            maxLength={11}
+          />
         </KeyboardAvoidingView>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("NewPassword")}>
+      <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
         <View style={styles.button}>
           <Text
             style={{
@@ -123,10 +157,10 @@ const styles = StyleSheet.create({
     height: hp("5.5%"),
     width: wp("11%"),
     borderRadius: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
   inputField: {
     height: hp("7%"),

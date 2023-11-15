@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  TextInput,
+} from "react-native";
 import React from "react";
 import { useState } from "react";
 import {
@@ -7,13 +14,38 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import axios from "axios";
+
 const EmailRecovery = () => {
   const goBack = () => {
     navigation.goBack();
   };
   const [email, setEmail] = useState("");
   const navigation = useNavigation();
+
+  const handleResetPasword = async () => {
+    try {
+      const apiUrl = "http://192.168.18.140:4000/api/v1/user/forgot-password/";
+      const requestData = {
+        email,
+      };
+      console.log("requestData", requestData);
+
+      await axios
+        .post(apiUrl, requestData)
+        .then((response) => {
+          console.log(response.data);
+          navigation.navigate("NewPassword");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -28,7 +60,11 @@ const EmailRecovery = () => {
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
             <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+              <Ionicons
+                name="ios-chevron-back-sharp"
+                size={28}
+                color="#670097"
+              />
             </TouchableOpacity>
             <Text
               style={{
@@ -49,58 +85,54 @@ const EmailRecovery = () => {
                 color: "#0D3559",
               }}
             >
-              Enter your email and we will send you a code to reset your password.
+              Enter your email and we will send you a code to reset your
+              password.
             </Text>
           </View>
         </View>
       </LinearGradient>
       <View
         style={{
-          paddingTop: wp(15),
+          paddingTop: wp(9),
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-
         <KeyboardAvoidingView
           enabled
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <TouchableOpacity>
-            <Text
-              style={{
-                marginBottom: 10,
-                color: "#0D3559",
-                fontWeight: "600",
-                fontSize: 16,
-                fontFamily: "Roboto-Regular",
-              }}
-            >
-              Email
-            </Text>
-            <TextInput
-              placeholder="Your Email Address"
-              style={styles.inputField}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              placeholderTextColor="#3D3D3D"
-            />
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </View>
-      <TouchableOpacity onPress={() => navigation.navigate("PhoneRecovery")}>
-        <View style={styles.button}>
           <Text
             style={{
-              fontSize: 18,
+              marginBottom: 10,
+              color: "#0D3559",
               fontWeight: "600",
+              fontSize: 16,
               fontFamily: "Roboto-Regular",
-              color: "#fff",
             }}
           >
-            Send OPT
+            Email
           </Text>
-        </View>
+          <TextInput
+            placeholder="Your Email Address"
+            style={styles.inputField}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            placeholderTextColor="#3D3D3D"
+          />
+        </KeyboardAvoidingView>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={handleResetPasword}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "600",
+            fontFamily: "Roboto-Regular",
+            color: "#fff",
+          }}
+        >
+          Send OPT
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -121,10 +153,10 @@ const styles = StyleSheet.create({
     height: hp("5.5%"),
     width: wp("11%"),
     borderRadius: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
   inputField: {
     height: hp("7%"),

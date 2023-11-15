@@ -7,6 +7,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 
 import {
@@ -25,7 +26,7 @@ const VerifyLogin = () => {
   const [otp3, setOtp3] = useState("");
   const [otp4, setOtp4] = useState("");
 
-  const handleVerify = async () => {
+  const handleVerifyCode = async () => {
     try {
       const apiUrl = "http://192.168.18.140:4000/api/v1/user/verify/";
       const requestData = {
@@ -36,14 +37,34 @@ const VerifyLogin = () => {
         .post(apiUrl, requestData)
         .then((response) => {
           console.log(response.data);
-          if (response.data.success) {
+          if (response.data.status === "success") {
+            Alert.alert("Success", "OTP is correct");
             navigation.navigate("HomepageOne");
           } else {
-            console.log("Incorrect OTP");
-            setOtp1("");
-            setOtp2("");
-            setOtp3("");
-            setOtp4("");
+            Alert.alert("Error", "OTP is incorrect");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleResendCode = async () => {
+    try {
+      const apiUrl = "http://192.168.18.140:4000/api/v1/user/resend-otp/";
+      const resendRequestData = {};
+
+      await axios
+        .post(apiUrl, resendRequestData)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.status === "success") {
+            Alert.alert("Success", "New OTP sent successfully");
+          } else {
+            Alert.alert("Error", "Failed to resend OTP");
           }
         })
         .catch((error) => {
@@ -183,7 +204,7 @@ const VerifyLogin = () => {
         >
           Didn’t receive the code?
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleResendCode}>
           <Text
             style={{
               fontFamily: "Roboto-Regular",
@@ -196,7 +217,7 @@ const VerifyLogin = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleVerify}>
+      <TouchableOpacity style={styles.button} onPress={handleVerifyCode}>
         <Text
           style={{
             fontSize: 18,
