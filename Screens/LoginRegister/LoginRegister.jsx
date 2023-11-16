@@ -9,7 +9,7 @@ import {
 import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -88,22 +88,28 @@ const LoginRegister = () => {
     console.log("token", token);
 
     try {
-      const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (response.ok) {
         const user = await response.json();
         await AsyncStorage.setItem("@user", JSON.stringify(user));
         setUserInfo(user);
       } else {
-        console.error("Failed to fetch user info:", response.status, response.statusText);
+        console.error(
+          "Failed to fetch user info:",
+          response.status,
+          response.statusText
+        );
       }
     } catch (error) {
       console.error("Error fetching user info:", error);
     }
   }
-
 
   // async function handlesSignInwithGoogle() {
   //   const user = await AsyncStorage.getItem("@user");
@@ -136,16 +142,23 @@ const LoginRegister = () => {
     console.log("token", token);
 
     try {
-      const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (response.ok) {
         const user = await response.json();
         await AsyncStorage.setItem("@user", JSON.stringify(user));
         setUserInfo(user);
       } else {
-        console.error("Failed to fetch user info:", response.status, response.statusText);
+        console.error(
+          "Failed to fetch user info:",
+          response.status,
+          response.statusText
+        );
       }
     } catch (error) {
       console.error("Error fetching user info:", error);
@@ -154,8 +167,11 @@ const LoginRegister = () => {
 
   return (
     <View style={styles.container}>
-      <View >
-        <Image style={styles.image} source={require("../../assets/newlogo.png")} />
+      <View>
+        <Image
+          style={styles.image}
+          source={require("../../assets/newlogo.png")}
+        />
         <Text
           style={{
             fontFamily: "Roboto-Regular",
@@ -182,12 +198,15 @@ const LoginRegister = () => {
         </Text>
       </View>
       <View style={{ paddingTop: 60 }}>
-        <TouchableOpacity onPress={() => navigation.navigate("SignUP")}>
+        <TouchableOpacity>
           <View>
-            <View
-              style={styles.registerContainer}
-            >
-              <AntDesign style={{ marginLeft: 24 }} name="apple1" size={35} color="black" />
+            <View style={styles.registerContainer}>
+              <AntDesign
+                style={{ marginLeft: 24 }}
+                name="apple1"
+                size={35}
+                color="black"
+              />
               <TextInput
                 style={styles.textInput}
                 placeholder="Continue with Apple"
@@ -201,9 +220,7 @@ const LoginRegister = () => {
         {/* <TouchableOpacity onPress={promptAsync} > */}
         <TouchableOpacity>
           <View style={{ paddingTop: 21 }}>
-            <View
-              style={styles.registerContainer}
-            >
+            <View style={styles.registerContainer}>
               <Image
                 style={{
                   marginLeft: 20,
@@ -222,18 +239,15 @@ const LoginRegister = () => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={() => navigation.navigate("SignUP")}>
           <View style={{ paddingTop: 21 }}>
-            <View
-              style={styles.registerContainer}
-            >
+            <View style={styles.registerContainer}>
               <MaterialIcons
                 style={{ marginLeft: 24 }}
                 name="email"
                 size={35}
                 color="#002896"
               />
-
               <TextInput
                 style={styles.textInput}
                 placeholder="Continue with Email"
@@ -262,7 +276,7 @@ const LoginRegister = () => {
         >
           Already have an account?
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("WelcomeBack")}>
           <Text
             style={{
               fontFamily: "Roboto-Regular",
@@ -331,14 +345,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: "#fff",
-    paddingTop: 40
+    paddingTop: 40,
   },
   image: {
     width: wp("40%"),
     height: wp("50%"),
     alignItems: "center",
     resizeMode: "contain",
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   registerContainer: {
     flexDirection: "row",
@@ -347,7 +361,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#EEF7FE",
     // paddingVertical: 5,
     borderRadius: 10,
-    marginHorizontal: 24
+    marginHorizontal: 24,
   },
   textInput: {
     flex: 1,
@@ -357,5 +371,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Roboto-Regular",
     marginVertical: 15,
-  }
+  },
 });

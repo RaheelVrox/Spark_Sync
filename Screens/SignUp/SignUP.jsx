@@ -50,7 +50,6 @@ const SignUP = () => {
       console.error("Error:", error);
     }
   };
-
   const goBack = () => {
     navigation.goBack();
   };
@@ -235,7 +234,7 @@ const SignUP = () => {
         >
           Already have an account?
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+        <TouchableOpacity onPress={() => navigation.navigate("WelcomeBack")}>
           <Text
             style={{
               fontFamily: "Roboto-Regular",

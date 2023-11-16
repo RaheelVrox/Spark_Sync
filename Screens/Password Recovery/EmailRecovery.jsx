@@ -31,12 +31,11 @@ const EmailRecovery = () => {
         email,
       };
       console.log("requestData", requestData);
-
       await axios
         .post(apiUrl, requestData)
         .then((response) => {
           console.log(response.data);
-          navigation.navigate("NewPassword");
+          navigation.navigate("VerifyLogin");
         })
         .catch((error) => {
           console.log(error);

@@ -18,13 +18,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
-
 const VerifyLogin = () => {
   const navigation = useNavigation();
   const [otp1, setOtp1] = useState("");
   const [otp2, setOtp2] = useState("");
   const [otp3, setOtp3] = useState("");
   const [otp4, setOtp4] = useState("");
+  const goBack = () => {
+    navigation.goBack();
+  };
 
   const handleVerifyCode = async () => {
     try {
@@ -32,16 +34,23 @@ const VerifyLogin = () => {
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
       };
+      // const headers = {
+      //   // Add your authentication headers here, such as Authorization token
+      //   Authorization: 'Bearer YOUR_ACCESS_TOKEN',
+      // };
 
+      console.log(requestData);
       await axios
         .post(apiUrl, requestData)
         .then((response) => {
           console.log(response.data);
-          if (response.data.status === "success") {
-            Alert.alert("Success", "OTP is correct");
+          if (response.data && response.data.status === "success") {
             navigation.navigate("HomepageOne");
           } else {
-            Alert.alert("Error", "OTP is incorrect");
+            // Display an error message
+            handleVerificationError(
+              response.data.errorMessage || "Invalid OTP: Please try again"
+            );
           }
         })
         .catch((error) => {
@@ -51,12 +60,15 @@ const VerifyLogin = () => {
       console.error("Error:", error);
     }
   };
+  const handleVerificationError = (errorMessage) => {
+    // Display an error message to the user
+    Alert.alert("Error", errorMessage);
+  };
 
   const handleResendCode = async () => {
     try {
       const apiUrl = "http://192.168.18.140:4000/api/v1/user/resend-otp/";
       const resendRequestData = {};
-
       await axios
         .post(apiUrl, resendRequestData)
         .then((response) => {
@@ -75,16 +87,8 @@ const VerifyLogin = () => {
     }
   };
 
-  const goBack = () => {
-    navigation.goBack();
-  };
-
   return (
-    <KeyboardAvoidingView
-      enabled
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <LinearGradient
         colors={["#EEF7FE", "#FCEEFE"]}
         start={{ x: 0, y: 0.3 }}
@@ -142,49 +146,69 @@ const VerifyLogin = () => {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-evenly",
-          paddingTop: wp(15),
+          paddingTop: wp(9),
         }}
       >
-        <View>
-          <TextInput
-            style={styles.inputField}
-            onChangeText={(text) => setOtp1(text)}
-            value={otp1}
-            placeholderTextColor="#3D3D3D"
-            keyboardType="phone-pad"
-            maxLength={1}
-          />
-        </View>
-        <View>
-          <TextInput
-            style={styles.inputField}
-            onChangeText={(text) => setOtp2(text)}
-            value={otp2}
-            placeholderTextColor="#3D3D3D"
-            keyboardType="phone-pad"
-            maxLength={1}
-          />
-        </View>
-        <View>
-          <TextInput
-            style={styles.inputField}
-            onChangeText={(text) => setOtp3(text)}
-            value={otp3}
-            placeholderTextColor="#3D3D3D"
-            keyboardType="phone-pad"
-            maxLength={1}
-          />
-        </View>
-        <View>
-          <TextInput
-            style={styles.inputField}
-            onChangeText={(text) => setOtp4(text)}
-            value={otp4}
-            placeholderTextColor="#3D3D3D"
-            keyboardType="phone-pad"
-            maxLength={1}
-          />
-        </View>
+        <KeyboardAvoidingView
+          enabled
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <View>
+            <TextInput
+              style={styles.inputField}
+              onChangeText={(text) => setOtp1(text)}
+              value={otp1}
+              placeholderTextColor="#3D3D3D"
+              keyboardType="phone-pad"
+              maxLength={1}
+            />
+          </View>
+        </KeyboardAvoidingView>
+        <KeyboardAvoidingView
+          enabled
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <View>
+            <TextInput
+              style={styles.inputField}
+              onChangeText={(text) => setOtp2(text)}
+              value={otp2}
+              placeholderTextColor="#3D3D3D"
+              keyboardType="phone-pad"
+              maxLength={1}
+            />
+          </View>
+        </KeyboardAvoidingView>
+        <KeyboardAvoidingView
+          enabled
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <View>
+            <TextInput
+              style={styles.inputField}
+              onChangeText={(text) => setOtp3(text)}
+              value={otp3}
+              placeholderTextColor="#3D3D3D"
+              keyboardType="phone-pad"
+              maxLength={1}
+            />
+          </View>
+        </KeyboardAvoidingView>
+        <KeyboardAvoidingView
+          enabled
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <View>
+            <TextInput
+              style={styles.inputField}
+              onChangeText={(text) => setOtp4(text)}
+              value={otp4}
+              placeholderTextColor="#3D3D3D"
+              keyboardType="phone-pad"
+              maxLength={1}
+            />
+          </View>
+        </KeyboardAvoidingView>
       </View>
       <View
         style={{
@@ -213,6 +237,7 @@ const VerifyLogin = () => {
               color: "#346AFE",
             }}
           >
+            {" "}
             Resend Code
           </Text>
         </TouchableOpacity>
@@ -226,10 +251,10 @@ const VerifyLogin = () => {
             color: "#fff",
           }}
         >
-          Save
+          Continue
         </Text>
       </TouchableOpacity>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -276,6 +301,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: 40,
+    marginTop: hp("48%"),
   },
 });

@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -16,7 +16,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 
 const WelcomeBack = () => {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const toggleShowPassword = () => {
@@ -41,7 +41,11 @@ const WelcomeBack = () => {
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
             <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+              <Ionicons
+                name="ios-chevron-back-sharp"
+                size={28}
+                color="#670097"
+              />
             </TouchableOpacity>
             <Text
               style={{
@@ -69,7 +73,7 @@ const WelcomeBack = () => {
       </LinearGradient>
       <View
         style={{
-          paddingTop: wp(15),
+          paddingTop: wp(9),
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -122,10 +126,14 @@ const WelcomeBack = () => {
               placeholderTextColor="#3D3D3D"
             />
             <MaterialCommunityIcons
-              name={showPassword ? 'eye-off' : 'eye'}
+              name={showPassword ? "eye-off" : "eye"}
               size={26}
               color="#346AFE"
-              style={{ position: "absolute", alignSelf: "flex-end", padding: 18 }}
+              style={{
+                position: "absolute",
+                alignSelf: "flex-end",
+                padding: 18,
+              }}
               onPress={toggleShowPassword}
             />
           </View>
@@ -136,10 +144,10 @@ const WelcomeBack = () => {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "flex-end",
-          marginHorizontal: 26,
+          marginHorizontal: 27,
         }}
       >
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
           <Text
             style={{
               marginBottom: 10,
@@ -153,7 +161,10 @@ const WelcomeBack = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("VerifyLogin")} f>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("VerifyLogin")}
+      >
         <Text
           style={{
             fontSize: 18,
@@ -171,7 +182,7 @@ const WelcomeBack = () => {
           alignItems: "center",
           paddingTop: wp(5),
           flexDirection: "row",
-          flex: 1
+          flex: 1,
         }}
       >
         <Text
@@ -184,7 +195,7 @@ const WelcomeBack = () => {
         >
           Don’t have an account?
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("SignUP")}>
           <Text
             style={{
               fontFamily: "Roboto-Regular",
@@ -215,10 +226,10 @@ const styles = StyleSheet.create({
     height: hp("5.5%"),
     width: wp("11%"),
     borderRadius: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
   inputField: {
     flexDirection: "row",
@@ -232,7 +243,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F3F4FF",
     fontWeight: "600",
     fontSize: 16,
-    fontFamily: "Roboto-Regular"
+    fontFamily: "Roboto-Regular",
   },
   button: {
     width: wp("88%"),
@@ -244,7 +255,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: wp(50)
+    marginTop: wp(55),
   },
 });
 
