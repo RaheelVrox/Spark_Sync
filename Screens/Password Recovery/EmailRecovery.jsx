@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   TextInput,
+  Alert,
 } from "react-native";
 import React from "react";
 import { useState } from "react";
@@ -18,15 +19,24 @@ import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 
 const EmailRecovery = () => {
+  const [email, setEmail] = useState("");
+  const navigation = useNavigation();
   const goBack = () => {
     navigation.goBack();
   };
-  const [email, setEmail] = useState("");
-  const navigation = useNavigation();
 
+  const handleVerificationError = (errorMessage) => {
+    // Display an error message to the user
+    Alert.alert("Error", errorMessage);
+  };
   const handleResetPasword = async () => {
     try {
-      const apiUrl = "http://192.168.18.140:4000/api/v1/user/forgot-password/";
+      // Basic validation to check if each part is not empty
+      if (!email) {
+        handleVerificationError("Please enter your email.");
+        return;
+      }
+      const apiUrl = "http://192.168.18.140:5000/api/v1/user/forgot-password/";
       const requestData = {
         email,
       };
@@ -39,6 +49,8 @@ const EmailRecovery = () => {
         })
         .catch((error) => {
           console.log(error);
+          // Handle other errors if needed
+          handleVerificationError("Invalid email. Please try again");
         });
     } catch (error) {
       console.error("Error:", error);

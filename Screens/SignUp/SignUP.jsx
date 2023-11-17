@@ -23,10 +23,12 @@ const SignUP = () => {
   const [email, setEmail] = useState("");
   const [phone_number, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-
+  const goBack = () => {
+    navigation.goBack();
+  };
   const handleSignUp = async () => {
     try {
-      const apiUrl = "http://192.168.18.140:4000/api/v1/user/register/";
+      const apiUrl = "http://192.168.18.140:5000/api/v1/user/register/";
       const requestData = {
         name,
         email,
@@ -49,9 +51,6 @@ const SignUP = () => {
     } catch (error) {
       console.error("Error:", error);
     }
-  };
-  const goBack = () => {
-    navigation.goBack();
   };
 
   return (
@@ -199,7 +198,7 @@ const SignUP = () => {
             value={password}
             onChangeText={(text) => setPassword(text)}
             placeholderTextColor="#3D3D3D"
-            keyboardType="phone-pad"
+            // keyboardType="phone-pad"
           />
         </KeyboardAvoidingView>
       </View>

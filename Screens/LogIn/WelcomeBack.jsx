@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   TextInput,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -14,17 +15,63 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { LinearGradient } from "expo-linear-gradient";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const WelcomeBack = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
   const navigation = useNavigation();
   const goBack = () => {
     navigation.goBack();
+  };
+
+  const handleVerificationError = (errorMessage) => {
+    // Display an error message to the user
+    Alert.alert("Error", errorMessage);
+  };
+
+  const handleLogin = async () => {
+    try {
+      // Basic validation to check if each part is not empty
+      if (!email) {
+        handleVerificationError("Please enter your email.");
+        return;
+      }
+
+      if (!password) {
+        handleVerificationError("Please enter your password.");
+        return;
+      }
+
+      const apiUrl = "http://192.168.18.140:5000/api/v1/user/login/";
+      const requestData = {
+        email,
+        password,
+      };
+      console.log("requestData", requestData);
+
+      await axios
+        .post(apiUrl, requestData)
+        .then(async (response) => {
+          console.log(response.data);
+          await AsyncStorage.setItem("userData", JSON.stringify(response.data));
+          navigation.navigate("VerifyLogin");
+        })
+        .catch((error) => {
+          console.log(error);
+          // Handle other errors if needed
+          handleVerificationError(
+            "Invalid email or password. Please try again"
+          );
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -96,8 +143,8 @@ const WelcomeBack = () => {
           <TextInput
             placeholder="Your Name"
             style={styles.inputField}
-            value={name}
-            onChangeText={(text) => setName(text)}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
             placeholderTextColor="#3D3D3D"
           />
         </KeyboardAvoidingView>
@@ -161,10 +208,7 @@ const WelcomeBack = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("VerifyLogin")}
-      >
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text
           style={{
             fontSize: 18,

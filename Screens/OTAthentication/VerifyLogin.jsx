@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -18,40 +18,66 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
+
 const VerifyLogin = () => {
   const navigation = useNavigation();
   const [otp1, setOtp1] = useState("");
   const [otp2, setOtp2] = useState("");
   const [otp3, setOtp3] = useState("");
   const [otp4, setOtp4] = useState("");
+
+  const otpInputRefs = [
+    useRef(null),
+    useRef(null),
+    useRef(null),
+    useRef(null),
+  ];
+
   const goBack = () => {
     navigation.goBack();
   };
 
+  const handleVerificationError = (errorMessage) => {
+    Alert.alert("Error", errorMessage);
+  };
+
   const handleVerifyCode = async () => {
     try {
-      const apiUrl = "http://192.168.18.140:4000/api/v1/user/verify/";
+      if (!otp1 || !otp2 || !otp3 || !otp4) {
+        handleVerificationError("Please enter a valid OTP");
+        return;
+      }
+
+      const apiUrl =
+        "http://192.168.18.140:5000/api/v1/user/verify-registration/";
+
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
       };
-      // const headers = {
-      //   // Add your authentication headers here, such as Authorization token
-      //   Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-      // };
 
-      console.log(requestData);
       await axios
         .post(apiUrl, requestData)
         .then((response) => {
-          console.log(response.data);
-          if (response.data && response.data.status === "success") {
-            navigation.navigate("HomepageOne");
-          } else {
-            // Display an error message
-            handleVerificationError(
-              response.data.errorMessage || "Invalid OTP: Please try again"
-            );
-          }
+          console.log(response);
+          navigation.navigate("HomepageOne");
+        })
+        .catch((error) => {
+          console.log(error);
+          handleVerificationError("Invalid OTP: Please try again");
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleResendCode = async () => {
+    try {
+      const apiUrl = "http://192.168.18.140:5000/api/v1/user/resend-otp/";
+      const resendRequestData = {};
+      await axios
+        .post(apiUrl, resendRequestData)
+        .then((response) => {
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -60,30 +86,35 @@ const VerifyLogin = () => {
       console.error("Error:", error);
     }
   };
-  const handleVerificationError = (errorMessage) => {
-    // Display an error message to the user
-    Alert.alert("Error", errorMessage);
+
+  const focusNextInput = (index) => {
+    if (index < otpInputRefs.length - 1 && otpInputRefs[index].current) {
+      otpInputRefs[index + 1].current.focus();
+    }
   };
 
-  const handleResendCode = async () => {
-    try {
-      const apiUrl = "http://192.168.18.140:4000/api/v1/user/resend-otp/";
-      const resendRequestData = {};
-      await axios
-        .post(apiUrl, resendRequestData)
-        .then((response) => {
-          console.log(response.data);
-          if (response.data.status === "success") {
-            Alert.alert("Success", "New OTP sent successfully");
-          } else {
-            Alert.alert("Error", "Failed to resend OTP");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.error("Error:", error);
+  const handleInputChange = (text, index) => {
+    if (/^[0-9]*$/.test(text)) {
+      switch (index) {
+        case 0:
+          setOtp1(text);
+          break;
+        case 1:
+          setOtp2(text);
+          break;
+        case 2:
+          setOtp3(text);
+          break;
+        case 3:
+          setOtp4(text);
+          break;
+        default:
+          break;
+      }
+
+      if (text !== "") {
+        focusNextInput(index);
+      }
     }
   };
 
@@ -149,66 +180,25 @@ const VerifyLogin = () => {
           paddingTop: wp(9),
         }}
       >
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <View>
-            <TextInput
-              style={styles.inputField}
-              onChangeText={(text) => setOtp1(text)}
-              value={otp1}
-              placeholderTextColor="#3D3D3D"
-              keyboardType="phone-pad"
-              maxLength={1}
-            />
-          </View>
-        </KeyboardAvoidingView>
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <View>
-            <TextInput
-              style={styles.inputField}
-              onChangeText={(text) => setOtp2(text)}
-              value={otp2}
-              placeholderTextColor="#3D3D3D"
-              keyboardType="phone-pad"
-              maxLength={1}
-            />
-          </View>
-        </KeyboardAvoidingView>
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <View>
-            <TextInput
-              style={styles.inputField}
-              onChangeText={(text) => setOtp3(text)}
-              value={otp3}
-              placeholderTextColor="#3D3D3D"
-              keyboardType="phone-pad"
-              maxLength={1}
-            />
-          </View>
-        </KeyboardAvoidingView>
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <View>
-            <TextInput
-              style={styles.inputField}
-              onChangeText={(text) => setOtp4(text)}
-              value={otp4}
-              placeholderTextColor="#3D3D3D"
-              keyboardType="phone-pad"
-              maxLength={1}
-            />
-          </View>
-        </KeyboardAvoidingView>
+        {Array.from({ length: 4 }, (_, index) => (
+          <KeyboardAvoidingView
+            key={index}
+            enabled
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <View>
+              <TextInput
+                ref={otpInputRefs[index]}
+                style={styles.inputField}
+                onChangeText={(text) => handleInputChange(text, index)}
+                value={index === 0 ? otp1 : index === 1 ? otp2 : index === 2 ? otp3 : otp4}
+                placeholderTextColor="#3D3D3D"
+                keyboardType="phone-pad"
+                maxLength={1}
+              />
+            </View>
+          </KeyboardAvoidingView>
+        ))}
       </View>
       <View
         style={{
@@ -242,7 +232,10 @@ const VerifyLogin = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleVerifyCode}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleVerifyCode}
+      >
         <Text
           style={{
             fontSize: 18,
@@ -304,3 +297,7 @@ const styles = StyleSheet.create({
     marginTop: hp("48%"),
   },
 });
+
+//  {"email": "raheelkhn96@gmail.com ",
+//  "name": "Sparksync", "password": "1234",
+//  "phone_number": "03034040912"}
