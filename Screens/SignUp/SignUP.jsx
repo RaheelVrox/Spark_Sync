@@ -4,8 +4,11 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TextInput,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  TextInput,
+  Keyboard,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -43,7 +46,7 @@ const SignUP = () => {
         .then(async (response) => {
           console.log(response.data);
           await AsyncStorage.setItem("userData", JSON.stringify(response.data));
-          navigation.navigate("VerifyLogin");
+          navigation.navigate("RegistrationVerify");
         })
         .catch((error) => {
           console.log(error);
@@ -54,84 +57,61 @@ const SignUP = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#EEF7FE", "#FCEEFE"]}
-        start={{ x: 0, y: 0.3 }}
-        end={{ x: 0.6, y: 0.6 }}
-        style={{
-          borderBottomRightRadius: 30,
-          borderBottomLeftRadius: 30,
-        }}
-      >
-        <View style={styles.headerContainer}>
-          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons
-                name="ios-chevron-back-sharp"
-                size={28}
-                color="#670097"
-              />
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 24,
-                fontWeight: "600",
-                color: "#122359",
-                marginBottom: 5,
-              }}
-            >
-              Sign Up
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 16,
-                fontWeight: "400",
-                color: "#122359",
-              }}
-            >
-              It only takes a minute to create your account
-            </Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <LinearGradient
+          colors={["#EEF7FE", "#FCEEFE"]}
+          start={{ x: 0, y: 0.3 }}
+          end={{ x: 0.6, y: 0.6 }}
+          style={{
+            borderBottomRightRadius: 30,
+            borderBottomLeftRadius: 30,
+          }}
+        >
+          <View style={styles.headerContainer}>
+            <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+              <TouchableOpacity style={styles.backbut} onPress={goBack}>
+                <Ionicons
+                  name="ios-chevron-back-sharp"
+                  size={28}
+                  color="#670097"
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 24,
+                  fontWeight: "600",
+                  color: "#122359",
+                  marginBottom: 5,
+                }}
+              >
+                Sign Up
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 16,
+                  fontWeight: "400",
+                  color: "#122359",
+                }}
+              >
+                It only takes a minute to create your account
+              </Text>
+            </View>
           </View>
-        </View>
-      </LinearGradient>
-      <View
-        style={{
-          paddingTop: wp(11),
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        </LinearGradient>
+        <View
+          style={{
+            paddingTop: wp(11),
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <Text
-            style={{
-              marginBottom: 10,
-              color: "#122359",
-              fontWeight: "600",
-              fontSize: 16,
-              fontFamily: "Roboto-Regular",
-            }}
+          <KeyboardAvoidingView
+            enabled
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
-            Name
-          </Text>
-          <TextInput
-            placeholder="Your Name"
-            style={styles.inputField}
-            value={name}
-            onChangeText={(text) => setName(text)}
-            placeholderTextColor="#3D3D3D"
-          />
-        </KeyboardAvoidingView>
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <TouchableOpacity>
             <Text
               style={{
                 marginBottom: 10,
@@ -141,113 +121,139 @@ const SignUP = () => {
                 fontFamily: "Roboto-Regular",
               }}
             >
-              Email
+              Name
             </Text>
             <TextInput
-              placeholder="Your Email Address"
+              placeholder="Your Name"
               style={styles.inputField}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
+              value={name}
+              onChangeText={(text) => setName(text)}
               placeholderTextColor="#3D3D3D"
             />
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
+          </KeyboardAvoidingView>
+          <KeyboardAvoidingView
+            enabled
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <TouchableOpacity>
+              <Text
+                style={{
+                  marginBottom: 10,
+                  color: "#122359",
+                  fontWeight: "600",
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                }}
+              >
+                Email
+              </Text>
+              <TextInput
+                placeholder="Your Email Address"
+                style={styles.inputField}
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                placeholderTextColor="#3D3D3D"
+              />
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
+          <KeyboardAvoidingView
+            enabled
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <Text
+              style={{
+                marginBottom: 10,
+                color: "#122359",
+                fontWeight: "600",
+                fontSize: 16,
+                fontFamily: "Roboto-Regular",
+              }}
+            >
+              Phone
+            </Text>
+            <TextInput
+              placeholder="Your Phone Number"
+              style={styles.inputField}
+              value={phone_number}
+              onChangeText={(text) => setPhoneNumber(text)}
+              maxLength={11}
+              placeholderTextColor="#3D3D3D"
+              keyboardType="phone-pad"
+            />
+          </KeyboardAvoidingView>
+          <KeyboardAvoidingView
+            enabled
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <Text
+              style={{
+                marginBottom: 10,
+                color: "#122359",
+                fontWeight: "600",
+                fontSize: 16,
+                fontFamily: "Roboto-Regular",
+              }}
+            >
+              Password
+            </Text>
+            <TextInput
+              placeholder="Your Password"
+              style={styles.inputField}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              placeholderTextColor="#3D3D3D"
+              // keyboardType="phone-pad"
+              maxLength={10}
+            />
+          </KeyboardAvoidingView>
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
           <Text
             style={{
-              marginBottom: 10,
-              color: "#122359",
+              fontSize: 18,
               fontWeight: "600",
-              fontSize: 16,
               fontFamily: "Roboto-Regular",
+              color: "#fff",
             }}
           >
-            Phone
+            Create Account
           </Text>
-          <TextInput
-            placeholder="Your Phone Number"
-            style={styles.inputField}
-            value={phone_number}
-            onChangeText={(text) => setPhoneNumber(text)}
-            maxLength={11}
-            placeholderTextColor="#3D3D3D"
-            keyboardType="phone-pad"
-          />
-        </KeyboardAvoidingView>
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <Text
-            style={{
-              marginBottom: 10,
-              color: "#122359",
-              fontWeight: "600",
-              fontSize: 16,
-              fontFamily: "Roboto-Regular",
-            }}
-          >
-            Password
-          </Text>
-          <TextInput
-            placeholder="Your Password"
-            style={styles.inputField}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            placeholderTextColor="#3D3D3D"
-            // keyboardType="phone-pad"
-          />
-        </KeyboardAvoidingView>
-      </View>
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text
+        </TouchableOpacity>
+        <View
           style={{
-            fontSize: 18,
-            fontWeight: "600",
-            fontFamily: "Roboto-Regular",
-            color: "#fff",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: wp(5),
+            flexDirection: "row",
+            flex: 1,
           }}
         >
-          Create Account
-        </Text>
-      </TouchableOpacity>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          paddingTop: wp(5),
-          flexDirection: "row",
-          flex: 1,
-        }}
-      >
-        <Text
-          style={{
-            fontFamily: "Roboto-Regular",
-            fontSize: 14,
-            fontWeight: "600",
-            color: "#3D3D3D",
-          }}
-        >
-          Already have an account?
-        </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("WelcomeBack")}>
           <Text
             style={{
               fontFamily: "Roboto-Regular",
               fontSize: 14,
               fontWeight: "600",
-              color: "#346AFE",
+              color: "#3D3D3D",
             }}
           >
-            {" "}
-            Log in
+            Already have an account?
           </Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("WelcomeBack")}>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 14,
+                fontWeight: "600",
+                color: "#346AFE",
+              }}
+            >
+              {" "}
+              Log in
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

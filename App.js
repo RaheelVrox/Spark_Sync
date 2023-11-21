@@ -23,6 +23,12 @@ import HomepageThree from "./Screens/HomePage/HomepageThree";
 import Profile from "./Screens/Profile/Profile";
 import EditProfile from "./Screens/Profile/EditProfile";
 import BackPageScan from "./Screens/ScanPages/BackPageScan";
+import UploadFrontpage from "./Screens/ScanPages/UploadFrontpage";
+import UploadBackpage from "./Screens/ScanPages/UploadBackpage";
+import PasswordVerify from "./Screens/OTAthentication/PasswordVerify";
+import RegistrationVerify from "./Screens/OTAthentication/RegistrationVerify";
+
+
 
 
 // import * as SplashScreen from 'expo-splash-screen';
@@ -141,6 +147,26 @@ const App = () => {
           options={{ headerShown: false }}
           name="BackPageScan"
           component={BackPageScan}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="UploadFrontpage"
+          component={UploadFrontpage}
+        />
+         <Stack.Screen
+          options={{ headerShown: false }}
+          name="UploadBackpage"
+          component={UploadBackpage}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="PasswordVerify"
+          component={PasswordVerify}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="RegistrationVerify"
+          component={RegistrationVerify}
         />
       </Stack.Navigator>
     </NavigationContainer>

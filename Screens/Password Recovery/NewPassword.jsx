@@ -6,6 +6,7 @@ import {
   Image,
   KeyboardAvoidingView,
   TextInput,
+  Alert,
 } from "react-native";
 import React from "react";
 import { useState } from "react";
@@ -16,16 +17,61 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import axios from "axios";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const NewPassword = () => {
-  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [newpassword, setNewPassword] = useState("");
+  const [userdata, setUserdata] = useState("");
   const navigation = useNavigation();
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
   const goBack = () => {
     navigation.goBack();
+  };
+  console.log("user_id", userdata);
+  useEffect(() => {
+    const getUserID = async () => {
+      const value = await AsyncStorage.getItem("email");
+      console.log("value", value);
+      if (value !== null) {
+        setUserdata(value);
+      }
+    };
+    getUserID();
+  }, []);
+
+  const handlePasswordUpdate = async () => {
+    try {
+      if (newPassword !== confirmPassword) {
+        Alert.alert("Error", "Passwords do not match. Please try again.");
+        return;
+      }
+      const apiUrl = "http://192.168.18.140:5000/api/v1/user/reset-password/";
+      const requestData = {
+        email: userdata,
+        newPassword,
+        confirmPassword,
+      };
+      console.log("requestData", requestData);
+      await axios
+        .post(apiUrl, requestData)
+        .then((response) => {
+          console.log(response.data);
+          // await AsyncStorage.setItem("userData", JSON.stringify(response.data));
+          navigation.navigate("WelcomeBack");
+        })
+        .catch((error) => {
+          console.log(error);
+          // Display an error message to the user
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -97,8 +143,8 @@ const NewPassword = () => {
           <View>
             <TextInput
               secureTextEntry={!showPassword}
-              value={password}
-              onChangeText={(text) => setPassword(text)}
+              value={newPassword}
+              onChangeText={(text) => setNewPassword(text)}
               style={styles.inputField}
               placeholder="Your Password"
               placeholderTextColor="#3D3D3D"
@@ -134,8 +180,8 @@ const NewPassword = () => {
           <View>
             <TextInput
               secureTextEntry={!showPassword}
-              value={newpassword}
-              onChangeText={(text) => setNewPassword(text)}
+              value={confirmPassword}
+              onChangeText={(text) => setConfirmPassword(text)}
               style={styles.inputField}
               placeholder="Your Password"
               placeholderTextColor="#3D3D3D"
@@ -154,10 +200,7 @@ const NewPassword = () => {
           </View>
         </KeyboardAvoidingView>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("FrontPageScan")}
-      >
+      <TouchableOpacity style={styles.button} onPress={handlePasswordUpdate}>
         <Text
           style={{
             fontSize: 18,
@@ -166,7 +209,7 @@ const NewPassword = () => {
             color: "#fff",
           }}
         >
-          Send OPT
+          Confirm
         </Text>
       </TouchableOpacity>
     </View>
@@ -217,6 +260,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: 20,
+    marginTop: wp(77),
   },
 });

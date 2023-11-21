@@ -20,20 +20,17 @@ import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const VerifyLogin = () => {
+const RegistrationVerify = () => {
   const navigation = useNavigation();
   const [otp1, setOtp1] = useState("");
   const [otp2, setOtp2] = useState("");
   const [otp3, setOtp3] = useState("");
   const [otp4, setOtp4] = useState("");
   const [useremail, setUseremail] = useState("");
+
   const otpInputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const goBack = () => {
     navigation.goBack();
-  };
-
-  const handleVerificationError = (errorMessage) => {
-    Alert.alert("Error", errorMessage);
   };
   console.log("user_email", useremail);
   useEffect(() => {
@@ -46,6 +43,10 @@ const VerifyLogin = () => {
     };
     getUserID();
   }, []);
+
+  const handleVerificationError = (errorMessage) => {
+    Alert.alert("Error", errorMessage);
+  };
   /////API INTEGRATE
   const handleVerifyCode = async () => {
     try {
@@ -53,7 +54,10 @@ const VerifyLogin = () => {
         handleVerificationError("Please enter a valid OTP");
         return;
       }
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/verify/";
+
+      const apiUrl =
+        "http://192.168.18.140:5000/api/v1/user/verify-registration/";
+
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
       };
@@ -62,8 +66,7 @@ const VerifyLogin = () => {
         .post(apiUrl, requestData)
         .then(async (response) => {
           console.log(response);
-          // navigation.navigate("HomepageOne");
-          navigation.navigate("Profile");
+          navigation.navigate("HomepageOne");
         })
         .catch((error) => {
           console.log(error);
@@ -262,7 +265,7 @@ const VerifyLogin = () => {
   );
 };
 
-export default VerifyLogin;
+export default RegistrationVerify;
 
 const styles = StyleSheet.create({
   container: {
@@ -308,7 +311,3 @@ const styles = StyleSheet.create({
     marginTop: hp("48%"),
   },
 });
-
-//  {"email": "raheelkhn96@gmail.com ",
-//  "name": "Sparksync", "password": "1234",
-//  "phone_number": "03034040912"}

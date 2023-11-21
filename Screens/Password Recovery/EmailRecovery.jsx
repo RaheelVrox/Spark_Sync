@@ -16,6 +16,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const EmailRecovery = () => {
@@ -24,7 +25,6 @@ const EmailRecovery = () => {
   const goBack = () => {
     navigation.goBack();
   };
-
   const handleVerificationError = (errorMessage) => {
     // Display an error message to the user
     Alert.alert("Error", errorMessage);
@@ -43,9 +43,10 @@ const EmailRecovery = () => {
       console.log("requestData", requestData);
       await axios
         .post(apiUrl, requestData)
-        .then((response) => {
+        .then(async (response) => {
           console.log(response.data);
-          navigation.navigate("VerifyLogin");
+          await AsyncStorage.setItem("email", email);
+          navigation.navigate("PasswordVerify");
         })
         .catch((error) => {
           console.log(error);
