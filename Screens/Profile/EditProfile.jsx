@@ -23,48 +23,65 @@ const EditProfile = () => {
   const [address, setAddress] = useState("");
   const [phone_number, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [userData, setUserData] = useState({ id: null });
-  const [profileImage, setProfileImage] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [profile_image, setProfileImage] = useState(null);
+  const [profile_imageDisplay, setProfileImageDisplay] = useState(null);
   const navigation = useNavigation();
 
-  const updateUserProfile = async () => {
+  console.log("userData", userData);
+
+  const handleSubmit = async () => {
     try {
-      const apiUrl = `http://192.168.18.140:5000/api/v1/user/update/${userData.id}`;
+      const apiUrl = `http://192.168.18.41:5000/api/v1/user/update/${userData.id}`;
 
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("address", address);
-      formData.append("name", name);
-      formData.append("phone_number", phone_number);
-      formData.append("profile_image", profileImage);
+      const filename = profile_image?.uri.substring(
+        profile_image?.uri.lastIndexOf("/") + 1
+      );
 
-      const response = await axios.post(apiUrl, formData, {
+      let data = new FormData();
+      data.append("email", email);
+      data.append("address", address);
+      data.append("name", name);
+      data.append("phone_number", phone_number);
+      if (profile_image) {
+        data.append("profile_image", {
+          uri: profile_image?.uri,
+          type: "image/jpeg", // Adjust the type accordingly
+          name: filename, // Adjust the name accordingly
+        });
+      }
+      const response = await axios.post(apiUrl, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      console.log("API response:", response.data);
-
       const updatedUserData = { ...userData, ...response.data };
       await AsyncStorage.setItem("userData", JSON.stringify(updatedUserData));
 
+      // Navigate to the profile screen
       navigation.navigate("Profile");
+
+      console.log("response", response);
     } catch (error) {
       console.error("Error updating user data:", error.message);
     }
   };
 
   const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 1,
+      });
 
-    if (!result.cancelled) {
-      setProfileImage(result.uri);
+      if (!result.canceled) {
+        setProfileImage(result.assets[0]);
+        setProfileImageDisplay(result.assets[0]?.uri);
+      }
+    } catch (error) {
+      console.error("Error picking an image", error);
     }
   };
 
@@ -78,6 +95,10 @@ const EditProfile = () => {
         setAddress(userDataFromStorage.address || "");
         setPhone(userDataFromStorage.phone_number || "");
         setEmail(userDataFromStorage.email || "");
+        setProfileImageDisplay(
+          `http://192.168.18.41:5000/profile_image/${userDataFromStorage.profile_image}` ||
+            ""
+        );
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -100,15 +121,17 @@ const EditProfile = () => {
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
             <TouchableOpacity onPress={pickImage}>
-              {profileImage ? (
+              {profile_imageDisplay ? (
                 <Image
                   style={{
+                    resizeMode: "contain",
+                    marginBottom: 16,
+                    alignSelf: "center",
                     width: 100,
                     height: 100,
                     borderRadius: 50,
-                    resizeMode: 'cover',
                   }}
-                  source={{ uri: profileImage }}
+                  source={{ uri: profile_imageDisplay }}
                 />
               ) : (
                 <Image
@@ -209,7 +232,7 @@ const EditProfile = () => {
         </View>
         <TouchableOpacity
           style={styles.Editbutton}
-          onPress={() => updateUserProfile()}
+          onPress={() => handleSubmit()}
         >
           <Text
             style={{

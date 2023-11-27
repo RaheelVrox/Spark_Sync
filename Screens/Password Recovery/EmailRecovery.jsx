@@ -36,7 +36,7 @@ const EmailRecovery = () => {
         handleVerificationError("Please enter your email.");
         return;
       }
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/forgot-password/";
+      const apiUrl = "http://192.168.18.41:5000/api/v1/user/forgot-password/";
       const requestData = {
         email,
       };
@@ -129,7 +129,8 @@ const EmailRecovery = () => {
             placeholder="Your Email Address"
             style={styles.inputField}
             value={email}
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={(text) => setEmail(text.toLowerCase())}
+            autoCapitalize="none"
             placeholderTextColor="#3D3D3D"
           />
         </KeyboardAvoidingView>

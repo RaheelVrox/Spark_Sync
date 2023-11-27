@@ -53,7 +53,7 @@ const WelcomeBack = () => {
         return;
       }
 
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/login/";
+      const apiUrl = "http://192.168.18.41:5000/api/v1/user/login/";
       const requestData = {
         email,
         password,
@@ -149,7 +149,8 @@ const WelcomeBack = () => {
               placeholder="Your Name"
               style={styles.inputField}
               value={email}
-              onChangeText={(text) => setEmail(text)}
+              onChangeText={(text) => setEmail(text.toLowerCase())}
+              autoCapitalize="none"
               placeholderTextColor="#3D3D3D"
             />
           </KeyboardAvoidingView>

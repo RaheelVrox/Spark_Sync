@@ -99,6 +99,26 @@ const StackNavigation = () => {
             name="ForgotPassword"
             component={ForgotPassword}
           />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="RegistrationVerify"
+            component={RegistrationVerify}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="PasswordVerify"
+            component={PasswordVerify}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="UploadFrontpage"
+            component={UploadFrontpage}
+          />
+           <Stack.Screen
+            options={{ headerShown: false }}
+            name="BottomTabsNavigator"
+            component={BottomTabsNavigator}
+          />
         </>
       ) : (
         <>

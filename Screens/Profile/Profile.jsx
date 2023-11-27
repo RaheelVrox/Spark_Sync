@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,44 +15,49 @@ import {
 } from "react-native-responsive-screen";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Updates from "expo-updates";
 
 const Profile = ({ route }) => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [profileImage, setProfileImage] = useState("");
 
-  const getUserDetails = async (userId) => {
+  const logout = async () => {
     try {
-      const apiUrl = `http://192.168.18.140:5000/api/v1/user/details/${userId}`;
-      const response = await axios.get(apiUrl);
-      console.log(response.data);
-      return response.data;
+      await AsyncStorage.removeItem("userData");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "SignUP" }],
+      });
+      await Updates.reloadAsync();
     } catch (error) {
-      console.error("Error fetching user details:", error);
-      throw error;
+      console.error("Error logging out:", error.message);
     }
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        setLoading(true);
+  const fetchUserData = async () => {
+    const storedUserData = await AsyncStorage.getItem("userData");
+    const userDataFromApi = JSON.parse(storedUserData)?.id;
 
-        const storedUserData = await AsyncStorage.getItem("userData");
-        const userDataFromApi = JSON.parse(storedUserData)?.id;
-        console.log("id is: ", userDataFromApi);
-        setUserData(userDataFromApi);
-        const userDetails = await getUserDetails(userDataFromApi);
-        setUserData(userDetails);
-      } catch (error) {
-        console.error("Error fetching user details:", error);
-      } finally {
+    const apiUrl = `http://192.168.18.41:5000/api/v1/user/details/${userDataFromApi}`;
+
+    await axios
+      .get(apiUrl)
+      .then((res) => {
+        let image = `http://192.168.18.41:5000/profile_image/${userData?.profile_image}`;
+        setProfileImage(image);
+        setUserData(res.data);
         setLoading(false);
-      }
-    };
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
 
+  useLayoutEffect(() => {
     fetchUserData();
-  }, []);
+  });
 
   return (
     <View style={styles.container}>
@@ -67,14 +72,34 @@ const Profile = ({ route }) => {
       >
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <Image
-              style={{
-                resizeMode: "contain",
-                marginBottom: 16,
-                alignSelf: "center",
-              }}
-              source={require("../../assets/profile.png")}
-            />
+            {userData ? (
+              <>
+                <Image
+                  style={{
+                    resizeMode: "contain",
+                    marginBottom: 16,
+                    alignSelf: "center",
+                    width: 100,
+                    height: 100,
+                    borderRadius: 100,
+                  }}
+                  source={{
+                    uri: profileImage,
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <Image
+                  style={{
+                    resizeMode: "contain",
+                    marginBottom: 16,
+                    alignSelf: "center",
+                  }}
+                  source={require("../../assets/profile.png")}
+                />
+              </>
+            )}
             <Text
               style={{
                 fontFamily: "Roboto-Regular",
@@ -120,12 +145,13 @@ const Profile = ({ route }) => {
       </LinearGradient>
       <View style={styles.detailContainer}>
         <View style={{ marginHorizontal: 16, paddingTop: 16 }}>
-          {/* Other user details or menu options */}
           <Text style={styles.text}>Reset Password</Text>
           <Text style={styles.text}>Contact</Text>
           <Text style={styles.text}>Terms of Services</Text>
           <Text style={styles.text}>Privacy Policy</Text>
-          <Text style={styles.text}>Sign Out</Text>
+          <TouchableOpacity onPress={logout}>
+            <Text style={styles.text}>Sign Out</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -140,7 +166,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   headerContainer: {
-    height: hp("35%"),
+    height: hp("36%"),
     width: wp("100%"),
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,

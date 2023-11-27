@@ -31,7 +31,7 @@ const SignUP = () => {
   };
   const handleSignUp = async () => {
     try {
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/register/";
+      const apiUrl = "http://192.168.18.41:5000/api/v1/user/register/";
       const requestData = {
         name,
         email,
@@ -135,7 +135,6 @@ const SignUP = () => {
             enabled
             behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
-            <TouchableOpacity>
               <Text
                 style={{
                   marginBottom: 10,
@@ -151,10 +150,10 @@ const SignUP = () => {
                 placeholder="Your Email Address"
                 style={styles.inputField}
                 value={email}
-                onChangeText={(text) => setEmail(text)}
+                onChangeText={(text) => setEmail(text.toLowerCase())}
+                autoCapitalize='none'
                 placeholderTextColor="#3D3D3D"
               />
-            </TouchableOpacity>
           </KeyboardAvoidingView>
           <KeyboardAvoidingView
             enabled

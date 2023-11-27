@@ -3,9 +3,11 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomepageOne from "../Screens/HomePage/HomepageOne";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign,Entypo  } from "@expo/vector-icons";
 import Profile from "../Screens/Profile/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
+import UploadFrontpage from "../Screens/ScanPages/UploadFrontpage";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,6 +29,61 @@ const HomeStack = ({}) => {
         name="HomepageOne"
         component={HomepageOne}
       />
+    </Stack.Navigator>
+  );
+};
+
+const AddNew = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="AddNew"
+      screenOptions={{
+        headerShadowVisibl: false,
+      }}
+    >
+      <Stack.Screen
+        options={{
+          tabBarLabelStyle: {
+            fontSize: 12,
+            color: "#E81F76",
+          },
+          headerShown: false,
+          headerShadowVisible: false,
+          headerTitle: "",
+          headerTitleAlign: "",
+          headerTitleStyle: {
+            fontWeight: "600",
+            fontSize: 18,
+            color: "#9b2890",
+          },
+          headerStyle: {},
+          headerTitleAlign: "center",
+        }}
+        name="UploadFrontpage"
+        component={UploadFrontpage}
+      />
+
+      {/* <Stack.Screen
+        options={{
+          tabBarLabelStyle: {
+            fontSize: 12,
+            color: "#E81F76",
+          },
+          headerShown: false,
+          headerShadowVisible: false,
+          headerTitle: "",
+          headerTitleAlign: "",
+          headerTitleStyle: {
+            fontWeight: "600",
+            fontSize: 18,
+            color: "#9b2890",
+          },
+          headerStyle: {},
+          headerTitleAlign: "center",
+        }}
+        name="UploadFrontpage"
+        component={UploadFrontpage}
+      /> */}
     </Stack.Navigator>
   );
 };
@@ -59,7 +116,7 @@ const ProfileStack = ({ navigation }) => {
         name="Profile"
         component={Profile}
       />
-      
+
       <Stack.Screen
         options={{
           tabBarLabelStyle: {
@@ -84,7 +141,6 @@ const ProfileStack = ({ navigation }) => {
     </Stack.Navigator>
   );
 };
-
 const BottomTabsNavigator = () => {
   return (
     <Tab.Navigator
@@ -92,12 +148,20 @@ const BottomTabsNavigator = () => {
       screenOptions={{
         headerShadowVisible: false,
         tabBarLabelStyle: { fontSize: 10 },
-        tabBarActiveTintColor: "#000000",
-        tabBarInactiveTintColor: "#9b2890",
+        tabBarActiveTintColor: "#346AFE",
+        tabBarInactiveTintColor: "#000000",
+        tabBarBackground: () => (
+          <LinearGradient
+            colors={["#EEF7FE", "#FCEEFE"]}
+            style={{ flex: 1 }}
+            start={{ x: 0, y: 0.3 }}
+            end={{ x: 0.6, y: 0.6 }}
+          />
+        ),
         tabBarStyle: [
           style.tabStyleProp,
           {
-            height: 55,
+            height: 70,
             paddingBottom: 5,
           },
         ],
@@ -114,7 +178,22 @@ const BottomTabsNavigator = () => {
           headerShown: false,
           headerTitle: "",
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="home" color={color} size={size} />
+            <Entypo name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="AddNew"
+        component={AddNew}
+        options={{
+          tabBarLabel: "Add New",
+          tabBarLabelStyle: {
+            fontSize: 12,
+          },
+          headerShown: false,
+          headerTitle: "",
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="plus" color={color} size={size} />
           ),
         }}
       />

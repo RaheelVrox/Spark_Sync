@@ -53,7 +53,7 @@ const VerifyLogin = () => {
         handleVerificationError("Please enter a valid OTP");
         return;
       }
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/verify/";
+      const apiUrl = "http://192.168.18.41:5000/api/v1/user/verify/";
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
       };
@@ -62,6 +62,7 @@ const VerifyLogin = () => {
         .then(async (response) => {
           console.log(response);
           navigation.navigate("BottomTabsNavigator");
+          // navigation.navigate("UploadFrontpage");
         })
         .catch((error) => {
           console.log(error);
@@ -74,7 +75,7 @@ const VerifyLogin = () => {
 
   const handleResendCode = async () => {
     try {
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/resend-otp/";
+      const apiUrl = "http://192.168.18.41:5000/api/v1/user/resend-otp/";
       const resendRequestData = {
         email: useremail,
       };

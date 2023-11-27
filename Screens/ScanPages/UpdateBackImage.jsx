@@ -65,7 +65,7 @@ const UpdateBackImage = ({ route, navigation }) => {
       });
 
       const response = await axios.post(
-        "http://192.168.18.140:5000/api/v1/backimage/create",
+        "http://192.168.18.41:5000/api/v1/backimage/create",
         formData,
         {
           headers: {
@@ -76,7 +76,7 @@ const UpdateBackImage = ({ route, navigation }) => {
 
       console.log("Image upload response:", response);
       console.log("Image uploaded successfully:", response.data);
-      navigation.navigate("UploadFrontpage");
+      navigation.navigate("HomepageOne");
     } catch (error) {
       console.error("Error uploading image", error);
       Alert.alert("Error uploading image. Please try again.");

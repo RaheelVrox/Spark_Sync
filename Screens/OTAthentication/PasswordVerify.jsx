@@ -56,7 +56,7 @@ const PasswordVerify = () => {
         return;
       }
 
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/verify/";
+      const apiUrl = "http://192.168.18.41:5000/api/v1/user/verify/";
 
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
@@ -79,7 +79,7 @@ const PasswordVerify = () => {
 
   const handleResendCode = async () => {
     try {
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/resend-otp/";
+      const apiUrl = "http://192.168.18.41:5000/api/v1/user/resend-otp/";
       const resendRequestData = {
         email: useremail,
       };

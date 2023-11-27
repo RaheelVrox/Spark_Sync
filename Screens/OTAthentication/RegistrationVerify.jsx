@@ -56,7 +56,7 @@ const RegistrationVerify = () => {
       }
 
       const apiUrl =
-        "http://192.168.18.140:5000/api/v1/user/verify-registration/";
+        "http://192.168.18.41:5000/api/v1/user/verify-registration/";
 
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
@@ -66,7 +66,7 @@ const RegistrationVerify = () => {
         .post(apiUrl, requestData)
         .then(async (response) => {
           console.log(response);
-          navigation.navigate("HomepageOne");
+          navigation.navigate("UploadFrontpage");
         })
         .catch((error) => {
           console.log(error);

@@ -51,7 +51,7 @@ const NewPassword = () => {
         Alert.alert("Error", "Passwords do not match. Please try again.");
         return;
       }
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/reset-password/";
+      const apiUrl = "http://192.168.18.41:5000/api/v1/user/reset-password/";
       const requestData = {
         email: userdata,
         newPassword,

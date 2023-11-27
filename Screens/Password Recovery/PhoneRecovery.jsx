@@ -26,7 +26,7 @@ const PhoneRecovery = () => {
   const [phone_number, setPhoneNumber] = useState("");
   const handleResetPassword = async () => {
     try {
-      // const apiUrl = "http://192.168.18.140:4000/api/v1/user/forgot-password/";
+      // const apiUrl = "http://192.168.18.41:4000/api/v1/user/forgot-password/";
       const requestData = {
         phone_number,
       };
