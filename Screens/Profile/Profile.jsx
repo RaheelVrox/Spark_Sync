@@ -15,8 +15,6 @@ const Profile = ({ route }) => {
 
   const getUserDetails = async (userId) => {
     try {
-      console.log("userId", userId);
-
       const apiUrl = `http://192.168.18.140:5000/api/v1/user/details/${userId}`;
       const response = await axios.get(apiUrl);
       console.log(response.data);
@@ -27,22 +25,15 @@ const Profile = ({ route }) => {
     }
   };
 
-  const getUserId = () => {
-    const dynamicUserId = route.params?.userId;
-    return dynamicUserId;
-  };
-
   useEffect(() => {
     const fetchUserData = async () => {
       const storedUserData = await AsyncStorage.getItem("userData");
-      console.log("storedUserData", storedUserData);
-
       try {
-        const userDataFromApi = await getUserDetails(storedUserData?.id);
-
+        const userDataFromApi = JSON.parse(storedUserData)?.id;
+        console.log("id is: ", userDataFromApi);
         setUserData(userDataFromApi);
-        AsyncStorage.setItem("userData", JSON.stringify(userDataFromApi));
-        // console.log("Stored UserData:", storedUserData);
+        const userDetails = await getUserDetails(userDataFromApi);
+        setUserData(userDetails);
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
@@ -99,7 +90,7 @@ const Profile = ({ route }) => {
           </View>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate("EditProfile", { userId: getUserId() })
+              navigation.navigate("EditProfile", { userId: userData?.id })
             }
             style={{
               height: 34,

@@ -14,8 +14,9 @@ import {
 import { Entypo } from "@expo/vector-icons";
 import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { AntDesign } from "@expo/vector-icons";
 const HomepageOne = () => {
   const goBack = () => {
     navigation.goBack();
@@ -42,7 +43,11 @@ const HomepageOne = () => {
           <View style={styles.headerContainer}>
             <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
               <TouchableOpacity style={styles.backbut} onPress={goBack}>
-                <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+                <Ionicons
+                  name="ios-chevron-back-sharp"
+                  size={28}
+                  color="#670097"
+                />
               </TouchableOpacity>
               <Text
                 style={{
@@ -63,7 +68,7 @@ const HomepageOne = () => {
                   color: "#0D3559",
                 }}
               >
-                Explore the offers available in your area
+                Review all your properties.
               </Text>
             </View>
           </View>
@@ -95,7 +100,7 @@ const HomepageOne = () => {
           <Image
             style={{
               resizeMode: "contain",
-              height: hp("40%"),
+              // height: hp("40%"),
               width: wp("100%"),
             }}
             source={require("../../assets/Blank_map.png")}
@@ -104,8 +109,8 @@ const HomepageOne = () => {
         <View
           style={{
             marginHorizontal: 24,
-            paddingTop: wp(10),
-            marginBottom: 25,
+            paddingTop: wp(6),
+            marginBottom: 20,
           }}
         >
           <Text
@@ -119,19 +124,16 @@ const HomepageOne = () => {
             Your properties
           </Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+        <TouchableOpacity>
           <View style={styles.containerbox}>
-            <View style={styles.leftBox}>
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 24,
-                  fontWeight: "700",
-                  color: "#670097",
-                }}
-              >
-                16.2¢
-              </Text>
+            <View
+              style={{
+                paddingRight: 15,
+                paddingLeft: 15,
+                justifyContent: "center",
+              }}
+            >
+              <AntDesign name="minuscircle" size={24} color="#858585" />
             </View>
             <View style={styles.rightText}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -140,8 +142,9 @@ const HomepageOne = () => {
                   style={{
                     fontFamily: "Roboto-Regular",
                     fontSize: 14,
-                    fontWeight: "400",
+                    fontWeight: "700",
                     color: "#122359",
+                    marginBottom: 5,
                   }}
                 >
                   1234 Street Dallas, TX
@@ -150,22 +153,12 @@ const HomepageOne = () => {
               <Text
                 style={{
                   fontFamily: "Roboto-Regular",
-                  fontSize: 14,
-                  fontWeight: "700",
-                  color: "#122359",
-                }}
-              >
-                Smart Basic 12 from Cirro Energy
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 14,
-                  fontWeight: "400",
+                  fontSize: 12,
+                  fontWeight: "600",
                   color: "#346AFE",
                 }}
               >
-                Will save 20%
+                Congratulations! You saved 20%
               </Text>
             </View>
           </View>
@@ -206,10 +199,10 @@ const styles = StyleSheet.create({
     height: hp("5.5%"),
     width: wp("11%"),
     borderRadius: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
   containerbox: {
     backgroundColor: "#F3F4FF",
@@ -220,21 +213,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginHorizontal: 24,
     borderRadius: 10,
-    height: hp("13%"),
-  },
-  leftBox: {
-    backgroundColor: "#fff",
-    paddingTop: 25,
-    paddingBottom: 25,
-    paddingRight: 25,
-    paddingLeft: 25,
-    borderRadius: 10,
-    justifyContent: "center",
+    height: hp("8%"),
   },
   rightText: {
     marginLeft: 25,
     justifyContent: "center",
     alignSelf: "center",
+    gap: 4,
   },
   bottomSheetContainer: {
     backgroundColor: "white",

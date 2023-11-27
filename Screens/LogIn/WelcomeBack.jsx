@@ -62,10 +62,10 @@ const WelcomeBack = () => {
 
       await axios
         .post(apiUrl, requestData)
-        .then((response) => {
-          console.log("ddsadas", response.data);
+        .then((res) => {
+          console.log("ddsadas", res.data.user);
 
-          AsyncStorage.setItem("userData", JSON.stringify(response.data));
+          AsyncStorage.setItem("userData", JSON.stringify(res.data.user));
           navigation.navigate("VerifyLogin");
         })
         .catch((error) => {

@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,17 +8,71 @@ import {
   KeyboardAvoidingView,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const EditProfile = () => {
   const [name, setName] = useState("");
-  const [address, setAddres] = useState("");
+  const [address, setAddress] = useState("");
   const [phone_number, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [userData, setUserData] = useState({ id: null });
+  const navigation = useNavigation();
+
+  const updateUserProfile = async () => {
+    try {
+      const apiUrl = `http://192.168.18.140:5000/api/v1/user/update/${userData.id}`;
+
+      // Create a FormData object
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("address", address);
+      formData.append("name", name);
+      formData.append("phone_number", phone_number);
+
+      // Send a POST request with FormData
+      const response = await axios.post(apiUrl, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("API response:", response.data);
+
+      // Update the user data in AsyncStorage
+      const updatedUserData = { ...userData, ...response.data };
+      await AsyncStorage.setItem("userData", JSON.stringify(updatedUserData));
+
+      navigation.navigate("Profile");
+    } catch (error) {
+      console.error("Error updating user data:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const storedUserData = await AsyncStorage.getItem("userData");
+        const userDataFromStorage = JSON.parse(storedUserData) || { id: null };
+        setUserData(userDataFromStorage);
+        setName(userDataFromStorage.name || "");
+        setAddress(userDataFromStorage.address || "");
+        setPhone(userDataFromStorage.phone_number || "");
+        setEmail(userDataFromStorage.email || "");
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -43,7 +98,7 @@ const EditProfile = () => {
               style={{
                 fontFamily: "Roboto-Regular",
                 fontSize: 16,
-                fontWeight: "600",
+                fontWeight: "700",
                 color: "#122359",
                 textAlign: "center",
               }}
@@ -82,7 +137,7 @@ const EditProfile = () => {
                 placeholder="Your Address"
                 style={styles.inputField}
                 value={address}
-                onChangeText={(text) => setAddres(text)}
+                onChangeText={(text) => setAddress(text)}
                 placeholderTextColor="#3D3D3D"
               />
             </KeyboardAvoidingView>
@@ -122,10 +177,13 @@ const EditProfile = () => {
             </KeyboardAvoidingView>
           </View>
         </View>
-        <TouchableOpacity style={styles.Editbutton}>
+        <TouchableOpacity
+          style={styles.Editbutton}
+          onPress={() => updateUserProfile()}
+        >
           <Text
             style={{
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: "600",
               fontFamily: "Roboto-Regular",
               color: "#fff",
@@ -138,8 +196,6 @@ const EditProfile = () => {
     </View>
   );
 };
-
-export default EditProfile;
 
 const styles = StyleSheet.create({
   container: {
@@ -157,15 +213,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     borderRadius: 10,
     marginTop: 40,
-    height: hp("44%"),
-    // width: wp("90%"),
+    height: hp("38%"),
   },
   rowContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
-    padding: 8,
-    marginTop: 8,
+    marginHorizontal: 8,
+    marginTop: 15,
   },
   inputField: {
     height: hp("5%"),
@@ -188,8 +243,8 @@ const styles = StyleSheet.create({
     color: "#122359",
   },
   Editbutton: {
-    width: wp("22%"),
-    height: hp("5%"),
+    width: wp("23%"),
+    height: hp("5.5%"),
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#346AFE",
@@ -200,3 +255,5 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 });
+
+export default EditProfile;

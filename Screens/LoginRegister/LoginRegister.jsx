@@ -223,10 +223,10 @@ const LoginRegister = () => {
             <View style={styles.registerContainer}>
               <Image
                 style={{
-                  marginLeft: 20,
+                  marginLeft: 18,
                   resizeMode: "contain",
-                  width: wp("10%"),
-                  height: wp("10%"),
+                  width: 40,
+                  height: 40,
                 }}
                 source={require("../../assets/googleicon.png")}
               />
@@ -276,7 +276,7 @@ const LoginRegister = () => {
         >
           Already have an account?
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("WelcomeBack")}>
+        <TouchableOpacity onPress={() => navigation.navigate("HomepageOne")}>
           <Text
             style={{
               fontFamily: "Roboto-Regular",

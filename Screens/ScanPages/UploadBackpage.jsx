@@ -1,18 +1,44 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 const UploadBackpage = () => {
   const navigation = useNavigation();
+  const [selectedImageUri, setSelectedImageUri] = useState(null);
+
   const goBack = () => {
     navigation.goBack();
   };
+
+  const pickImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        const selectedUri = result.assets[0];
+        setSelectedImageUri(selectedUri);
+        console.log("Image selected:", selectedUri);
+        // Navigate to the next screen
+        navigation.navigate("UpdateBackImage", {
+          imageUri: selectedUri,
+        });
+      }
+    } catch (error) {
+      console.error("Error picking an image", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -96,7 +122,7 @@ const UploadBackpage = () => {
           maximum file size allowed is 10MB.
         </Text>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={pickImage}>
         <View
           style={{
             width: wp("88%"),
@@ -124,7 +150,7 @@ const UploadBackpage = () => {
         </View>
       </TouchableOpacity>
       <View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={pickImage} style={styles.button}>
           <Text
             style={{
               fontSize: 18,
@@ -162,6 +188,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   Gallerybox: {
+    height: hp("16%"),
     width: wp("32%"),
     borderRadius: 10,
     backgroundColor: "#EEF7FE",

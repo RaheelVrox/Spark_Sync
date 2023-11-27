@@ -17,7 +17,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
 export default function FrontPageScan() {
   const goBack = () => {
@@ -71,7 +71,6 @@ export default function FrontPageScan() {
             );
             setLoading(false);
           });
-
       } else {
         // User cancelled taking a photo
         ToastAndroid.showWithGravity(
@@ -106,7 +105,11 @@ export default function FrontPageScan() {
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
             <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons name="ios-chevron-back-sharp" size={28} color="#670097" />
+              <Ionicons
+                name="ios-chevron-back-sharp"
+                size={28}
+                color="#670097"
+              />
             </TouchableOpacity>
             <Text
               style={{
@@ -133,20 +136,29 @@ export default function FrontPageScan() {
         </View>
       </LinearGradient>
       <View>
-        <Image style={{
-          width: wp("100%"), height: wp("100%"),
-          resizeMode: "contain", alignSelf: "center", marginBottom: 25, marginTop: 15
-        }}
-          source={require("../../assets/FrontPage.png")} />
+        <Image
+          style={{
+            width: wp("100%"),
+            height: wp("100%"),
+            resizeMode: "contain",
+            alignSelf: "center",
+            marginBottom: 25,
+            marginTop: 15,
+          }}
+          source={require("../../assets/frontpage.png")}
+        />
       </View>
       <View style={{ flex: 1 }}>
         <TouchableOpacity style={styles.camerabut} onPress={SelectPhoto}>
-          <Image style={{
-            width: wp("10%"),
-            height: wp("10%"),
-            resizeMode: "contain", alignSelf: "center"
-          }}
-            source={require("../../assets/iroundcamera.png")} />
+          <Image
+            style={{
+              width: wp("10%"),
+              height: wp("10%"),
+              resizeMode: "contain",
+              alignSelf: "center",
+            }}
+            source={require("../../assets/iroundcamera.png")}
+          />
         </TouchableOpacity>
         {/* {loading === false ? (
           subtitle !== null ? ( */}
@@ -192,17 +204,17 @@ const styles = StyleSheet.create({
     height: hp("5.5%"),
     width: wp("11%"),
     borderRadius: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
   camerabut: {
     height: hp("6%"),
     width: wp("17%"),
     borderRadius: 10,
-    backgroundColor: '#EEF7FE',
-    alignItems: 'center',
+    backgroundColor: "#EEF7FE",
+    alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
   },
@@ -217,6 +229,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#346AFE",
     alignSelf: "center",
     // marginTop: 50,
-    margin: 30
+    margin: 30,
   },
 });

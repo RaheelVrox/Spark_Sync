@@ -63,7 +63,7 @@ const VerifyLogin = () => {
         .then(async (response) => {
           console.log(response);
           // navigation.navigate("HomepageOne");
-          navigation.navigate("Profile");
+          navigation.navigate("UploadBackpage");
         })
         .catch((error) => {
           console.log(error);
