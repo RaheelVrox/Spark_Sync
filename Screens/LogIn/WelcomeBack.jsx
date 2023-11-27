@@ -63,8 +63,6 @@ const WelcomeBack = () => {
       await axios
         .post(apiUrl, requestData)
         .then((res) => {
-          console.log("ddsadas", res.data.user);
-
           AsyncStorage.setItem("userData", JSON.stringify(res.data.user));
           navigation.navigate("VerifyLogin");
         })

@@ -57,13 +57,11 @@ const VerifyLogin = () => {
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
       };
-      console.log("requestData", requestData);
       await axios
         .post(apiUrl, requestData)
         .then(async (response) => {
           console.log(response);
-          // navigation.navigate("HomepageOne");
-          navigation.navigate("UploadBackpage");
+          navigation.navigate("BottomTabsNavigator");
         })
         .catch((error) => {
           console.log(error);

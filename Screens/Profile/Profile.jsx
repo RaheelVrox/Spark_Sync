@@ -72,7 +72,7 @@ const Profile = ({ route }) => {
                 textAlign: "center",
               }}
             >
-              {userData?.name || "Faris Husain"}
+              {userData?.name || "Loading..."}
             </Text>
             <Text
               style={{
@@ -84,8 +84,7 @@ const Profile = ({ route }) => {
                 marginTop: 8,
               }}
             >
-              {userData?.address ||
-                "1234 Some house, Some street Houston, Texas."}
+              {userData?.address || "Address not found!"}
             </Text>
           </View>
           <TouchableOpacity
