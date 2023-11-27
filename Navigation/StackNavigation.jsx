@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FrontPage from "../Screens/FrontPage/FrontPage";
@@ -27,143 +27,169 @@ import RegistrationVerify from "../Screens/OTAthentication/RegistrationVerify";
 import UpdateFrontImage from "../Screens/ScanPages/UpdateFrontImage";
 import UpdateBackImage from "../Screens/ScanPages/UpdateBackImage";
 import BottomTabsNavigator from "./BottomTabsNavigator";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const navigation = useNavigation();
 
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const data = await AsyncStorage.getItem("userData");
+
+        setUserData(data);
+
+        console.log("dataaaa", data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUserData();
+  }, [navigation]);
+
   return (
     <Stack.Navigator initialRouteName="FrontPage">
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="FrontPage"
-        component={FrontPage}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="LoginRegister"
-        component={LoginRegister}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="SignUP"
-        component={SignUP}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="WelcomeBack"
-        component={WelcomeBack}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="VerifyLogin"
-        component={VerifyLogin}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="EmailRecovery"
-        component={EmailRecovery}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="PhoneRecovery"
-        component={PhoneRecovery}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="NewPassword"
-        component={NewPassword}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="ForgotPassword"
-        component={ForgotPassword}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="LodingPage"
-        component={LodingPage}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="DataPage"
-        component={DataPage}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="EditDataPage"
-        component={EditDataPage}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="FrontPageScan"
-        component={FrontPageScan}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="HomepageOne"
-        component={HomepageOne}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="HomepageTwo"
-        component={HomepageTwo}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="HomepageThree"
-        component={HomepageThree}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="Profile"
-        component={Profile}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="EditProfile"
-        component={EditProfile}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="BackPageScan"
-        component={BackPageScan}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="UploadFrontpage"
-        component={UploadFrontpage}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="UploadBackpage"
-        component={UploadBackpage}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="PasswordVerify"
-        component={PasswordVerify}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="RegistrationVerify"
-        component={RegistrationVerify}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="UpdateFrontImage"
-        component={UpdateFrontImage}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="UpdateBackImage"
-        component={UpdateBackImage}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="BottomTabsNavigator"
-        component={BottomTabsNavigator}
-      />
+      {userData === null ? (
+        <>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="FrontPage"
+            component={FrontPage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="LoginRegister"
+            component={LoginRegister}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SignUP"
+            component={SignUP}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="WelcomeBack"
+            component={WelcomeBack}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="VerifyLogin"
+            component={VerifyLogin}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="EmailRecovery"
+            component={EmailRecovery}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="PhoneRecovery"
+            component={PhoneRecovery}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="NewPassword"
+            component={NewPassword}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="ForgotPassword"
+            component={ForgotPassword}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="BottomTabsNavigator"
+            component={BottomTabsNavigator}
+          />
+
+          {/* <Stack.Screen
+            options={{ headerShown: false }}
+            name="LodingPage"
+            component={LodingPage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="DataPage"
+            component={DataPage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="EditDataPage"
+            component={EditDataPage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="FrontPageScan"
+            component={FrontPageScan}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="HomepageOne"
+            component={HomepageOne}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="HomepageTwo"
+            component={HomepageTwo}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="HomepageThree"
+            component={HomepageThree}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Profile"
+            component={Profile}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="EditProfile"
+            component={EditProfile}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="BackPageScan"
+            component={BackPageScan}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="UploadFrontpage"
+            component={UploadFrontpage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="UploadBackpage"
+            component={UploadBackpage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="PasswordVerify"
+            component={PasswordVerify}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="RegistrationVerify"
+            component={RegistrationVerify}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="UpdateFrontImage"
+            component={UpdateFrontImage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="UpdateBackImage"
+            component={UpdateBackImage}
+          /> */}
+        </>
+      )}
     </Stack.Navigator>
   );
 };

@@ -67,48 +67,37 @@ const Profile = ({ route }) => {
       >
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            {loading ? (
-              <ActivityIndicator size="large" color="#0D3559" />
-            ) : (
-              <>
-                <Image
-                  style={{
-                    resizeMode: "contain",
-                    marginBottom: 16,
-                    alignSelf: "center",
-                  }}
-                  source={
-                    userData?.profile_image
-                      ? { uri: userData.address }
-                      : require("../../assets/profile.png")
-                  }
-                />
-                <Text
-                  style={{
-                    fontFamily: "Roboto-Regular",
-                    fontSize: 24,
-                    fontWeight: "600",
-                    color: "#0D3559",
-                    textAlign: "center",
-                  }}
-                >
-                  {userData?.name || "Faris Husain"}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: "Roboto-Regular",
-                    fontSize: 16,
-                    fontWeight: "400",
-                    color: "#0D3559",
-                    textAlign: "center",
-                    marginTop: 8,
-                  }}
-                >
-                  {userData?.address ||
-                    "1234 Some house, Some street Houston, Texas."}
-                </Text>
-              </>
-            )}
+            <Image
+              style={{
+                resizeMode: "contain",
+                marginBottom: 16,
+                alignSelf: "center",
+              }}
+              source={require("../../assets/profile.png")}
+            />
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 24,
+                fontWeight: "600",
+                color: "#0D3559",
+                textAlign: "center",
+              }}
+            >
+              {userData?.name || "Loading..."}
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 16,
+                fontWeight: "400",
+                color: "#0D3559",
+                textAlign: "center",
+                marginTop: 8,
+              }}
+            >
+              {userData?.address || "Address not found!"}
+            </Text>
           </View>
           <TouchableOpacity
             onPress={() =>

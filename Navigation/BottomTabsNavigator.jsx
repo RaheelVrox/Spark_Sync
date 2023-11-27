@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomepageOne from "../Screens/HomePage/HomepageOne";
 import { AntDesign } from "@expo/vector-icons";
 import Profile from "../Screens/Profile/Profile";
+import EditProfile from "../Screens/Profile/EditProfile";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -14,16 +15,13 @@ const HomeStack = ({}) => {
     <Stack.Navigator
       initialRouteName="HomepageOne"
       screenOptions={{
-        headerShadowVisible: true,
-        headerMode: "screen",
-        headerStyle: {
-          backgroundColor: "transparent",
-        },
+        headerShadowVisible: false,
+        headerShown: false,
       }}
     >
       <Stack.Screen
         options={{
-          headerShown: true,
+          headerShown: false,
           headerTitle: "",
         }}
         name="HomepageOne"
@@ -35,9 +33,9 @@ const HomeStack = ({}) => {
 const ProfileStack = ({ navigation }) => {
   return (
     <Stack.Navigator
-      initialRouteName="HomepageOne"
+      initialRouteName="Profile"
       screenOptions={{
-        headerShadowVisible: false,
+        headerShadowVisibl: false,
       }}
     >
       <Stack.Screen
@@ -46,7 +44,8 @@ const ProfileStack = ({ navigation }) => {
             fontSize: 12,
             color: "#E81F76",
           },
-          headerShadowVisible: true,
+          headerShown: false,
+          headerShadowVisible: false,
           headerTitle: "",
           headerTitleAlign: "",
           headerTitleStyle: {
@@ -59,6 +58,28 @@ const ProfileStack = ({ navigation }) => {
         }}
         name="Profile"
         component={Profile}
+      />
+      
+      <Stack.Screen
+        options={{
+          tabBarLabelStyle: {
+            fontSize: 12,
+            color: "#E81F76",
+          },
+          headerShown: false,
+          headerShadowVisible: false,
+          headerTitle: "",
+          headerTitleAlign: "",
+          headerTitleStyle: {
+            fontWeight: "600",
+            fontSize: 18,
+            color: "#9b2890",
+          },
+          headerStyle: {},
+          headerTitleAlign: "center",
+        }}
+        name="EditProfile"
+        component={EditProfile}
       />
     </Stack.Navigator>
   );
