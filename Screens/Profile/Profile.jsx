@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -12,6 +19,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Profile = ({ route }) => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const getUserDetails = async (userId) => {
     try {
@@ -27,8 +35,10 @@ const Profile = ({ route }) => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const storedUserData = await AsyncStorage.getItem("userData");
       try {
+        setLoading(true);
+
+        const storedUserData = await AsyncStorage.getItem("userData");
         const userDataFromApi = JSON.parse(storedUserData)?.id;
         console.log("id is: ", userDataFromApi);
         setUserData(userDataFromApi);
@@ -36,6 +46,8 @@ const Profile = ({ route }) => {
         setUserData(userDetails);
       } catch (error) {
         console.error("Error fetching user details:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -55,38 +67,48 @@ const Profile = ({ route }) => {
       >
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <Image
-              style={{
-                resizeMode: "contain",
-                marginBottom: 16,
-                alignSelf: "center",
-              }}
-              source={require("../../assets/profile.png")}
-            />
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 24,
-                fontWeight: "600",
-                color: "#0D3559",
-                textAlign: "center",
-              }}
-            >
-              {userData?.name || "Faris Husain"}
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 16,
-                fontWeight: "400",
-                color: "#0D3559",
-                textAlign: "center",
-                marginTop: 8,
-              }}
-            >
-              {userData?.address ||
-                "1234 Some house, Some street Houston, Texas."}
-            </Text>
+            {loading ? (
+              <ActivityIndicator size="large" color="#0D3559" />
+            ) : (
+              <>
+                <Image
+                  style={{
+                    resizeMode: "contain",
+                    marginBottom: 16,
+                    alignSelf: "center",
+                  }}
+                  source={
+                    userData?.profile_image
+                      ? { uri: userData.address }
+                      : require("../../assets/profile.png")
+                  }
+                />
+                <Text
+                  style={{
+                    fontFamily: "Roboto-Regular",
+                    fontSize: 24,
+                    fontWeight: "600",
+                    color: "#0D3559",
+                    textAlign: "center",
+                  }}
+                >
+                  {userData?.name || "Faris Husain"}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Roboto-Regular",
+                    fontSize: 16,
+                    fontWeight: "400",
+                    color: "#0D3559",
+                    textAlign: "center",
+                    marginTop: 8,
+                  }}
+                >
+                  {userData?.address ||
+                    "1234 Some house, Some street Houston, Texas."}
+                </Text>
+              </>
+            )}
           </View>
           <TouchableOpacity
             onPress={() =>

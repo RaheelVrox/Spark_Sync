@@ -16,6 +16,7 @@ import {
 } from "react-native-responsive-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from "expo-image-picker";
 
 const EditProfile = () => {
   const [name, setName] = useState("");
@@ -23,20 +24,20 @@ const EditProfile = () => {
   const [phone_number, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [userData, setUserData] = useState({ id: null });
+  const [profileImage, setProfileImage] = useState(null);
   const navigation = useNavigation();
 
   const updateUserProfile = async () => {
     try {
       const apiUrl = `http://192.168.18.140:5000/api/v1/user/update/${userData.id}`;
 
-      // Create a FormData object
       const formData = new FormData();
       formData.append("email", email);
       formData.append("address", address);
       formData.append("name", name);
       formData.append("phone_number", phone_number);
+      formData.append("profile_image", profileImage);
 
-      // Send a POST request with FormData
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -45,13 +46,25 @@ const EditProfile = () => {
 
       console.log("API response:", response.data);
 
-      // Update the user data in AsyncStorage
       const updatedUserData = { ...userData, ...response.data };
       await AsyncStorage.setItem("userData", JSON.stringify(updatedUserData));
 
       navigation.navigate("Profile");
     } catch (error) {
       console.error("Error updating user data:", error.message);
+    }
+  };
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setProfileImage(result.uri);
     }
   };
 
@@ -86,14 +99,31 @@ const EditProfile = () => {
       >
         <View style={styles.headerContainer}>
           <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <Image
-              style={{
-                resizeMode: "contain",
-                marginBottom: 16,
-                alignSelf: "center",
-              }}
-              source={require("../../assets/profile.png")}
-            />
+            <TouchableOpacity onPress={pickImage}>
+              {profileImage ? (
+                <Image
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 50,
+                    resizeMode: 'cover',
+                  }}
+                  source={{ uri: profileImage }}
+                />
+              ) : (
+                <Image
+                  style={{
+                    resizeMode: "contain",
+                    marginBottom: 16,
+                    alignSelf: "center",
+                    width: 100,
+                    height: 100,
+                    borderRadius: 50,
+                  }}
+                  source={require("../../assets/profile.png")}
+                />
+              )}
+            </TouchableOpacity>
             <Text
               style={{
                 fontFamily: "Roboto-Regular",

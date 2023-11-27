@@ -276,7 +276,7 @@ const LoginRegister = () => {
         >
           Already have an account?
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("WelcomeBack")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
           <Text
             style={{
               fontFamily: "Roboto-Regular",
