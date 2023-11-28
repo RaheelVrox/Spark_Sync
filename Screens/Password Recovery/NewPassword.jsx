@@ -5,7 +5,10 @@ import {
   TouchableOpacity,
   Image,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
   TextInput,
+  Keyboard,
+  Platform,
   Alert,
 } from "react-native";
 import React from "react";
@@ -75,144 +78,146 @@ const NewPassword = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#EEF7FE", "#FCEEFE"]}
-        start={{ x: 0, y: 0.3 }}
-        end={{ x: 0.6, y: 0.6 }}
-        style={{
-          borderBottomRightRadius: 30,
-          borderBottomLeftRadius: 30,
-        }}
-      >
-        <View style={styles.headerContainer}>
-          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons
-                name="ios-chevron-back-sharp"
-                size={28}
-                color="#670097"
-              />
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 24,
-                fontWeight: "600",
-                color: "#0D3559",
-                marginBottom: 5,
-              }}
-            >
-              Reset Password
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 16,
-                fontWeight: "400",
-                color: "#0D3559",
-              }}
-            >
-              Enter your new password
-            </Text>
-          </View>
-        </View>
-      </LinearGradient>
-      <View
-        style={{
-          paddingTop: wp(9),
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <Text
-            style={{
-              marginBottom: 10,
-              color: "#122359",
-              fontWeight: "600",
-              fontSize: 16,
-              fontFamily: "Roboto-Regular",
-            }}
-          >
-            New Password
-          </Text>
-          <View>
-            <TextInput
-              secureTextEntry={!showPassword}
-              value={newPassword}
-              onChangeText={(text) => setNewPassword(text)}
-              style={styles.inputField}
-              placeholder="Your Password"
-              placeholderTextColor="#3D3D3D"
-            />
-            <MaterialCommunityIcons
-              name={showPassword ? "eye-off" : "eye"}
-              size={26}
-              color="#346AFE"
-              style={{
-                position: "absolute",
-                alignSelf: "flex-end",
-                padding: 18,
-              }}
-              onPress={toggleShowPassword}
-            />
-          </View>
-        </KeyboardAvoidingView>
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <Text
-            style={{
-              marginBottom: 10,
-              color: "#122359",
-              fontWeight: "600",
-              fontSize: 16,
-              fontFamily: "Roboto-Regular",
-            }}
-          >
-            Enter Again
-          </Text>
-          <View>
-            <TextInput
-              secureTextEntry={!showPassword}
-              value={confirmPassword}
-              onChangeText={(text) => setConfirmPassword(text)}
-              style={styles.inputField}
-              placeholder="Your Password"
-              placeholderTextColor="#3D3D3D"
-            />
-            <MaterialCommunityIcons
-              name={showPassword ? "eye-off" : "eye"}
-              size={26}
-              color="#346AFE"
-              style={{
-                position: "absolute",
-                alignSelf: "flex-end",
-                padding: 18,
-              }}
-              onPress={toggleShowPassword}
-            />
-          </View>
-        </KeyboardAvoidingView>
-      </View>
-      <TouchableOpacity style={styles.button} onPress={handlePasswordUpdate}>
-        <Text
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <LinearGradient
+          colors={["#EEF7FE", "#FCEEFE"]}
+          start={{ x: 0, y: 0.3 }}
+          end={{ x: 0.6, y: 0.6 }}
           style={{
-            fontSize: 18,
-            fontWeight: "600",
-            fontFamily: "Roboto-Regular",
-            color: "#fff",
+            borderBottomRightRadius: 30,
+            borderBottomLeftRadius: 30,
           }}
         >
-          Confirm
-        </Text>
-      </TouchableOpacity>
-    </View>
+          <View style={styles.headerContainer}>
+            <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+              <TouchableOpacity style={styles.backbut} onPress={goBack}>
+                <Ionicons
+                  name="ios-chevron-back-sharp"
+                  size={28}
+                  color="#670097"
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 24,
+                  fontWeight: "600",
+                  color: "#0D3559",
+                  marginBottom: 5,
+                }}
+              >
+                Reset Password
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 16,
+                  fontWeight: "400",
+                  color: "#0D3559",
+                }}
+              >
+                Enter your new password
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+        <View
+          style={{
+            paddingTop: wp(9),
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <KeyboardAvoidingView
+            enabled
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <Text
+              style={{
+                marginBottom: 10,
+                color: "#122359",
+                fontWeight: "600",
+                fontSize: 16,
+                fontFamily: "Roboto-Regular",
+              }}
+            >
+              New Password
+            </Text>
+            <View>
+              <TextInput
+                secureTextEntry={!showPassword}
+                value={newPassword}
+                onChangeText={(text) => setNewPassword(text)}
+                style={styles.inputField}
+                placeholder="Your Password"
+                placeholderTextColor="#3D3D3D"
+              />
+              <MaterialCommunityIcons
+                name={showPassword ? "eye-off" : "eye"}
+                size={26}
+                color="#346AFE"
+                style={{
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  padding: 18,
+                }}
+                onPress={toggleShowPassword}
+              />
+            </View>
+          </KeyboardAvoidingView>
+          <KeyboardAvoidingView
+            enabled
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
+            <Text
+              style={{
+                marginBottom: 10,
+                color: "#122359",
+                fontWeight: "600",
+                fontSize: 16,
+                fontFamily: "Roboto-Regular",
+              }}
+            >
+              Enter Again
+            </Text>
+            <View>
+              <TextInput
+                secureTextEntry={!showPassword}
+                value={confirmPassword}
+                onChangeText={(text) => setConfirmPassword(text)}
+                style={styles.inputField}
+                placeholder="Your Password"
+                placeholderTextColor="#3D3D3D"
+              />
+              <MaterialCommunityIcons
+                name={showPassword ? "eye-off" : "eye"}
+                size={26}
+                color="#346AFE"
+                style={{
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  padding: 18,
+                }}
+                onPress={toggleShowPassword}
+              />
+            </View>
+          </KeyboardAvoidingView>
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handlePasswordUpdate}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "600",
+              fontFamily: "Roboto-Regular",
+              color: "#fff",
+            }}
+          >
+            Confirm
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

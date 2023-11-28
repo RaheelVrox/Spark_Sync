@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
   Platform,
   Alert,
 } from "react-native";
@@ -124,140 +126,142 @@ const VerifyLogin = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#EEF7FE", "#FCEEFE"]}
-        start={{ x: 0, y: 0.3 }}
-        end={{ x: 0.6, y: 0.6 }}
-        style={{
-          borderBottomRightRadius: 30,
-          borderBottomLeftRadius: 30,
-        }}
-      >
-        <View style={styles.headerContainer}>
-          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons
-                name="ios-chevron-back-sharp"
-                size={28}
-                color="#670097"
-              />
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 24,
-                fontWeight: "600",
-                color: "#0D3559",
-                marginBottom: 5,
-              }}
-            >
-              Verify Login
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 16,
-                fontWeight: "400",
-                color: "#0D3559",
-              }}
-            >
-              Enter OTP Code sent to your email.
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 16,
-                fontWeight: "400",
-                color: "#0D3559",
-              }}
-            >
-              The code will expire in 01:30
-            </Text>
-          </View>
-        </View>
-      </LinearGradient>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-evenly",
-          paddingTop: wp(9),
-        }}
-      >
-        {Array.from({ length: 4 }, (_, index) => (
-          <KeyboardAvoidingView
-            key={index}
-            enabled
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
-            <View>
-              <TextInput
-                ref={otpInputRefs[index]}
-                style={styles.inputField}
-                onChangeText={(text) => handleInputChange(text, index)}
-                value={
-                  index === 0
-                    ? otp1
-                    : index === 1
-                    ? otp2
-                    : index === 2
-                    ? otp3
-                    : otp4
-                }
-                placeholderTextColor="#3D3D3D"
-                keyboardType="phone-pad"
-                maxLength={1}
-              />
-            </View>
-          </KeyboardAvoidingView>
-        ))}
-      </View>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          paddingTop: 30,
-          flexDirection: "row",
-        }}
-      >
-        <Text
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <LinearGradient
+          colors={["#EEF7FE", "#FCEEFE"]}
+          start={{ x: 0, y: 0.3 }}
+          end={{ x: 0.6, y: 0.6 }}
           style={{
-            fontFamily: "Roboto-Regular",
-            fontSize: 14,
-            fontWeight: "400",
-            color: "#3D3D3D",
+            borderBottomRightRadius: 30,
+            borderBottomLeftRadius: 30,
           }}
         >
-          Didn’t receive the code?
-        </Text>
-        <TouchableOpacity onPress={handleResendCode}>
+          <View style={styles.headerContainer}>
+            <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+              <TouchableOpacity style={styles.backbut} onPress={goBack}>
+                <Ionicons
+                  name="ios-chevron-back-sharp"
+                  size={28}
+                  color="#670097"
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 24,
+                  fontWeight: "600",
+                  color: "#0D3559",
+                  marginBottom: 5,
+                }}
+              >
+                Verify Login
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 16,
+                  fontWeight: "400",
+                  color: "#0D3559",
+                }}
+              >
+                Enter OTP Code sent to your email.
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 16,
+                  fontWeight: "400",
+                  color: "#0D3559",
+                }}
+              >
+                The code will expire in 01:30
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            paddingTop: wp(9),
+          }}
+        >
+          {Array.from({ length: 4 }, (_, index) => (
+            <KeyboardAvoidingView
+              key={index}
+              enabled
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
+              <View>
+                <TextInput
+                  ref={otpInputRefs[index]}
+                  style={styles.inputField}
+                  onChangeText={(text) => handleInputChange(text, index)}
+                  value={
+                    index === 0
+                      ? otp1
+                      : index === 1
+                      ? otp2
+                      : index === 2
+                      ? otp3
+                      : otp4
+                  }
+                  placeholderTextColor="#3D3D3D"
+                  keyboardType="phone-pad"
+                  maxLength={1}
+                />
+              </View>
+            </KeyboardAvoidingView>
+          ))}
+        </View>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 30,
+            flexDirection: "row",
+          }}
+        >
           <Text
             style={{
               fontFamily: "Roboto-Regular",
               fontSize: 14,
               fontWeight: "400",
-              color: "#346AFE",
+              color: "#3D3D3D",
             }}
           >
-            {" "}
-            Resend Code
+            Didn’t receive the code?
+          </Text>
+          <TouchableOpacity onPress={handleResendCode}>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 14,
+                fontWeight: "400",
+                color: "#346AFE",
+              }}
+            >
+              {" "}
+              Resend Code
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleVerifyCode}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "600",
+              fontFamily: "Roboto-Regular",
+              color: "#fff",
+            }}
+          >
+            Continue
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleVerifyCode}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "600",
-            fontFamily: "Roboto-Regular",
-            color: "#fff",
-          }}
-        >
-          Continue
-        </Text>
-      </TouchableOpacity>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

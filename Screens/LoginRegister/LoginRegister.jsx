@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,25 +7,20 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
-import * as AsyncStorage from "@react-native-async-storage/async-storage";
-
-WebBrowser.maybeCompleteAuthSession();
-// import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-// import auth from '@react-native-firebase/auth';
-//android 540523955446-jkfj5mos0c2sda6sdoefki6e2io7if0t.apps.googleusercontent.com
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginRegister = () => {
-  const [userInfo, setUserInfo] = React.useState(null);
+  const navigation = useNavigation();
+  const [token, setToken] = useState("");
+  const [userInfo, setUserInfo] = useState(null);
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId:
       "540523955446-jkfj5mos0c2sda6sdoefki6e2io7if0t.apps.googleusercontent.com",
@@ -33,113 +29,37 @@ const LoginRegister = () => {
     iosClientId:
       "540523955446-d87qjngbbrd52356tuitujekmgiheepa.apps.googleusercontent.com",
   });
-  const navigation = useNavigation();
-  // useEffect(() => {
-  //   GoogleSignin.configure({
-  //     webClientId: '',
-  //   });
-  // }, []);
-  // const signInWithGoogle = async () => {
-  //   try {
-  //     await GoogleSignin.hasPlayServices();
-  //     const userInfo = await GoogleSignin.signIn();
-
-  //     // Use userInfo to authenticate with Firebase
-  //     // You can use Firebase Authentication methods to link or create a user with this data.
-  //     console.log(userInfo);
-  //   }
-  //   catch (error) {
-  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-  //       // User canceled the sign-in process
-  //     } else if (error.code === statusCodes.IN_PROGRESS) {
-  //       // Sign-in is in progress
-  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-  //       // Play services are not available
-  //     } else {
-  //       // Some other error occurred
-  //       console.error(error);
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
-    handlesSignInwithGoogle();
-  }, [response]);
+    handleEffect();
+  }, [response, token]);
 
-  // const getUserInfo = async (token) => {
-  //   if (!token) return;
+  async function handleEffect() {
+    const user = await getLocalUser();
+    console.log("Local_User:", user);
 
-  //   console.log("token", token);
-
-  //   try {
-  //     const response = await fetch("http://www.googleapis.com/userinfo/v2/me", {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     const user = await response.json();
-
-  //     await AsyncStorage.setItem("@user", JSON, Stringify(user));
-  //     setUserInfo(user);
-  //   } catch (error) {}
-  // };
-
-  async function getUserInfo(token) {
-    if (!token) return;
-
-    console.log("token", token);
-
-    try {
-      const response = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      if (response.ok) {
-        const user = await response.json();
-        await AsyncStorage.setItem("@user", JSON.stringify(user));
-        setUserInfo(user);
-      } else {
-        console.error(
-          "Failed to fetch user info:",
-          response.status,
-          response.statusText
-        );
-      }
-    } catch (error) {
-      console.error("Error fetching user info:", error);
-    }
-  }
-
-  // async function handlesSignInwithGoogle() {
-  //   const user = await AsyncStorage.getItem("@user");
-  //   if (!user) {
-  //     if (response?.type === "success") {
-  //       await getUserInfo(response.authorization.accessToken);
-  //     }
-  //   } else {
-  //     setUserInfo(JSON.parse(user));
-  //   }
-  // }
-  // console.log("userInfo:-", userInfo);
-
-  async function handlesSignInwithGoogle() {
-    console.log("Handling Google Sign-In");
-    console.log("Response:", response);
-
-    const user = await AsyncStorage.getItem("@user");
     if (!user) {
       if (response?.type === "success") {
-        await getUserInfo(response.authorization.accessToken);
+        console.log("Authentication Response:", response);
+        setToken(response.authentication.accessToken);
+        getUserInfo(response.authentication.accessToken);
+      } else {
+        console.log("Authentication Response:", response);
       }
     } else {
-      setUserInfo(JSON.parse(user));
+      setUserInfo(user);
+      console.log("Loaded locally:", user);
     }
   }
-  async function getUserInfo(token) {
-    if (!token) return;
 
-    console.log("token", token);
+  const getLocalUser = async () => {
+    const data = await AsyncStorage.getItem("@user");
+    if (!data) return null;
+    return JSON.parse(data);
+  };
+
+  const getUserInfo = async (token) => {
+    if (!token) return;
 
     try {
       const response = await fetch(
@@ -149,21 +69,22 @@ const LoginRegister = () => {
         }
       );
 
-      if (response.ok) {
-        const user = await response.json();
-        await AsyncStorage.setItem("@user", JSON.stringify(user));
-        setUserInfo(user);
-      } else {
+      if (!response.ok) {
         console.error(
-          "Failed to fetch user info:",
+          "UserInfo API Error:",
           response.status,
           response.statusText
         );
+        return;
       }
+
+      const user = await response.json();
+      await AsyncStorage.setItem("@user", JSON.stringify(user));
+      setUserInfo(user);
     } catch (error) {
-      console.error("Error fetching user info:", error);
+      console.error("UserInfo Fetch Error:", error);
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -179,7 +100,6 @@ const LoginRegister = () => {
             fontWeight: "600",
             color: "#122359",
             textAlign: "center",
-            // marginTop: 20,
           }}
         >
           Welcome To
@@ -191,7 +111,6 @@ const LoginRegister = () => {
             fontWeight: "600",
             color: "#002896",
             textAlign: "center",
-            // marginBottom: 20,
           }}
         >
           Spark Sync
@@ -216,9 +135,7 @@ const LoginRegister = () => {
             </View>
           </View>
         </TouchableOpacity>
-        {/* <TouchableOpacity onPress={signInWithGoogle}> */}
-        {/* <TouchableOpacity onPress={promptAsync} > */}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => promptAsync()}>
           <View style={{ paddingTop: 21 }}>
             <View style={styles.registerContainer}>
               <Image
@@ -235,6 +152,7 @@ const LoginRegister = () => {
                 placeholder="Continue with Google"
                 placeholderTextColor="#0D3559"
                 editable={false}
+                disabled={!request}
               />
             </View>
           </View>
@@ -359,7 +277,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 50,
     backgroundColor: "#EEF7FE",
-    // paddingVertical: 5,
     borderRadius: 10,
     marginHorizontal: 24,
   },

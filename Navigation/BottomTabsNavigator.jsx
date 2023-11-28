@@ -8,6 +8,9 @@ import Profile from "../Screens/Profile/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
 import UploadFrontpage from "../Screens/ScanPages/UploadFrontpage";
 import { LinearGradient } from "expo-linear-gradient";
+import UpdateFrontImage from "../Screens/ScanPages/UpdateFrontImage";
+import UpdateBackImage from "../Screens/ScanPages/UpdateFrontImage";
+import UploadBackpage from "../Screens/ScanPages/UploadBackpage";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,7 +66,7 @@ const AddNew = ({ navigation }) => {
         component={UploadFrontpage}
       />
 
-      {/* <Stack.Screen
+      <Stack.Screen
         options={{
           tabBarLabelStyle: {
             fontSize: 12,
@@ -81,9 +84,51 @@ const AddNew = ({ navigation }) => {
           headerStyle: {},
           headerTitleAlign: "center",
         }}
-        name="UploadFrontpage"
-        component={UploadFrontpage}
-      /> */}
+        name="UpdateFrontImage"
+        component={UpdateFrontImage}
+      />
+      <Stack.Screen
+        options={{
+          tabBarLabelStyle: {
+            fontSize: 12,
+            color: "#E81F76",
+          },
+          headerShown: false,
+          headerShadowVisible: false,
+          headerTitle: "",
+          headerTitleAlign: "",
+          headerTitleStyle: {
+            fontWeight: "600",
+            fontSize: 18,
+            color: "#9b2890",
+          },
+          headerStyle: {},
+          headerTitleAlign: "center",
+        }}
+        name="UploadBackpage"
+        component={UploadBackpage}
+      />
+      <Stack.Screen
+        options={{
+          tabBarLabelStyle: {
+            fontSize: 12,
+            color: "#E81F76",
+          },
+          headerShown: false,
+          headerShadowVisible: false,
+          headerTitle: "",
+          headerTitleAlign: "",
+          headerTitleStyle: {
+            fontWeight: "600",
+            fontSize: 18,
+            color: "#9b2890",
+          },
+          headerStyle: {},
+          headerTitleAlign: "center",
+        }}
+        name="UpdateBackImage"
+        component={UpdateBackImage}
+      />
     </Stack.Navigator>
   );
 };

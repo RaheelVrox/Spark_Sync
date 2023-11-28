@@ -26,7 +26,7 @@
       },
       "permissions": ["CAMERA_ROLL"],
       "package": "com.raheelmubarik12.Spark_Sync"
-    },
+    },  
     "web": {
       "favicon": "./assets/favicon.png"
     },
