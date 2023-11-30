@@ -76,7 +76,7 @@ const UpdateBackImage = ({ route, navigation }) => {
 
       console.log("Image upload response:", response);
       console.log("Image uploaded successfully:", response.data);
-      navigation.navigate("HomepageOne");
+      navigation.navigate("BottomTabsNavigator");
     } catch (error) {
       console.error("Error uploading image", error);
       Alert.alert("Error uploading image. Please try again.");

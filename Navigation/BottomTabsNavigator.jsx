@@ -1,9 +1,13 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomepageOne from "../Screens/HomePage/HomepageOne";
-import { AntDesign,Entypo  } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import Profile from "../Screens/Profile/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
 import UploadFrontpage from "../Screens/ScanPages/UploadFrontpage";
@@ -11,6 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import UpdateFrontImage from "../Screens/ScanPages/UpdateFrontImage";
 import UpdateBackImage from "../Screens/ScanPages/UpdateFrontImage";
 import UploadBackpage from "../Screens/ScanPages/UploadBackpage";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -187,6 +192,7 @@ const ProfileStack = ({ navigation }) => {
   );
 };
 const BottomTabsNavigator = () => {
+  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
       initialRouteName="HomeStack"
@@ -194,7 +200,7 @@ const BottomTabsNavigator = () => {
         headerShadowVisible: false,
         tabBarLabelStyle: { fontSize: 10 },
         tabBarActiveTintColor: "#346AFE",
-        tabBarInactiveTintColor: "#000000",
+        tabBarInactiveTintColor: "#002896",
         tabBarBackground: () => (
           <LinearGradient
             colors={["#EEF7FE", "#FCEEFE"]}
@@ -204,12 +210,15 @@ const BottomTabsNavigator = () => {
           />
         ),
         tabBarStyle: [
-          style.tabStyleProp,
           {
-            height: 70,
-            paddingBottom: 5,
+            height:
+              Platform.OS === "ios" ? 60 + insets.bottom : 60 + insets.bottom,
           },
         ],
+        tabBarItemStyle: style.tabStyle,
+        headerStyle: {
+          backgroundColor: "transparent",
+        },
       }}
     >
       <Tab.Screen
@@ -261,4 +270,9 @@ const BottomTabsNavigator = () => {
   );
 };
 export default BottomTabsNavigator;
-const style = StyleSheet.create({});
+const style = StyleSheet.create({
+  tabStyle: {
+    backgroundColor: "transparent",
+    paddingBottom: 5,
+  },
+});

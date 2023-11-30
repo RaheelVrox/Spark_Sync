@@ -114,10 +114,25 @@ const StackNavigation = () => {
             name="UploadFrontpage"
             component={UploadFrontpage}
           />
-           <Stack.Screen
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="UpdateFrontImage"
+            component={UpdateFrontImage}
+          />
+          <Stack.Screen
             options={{ headerShown: false }}
             name="BottomTabsNavigator"
             component={BottomTabsNavigator}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="UploadBackpage"
+            component={UploadBackpage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="UpdateBackImage"
+            component={UpdateBackImage}
           />
         </>
       ) : (

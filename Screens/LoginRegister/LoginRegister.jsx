@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
@@ -15,6 +16,8 @@ import {
 } from "react-native-responsive-screen";
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AuthApple from ".../../../components/Auth";
+
 
 const LoginRegister = () => {
   const navigation = useNavigation();
@@ -116,23 +119,30 @@ const LoginRegister = () => {
           Spark Sync
         </Text>
       </View>
-      <View style={{ paddingTop: 60 }}>
+      <View style={{ paddingTop: 50 }}>
         <TouchableOpacity>
+          {/* <Auth /> */}
           <View>
-            <View style={styles.registerContainer}>
-              <AntDesign
-                style={{ marginLeft: 24 }}
-                name="apple1"
-                size={35}
-                color="black"
-              />
-              <TextInput
-                style={styles.textInput}
-                placeholder="Continue with Apple"
-                placeholderTextColor="#0D3559"
-                editable={false}
-              />
-            </View>
+            {/* {Platform.OS === "ios" && ( */}
+            <>
+              <View>
+                <AuthApple />
+
+                {/* <AntDesign
+                    style={{ marginLeft: 24 }}
+                    name="apple1"
+                    size={35}
+                    color="black"
+                  />
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder="Continue with Apple"
+                    placeholderTextColor="#0D3559"
+                    editable={false}
+                  /> */}
+              </View>
+            </>
+            {/* // )} */}
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => promptAsync()}>
@@ -180,7 +190,8 @@ const LoginRegister = () => {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 21,
+          // marginTop: 25,
+          paddingTop: 25,
           flexDirection: "row",
         }}
       >
@@ -212,7 +223,7 @@ const LoginRegister = () => {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          paddingTop: wp(25),
+          paddingTop: wp(30),
           marginHorizontal: 24,
         }}
       >
