@@ -18,7 +18,6 @@ import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthApple from ".../../../components/Auth";
 
-
 const LoginRegister = () => {
   const navigation = useNavigation();
   const [token, setToken] = useState("");
@@ -39,19 +38,19 @@ const LoginRegister = () => {
 
   async function handleEffect() {
     const user = await getLocalUser();
-    console.log("Local_User:", user);
+    // console.log("Local_User:", user);
 
     if (!user) {
       if (response?.type === "success") {
-        console.log("Authentication Response:", response);
+        // console.log("Authentication Response:", response);
         setToken(response.authentication.accessToken);
         getUserInfo(response.authentication.accessToken);
       } else {
-        console.log("Authentication Response:", response);
+        // console.log("Authentication Response:", response);
       }
     } else {
       setUserInfo(user);
-      console.log("Loaded locally:", user);
+      // console.log("Loaded locally:", user);
     }
   }
 
@@ -121,7 +120,6 @@ const LoginRegister = () => {
       </View>
       <View style={{ paddingTop: 50 }}>
         <TouchableOpacity>
-          {/* <Auth /> */}
           <View>
             {/* {Platform.OS === "ios" && ( */}
             <>

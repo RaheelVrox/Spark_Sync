@@ -1,21 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Alert, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import { Button, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
 import * as SecureStore from "expo-secure-store";
+import { Buffer } from "buffer";
 
-export function AuthApple() {
-  const [isFirstSignIn, setIsFirstSignIn] = useState(true);
+export default function AuthApple() {
+  const [appleAuthAvailable, setAppleAuthAvailable] = useState(false);
+  const [userToken, setUserToken] = useState();
 
   useEffect(() => {
-    // Check if the user has signed in before
-    SecureStore.getItemAsync("appleAuthToken").then((token) => {
-      if (token) {
-        setIsFirstSignIn(false);
+    const checkAvailable = async () => {
+      const isAvailable = await AppleAuthentication.isAvailableAsync();
+      setAppleAuthAvailable(isAvailable);
+      if (isAvailable) {
+        const credentialJson = await SecureStore.getItemAsync(
+          "apple-credentials"
+        );
+        setUserToken(JSON.parse(credentialJson));
       }
-    });
+    };
+    checkAvailable();
   }, []);
 
-  const handleAppleSignUp = async () => {
+  const login = async () => {
     try {
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
@@ -23,63 +31,119 @@ export function AuthApple() {
           AppleAuthentication.AppleAuthenticationScope.EMAIL,
         ],
       });
-
-      console.log("Apple Sign-In Success:", credential);
-
-      // Check the received user information
-      console.log("Email:", credential.email);
-      console.log("AppleAuthentication:", credential.fullName);
-
-      // Store the token securely only on the first sign-in
-      if (isFirstSignIn && credential.identityToken) {
-        await SecureStore.setItemAsync(
-          "appleAuthToken",
-          credential.identityToken
-        );
-        // Alert.alert(
-        //   "Token Stored",
-        //   "Apple Authentication token has been stored."
-        // );
-        setIsFirstSignIn(false); // Update state to indicate subsequent sign-ins
-      }
-
-      console.log("Credential Data:", credential);
+      setUserToken(credential);
+      SecureStore.setItemAsync("apple-credentials", JSON.stringify(credential));
     } catch (e) {
-      console.error("Apple Sign-In Error:", e);
-
-      if (e.code === "ERR_REQUEST_CANCELED") {
-        // handle that the user canceled the sign-in flow
-        Alert.alert("Sign-In Canceled", "You canceled the Apple Sign-In.");
-      } else {
-        // handle other errors
-        Alert.alert(
-          "Sign-In Error",
-          "An error occurred during Apple Sign-In. Please try again."
-        );
-      }
+      console.log(e);
     }
   };
 
-  if (Platform.OS === "ios") {
-    return (
-      <View style={styles.container}>
+  const getCredentialState = async () => {
+    const credentialState = await AppleAuthentication.getCredentialStateAsync(
+      userToken.user
+    );
+    console.log("applecredential:", credentialState);
+  };
+
+  const logout = async () => {
+    SecureStore.deleteItemAsync("apple-credentials");
+    setUserToken(undefined);
+  };
+
+  const refresh = async () => {
+    const result = await AppleAuthentication.refreshAsync({
+      user: userToken.user,
+    });
+    setUserToken(result);
+    SecureStore.setItemAsync("apple-credentials", JSON.stringify(result));
+  };
+
+  const getAppleAuthContent = () => {
+    if (!userToken) {
+      return (
         <AppleAuthentication.AppleAuthenticationButton
           buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
           buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
           cornerRadius={5}
-          style={{ width: 200, height: 64 }}
-          onPress={handleAppleSignUp}
+          style={styles.button}
+          onPress={login}
         />
-      </View>
-    );
-  }
+      );
+    } else {
+      const identityToken = userToken.identityToken;
+      console.log("identityToken:", identityToken);
+      if (identityToken) {
+        const parts = identityToken
+          .split(".")
+          .map((part) =>
+            Buffer.from(part.replace(/-/g, "+").replace(/_/g, "/"), "base64")
+          );
+        const decodedPayload = JSON.parse(parts[1].toString("utf-8"));
+        console.log("Decoded_identity_Token :", decodedPayload);
+        const current = Date.now() / 1000;
 
-  return null; // Return null for non-iOS platforms
+        return (
+          <View>
+            <Text>{decodedPayload.email}</Text>
+            <Text>Expired: {(current >= decodedPayload.exp).toString()}</Text>
+            <Button
+              title="Logout"
+              onPress={logout}
+              style={styles.logoutButton}
+            />
+
+            {/* <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+              <Text
+                style={{
+                  color: "#fff",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  alignSelf: "center",
+                }}
+              >
+                Logout
+              </Text>
+            </TouchableOpacity> */}
+
+            <Button title="Refresh" onPress={refresh} />
+            <Button title="Get Credential State" onPress={getCredentialState} />
+          </View>
+        );
+      } else {
+        return <Text>Identity Token not available</Text>;
+      }
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      {appleAuthAvailable ? (
+        getAppleAuthContent()
+      ) : (
+        <Text>Apple auth unavailable</Text>
+      )}
+      <StatusBar style="auto" />
+    </View>
+  );
 }
-export default AuthApple;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    width: 200,
+    height: 100,
+  },
+  logoutButton: {
+    width: 150,
+    height: 40,
+    marginTop: 80,
+    backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
   },
