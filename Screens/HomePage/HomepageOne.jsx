@@ -124,7 +124,7 @@ const HomepageOne = () => {
             Your properties
           </Text>
         </View>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <View style={styles.containerbox}>
             <View
               style={{
@@ -162,7 +162,7 @@ const HomepageOne = () => {
               </Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       {/* Bottom Sheet */}

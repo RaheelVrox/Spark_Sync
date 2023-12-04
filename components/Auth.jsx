@@ -20,6 +20,7 @@ export default function AuthApple() {
         setUserToken(JSON.parse(credentialJson));
       }
     };
+
     checkAvailable();
   }, []);
 
@@ -42,7 +43,7 @@ export default function AuthApple() {
     const credentialState = await AppleAuthentication.getCredentialStateAsync(
       userToken.user
     );
-    console.log("applecredential:", credentialState);
+    console.log("credentialstate", credentialState);
   };
 
   const logout = async () => {
@@ -71,7 +72,7 @@ export default function AuthApple() {
       );
     } else {
       const identityToken = userToken.identityToken;
-      console.log("identityToken:", identityToken);
+      console.log("identity_Token:", identityToken);
       if (identityToken) {
         const parts = identityToken
           .split(".")
@@ -86,13 +87,14 @@ export default function AuthApple() {
           <View>
             <Text>{decodedPayload.email}</Text>
             <Text>Expired: {(current >= decodedPayload.exp).toString()}</Text>
-            <Button
+
+            {/* <Button
               title="Logout"
               onPress={logout}
               style={styles.logoutButton}
-            />
+            /> */}
 
-            {/* <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+            <TouchableOpacity style={styles.logoutButton} onPress={logout}>
               <Text
                 style={{
                   color: "#fff",
@@ -104,7 +106,7 @@ export default function AuthApple() {
               >
                 Logout
               </Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             <Button title="Refresh" onPress={refresh} />
             <Button title="Get Credential State" onPress={getCredentialState} />
@@ -137,12 +139,15 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 200,
-    height: 100,
+    height: 80,
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
   },
   logoutButton: {
     width: 150,
     height: 40,
-    marginTop: 80,
+    // marginTop: 80,
     backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",

@@ -23,6 +23,13 @@ const LoginRegister = () => {
   const [token, setToken] = useState("");
   const [userInfo, setUserInfo] = useState(null);
 
+  const handleGooglePress = () => {
+    promptAsync();
+  };
+  const handleEmailPress = () => {
+    navigation.navigate("SignUP");
+  };
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId:
       "540523955446-jkfj5mos0c2sda6sdoefki6e2io7if0t.apps.googleusercontent.com",
@@ -118,6 +125,7 @@ const LoginRegister = () => {
           Spark Sync
         </Text>
       </View>
+
       <View style={{ paddingTop: 50 }}>
         <TouchableOpacity>
           <View>
@@ -143,7 +151,8 @@ const LoginRegister = () => {
             {/* // )} */}
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => promptAsync()}>
+
+        <TouchableOpacity onPress={() => handleGooglePress()}>
           <View style={{ paddingTop: 21 }}>
             <View style={styles.registerContainer}>
               <Image
@@ -165,7 +174,8 @@ const LoginRegister = () => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("SignUP")}>
+
+        <TouchableOpacity onPress={handleEmailPress}>
           <View style={{ paddingTop: 21 }}>
             <View style={styles.registerContainer}>
               <MaterialIcons
@@ -184,6 +194,7 @@ const LoginRegister = () => {
           </View>
         </TouchableOpacity>
       </View>
+
       <View
         style={{
           justifyContent: "center",
