@@ -43,7 +43,7 @@ export default function AuthApple() {
     const credentialState = await AppleAuthentication.getCredentialStateAsync(
       userToken.user
     );
-    console.log("credentialstate", credentialState);
+    console.log("credentialstate:", credentialState);
   };
 
   const logout = async () => {
@@ -88,13 +88,13 @@ export default function AuthApple() {
             <Text>{decodedPayload.email}</Text>
             <Text>Expired: {(current >= decodedPayload.exp).toString()}</Text>
 
-            {/* <Button
+            <Button
               title="Logout"
               onPress={logout}
               style={styles.logoutButton}
-            /> */}
+            />
 
-            <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+            {/* <TouchableOpacity style={styles.logoutButton} onPress={logout}>
               <Text
                 style={{
                   color: "#fff",
@@ -106,7 +106,7 @@ export default function AuthApple() {
               >
                 Logout
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <Button title="Refresh" onPress={refresh} />
             <Button title="Get Credential State" onPress={getCredentialState} />

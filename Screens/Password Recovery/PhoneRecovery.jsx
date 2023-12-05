@@ -3,9 +3,11 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
   TextInput,
+  Keyboard,
+  Platform,
 } from "react-native";
 import React from "react";
 import { useState } from "react";
@@ -47,6 +49,7 @@ const PhoneRecovery = () => {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       <LinearGradient
         colors={["#EEF7FE", "#FCEEFE"]}
@@ -139,6 +142,7 @@ const PhoneRecovery = () => {
         </View>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 
