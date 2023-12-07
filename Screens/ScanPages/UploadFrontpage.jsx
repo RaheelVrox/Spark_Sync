@@ -122,7 +122,7 @@ const UploadFrontpage = () => {
           maximum file size allowed is 10MB.
         </Text>
       </View>
-      <TouchableOpacity onPress={pickImage}>
+      {/* <TouchableOpacity onPress={pickImage}>
         <View
           style={{
             width: wp("88%"),
@@ -148,7 +148,7 @@ const UploadFrontpage = () => {
             Retake the picture
           </Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View>
         <TouchableOpacity onPress={pickImage} style={styles.button}>
           <Text
@@ -206,6 +206,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: wp(5),
+    marginTop: wp(45),
   },
 });

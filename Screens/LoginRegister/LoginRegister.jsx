@@ -16,7 +16,7 @@ import {
 } from "react-native-responsive-screen";
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AuthApple from ".../../../components/Auth";
+// import AuthApple from ".../../../components/Auth";
 
 const LoginRegister = () => {
   const navigation = useNavigation();
@@ -132,7 +132,7 @@ const LoginRegister = () => {
             {/* {Platform.OS === "ios" && ( */}
             <>
               <View>
-                <AuthApple />
+                {/* <AuthApple /> */}
 
                 {/* <AntDesign
                     style={{ marginLeft: 24 }}
@@ -174,14 +174,13 @@ const LoginRegister = () => {
             </View>
           </View>
         </TouchableOpacity>
-
         <TouchableOpacity onPress={handleEmailPress}>
           <View style={{ paddingTop: 21 }}>
             <View style={styles.registerContainer}>
               <MaterialIcons
-                style={{ marginLeft: 24 }}
+                style={{ marginLeft: 26 }}
                 name="email"
-                size={35}
+                size={32}
                 color="#002896"
               />
               <TextInput

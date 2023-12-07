@@ -57,15 +57,19 @@ const NewPassword = () => {
     try {
       // Basic validation to check if each part is not empty
       if (!newPassword) {
-        handleVerificationError("Please enter your newPassword.");
+        handleVerificationError("Please enter your newpassword.");
         return;
       }
       if (!confirmPassword) {
-        handleVerificationError("Please enter your confirmPassword.");
+        handleVerificationError("Please enter your confirmpassword.");
         return;
       }
       if (newPassword !== confirmPassword) {
         Alert.alert("Error", "Passwords do not match. Please try again.");
+        return;
+      }
+      if (newPassword.length < 8) {
+        Alert.alert("Error", "Password must be at least 8 characters long");
         return;
       }
       const apiUrl = `${ApiData.url}/api/v1/user/reset-password/`;
@@ -163,7 +167,7 @@ const NewPassword = () => {
               <TextInput
                 secureTextEntry={!showPassword}
                 value={newPassword}
-                onChangeText={(text) => setNewPassword(text)}
+                onChangeText={(text) => setNewPassword(text.replace(/\s/g, ""))}
                 style={styles.inputField}
                 placeholder="Your Password"
                 placeholderTextColor="#3D3D3D"
@@ -200,7 +204,9 @@ const NewPassword = () => {
               <TextInput
                 secureTextEntry={!showPassword}
                 value={confirmPassword}
-                onChangeText={(text) => setConfirmPassword(text)}
+                onChangeText={(text) =>
+                  setConfirmPassword(text.replace(/\s/g, ""))
+                }
                 style={styles.inputField}
                 placeholder="Your Password"
                 placeholderTextColor="#3D3D3D"

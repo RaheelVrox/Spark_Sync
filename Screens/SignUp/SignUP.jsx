@@ -39,7 +39,6 @@ const SignUP = () => {
     navigation.goBack();
   };
   const handleEmailChange = (text) => {
-    // Remove leading and trailing spaces from the entered email
     const trimmedEmail = text.trim();
     // Update the state with the trimmed email
     setEmail(trimmedEmail.toLowerCase());
@@ -50,6 +49,12 @@ const SignUP = () => {
         Alert.alert("Error", "Please enter all required details");
         return;
       }
+
+      if (password.length < 8) {
+        Alert.alert("Error", "Password must be at least 8 characters long");
+        return;
+      }
+
       const apiUrl = `${ApiData.url}/api/v1/user/register/`;
       const requestData = {
         name,
@@ -151,11 +156,17 @@ const SignUP = () => {
                 Name
               </Text>
               <TextInput
-                placeholder="Your Name"
-                style={styles.inputField}
+                placeholder="Your name"
+                style={{
+                  ...styles.inputField,
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                  fontWeight: "400",
+                  color: "#122359",
+                }}
                 value={name}
                 onChangeText={(text) => setName(text)}
-                placeholderTextColor="#3D3D3D"
+                placeholderTextColor="#858585"
               />
             </KeyboardAvoidingView>
             <KeyboardAvoidingView
@@ -174,14 +185,20 @@ const SignUP = () => {
                 Email
               </Text>
               <TextInput
-                placeholder="Your Email Address"
-                style={styles.inputField}
+                placeholder="Your email address"
+                style={{
+                  ...styles.inputField,
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                  fontWeight: "400",
+                  color: "#122359",
+                }}
                 value={email}
                 onChangeText={handleEmailChange}
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoCompleteType="email"
-                placeholderTextColor="#3D3D3D"
+                placeholderTextColor="#858585"
               />
             </KeyboardAvoidingView>
             <KeyboardAvoidingView
@@ -200,12 +217,18 @@ const SignUP = () => {
                 Phone
               </Text>
               <TextInput
-                placeholder="Your Phone Number"
-                style={styles.inputField}
+                placeholder="Your phone number"
+                style={{
+                  ...styles.inputField,
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                  fontWeight: "400",
+                  color: "#122359",
+                }}
                 value={phone_number}
                 onChangeText={(text) => setPhoneNumber(text)}
                 maxLength={11}
-                placeholderTextColor="#3D3D3D"
+                placeholderTextColor="#858585"
                 keyboardType="phone-pad"
               />
             </KeyboardAvoidingView>
@@ -227,12 +250,17 @@ const SignUP = () => {
               <View>
                 <TextInput
                   secureTextEntry={!showPassword}
-                  placeholder="Your Password"
-                  style={styles.inputField}
+                  placeholder="Your password"
+                  style={{
+                    ...styles.inputField,
+                    fontSize: 16,
+                    fontFamily: "Roboto-Regular",
+                    fontWeight: "400",
+                    color: "#122359",
+                  }}
                   value={password}
-                  onChangeText={(text) => setPassword(text)}
-                  placeholderTextColor="#3D3D3D"
-                  maxLength={10}
+                  onChangeText={(text) => setPassword(text.replace(/\s/g, ""))}
+                  placeholderTextColor="#858585"
                 />
                 <MaterialCommunityIcons
                   name={showPassword ? "eye-off" : "eye"}

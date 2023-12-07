@@ -128,7 +128,7 @@ const EmailRecovery = () => {
             <Text
               style={{
                 marginBottom: 10,
-                color: "#0D3559",
+                color: "#122359",
                 fontWeight: "600",
                 fontSize: 16,
                 fontFamily: "Roboto-Regular",
@@ -137,14 +137,20 @@ const EmailRecovery = () => {
               Email
             </Text>
             <TextInput
-              placeholder="Your Email Address"
-              style={styles.inputField}
+              placeholder="Your email address"
+              style={{
+                ...styles.inputField,
+                fontSize: 16,
+                fontFamily: "Roboto-Regular",
+                fontWeight: "400",
+                color: "#122359",
+              }}
               value={identifier}
               onChangeText={handleEmailChange}
               autoCapitalize="none"
               autoCorrect={false}
               autoCompleteType="email"
-              placeholderTextColor="#3D3D3D"
+              placeholderTextColor="#858585"
             />
           </KeyboardAvoidingView>
         </View>

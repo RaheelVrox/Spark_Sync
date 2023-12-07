@@ -153,7 +153,9 @@ const Profile = ({ route }) => {
       </LinearGradient>
       <View style={styles.detailContainer}>
         <View style={{ marginHorizontal: 16, paddingTop: 16 }}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ForgotPassword")}
+          >
             <Text style={styles.text}>Reset Password</Text>
           </TouchableOpacity>
           <TouchableOpacity>

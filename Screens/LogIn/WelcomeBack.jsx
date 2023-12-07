@@ -153,14 +153,20 @@ const WelcomeBack = () => {
               Email
             </Text>
             <TextInput
-              placeholder="Your Email Address"
-              style={styles.inputField}
+              placeholder="Your email address"
+              style={{
+                ...styles.inputField,
+                fontSize: 16,
+                fontFamily: "Roboto-Regular",
+                fontWeight: "400",
+                color:"#122359"
+              }}
               value={email}
               onChangeText={handleEmailChange}
               autoCapitalize="none"
               autoCorrect={false}
               autoCompleteType="email"
-              placeholderTextColor="#3D3D3D"
+              placeholderTextColor="#858585"
             />
           </KeyboardAvoidingView>
           <KeyboardAvoidingView
@@ -181,11 +187,17 @@ const WelcomeBack = () => {
             <View>
               <TextInput
                 secureTextEntry={!showPassword}
+                style={{
+                  ...styles.inputField,
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                  fontWeight: "400",
+                  color:"#122359"
+                }}
                 value={password}
-                onChangeText={(text) => setPassword(text)}
-                style={styles.inputField}
-                placeholder="Your Password"
-                placeholderTextColor="#3D3D3D"
+                onChangeText={(text) => setPassword(text.replace(/\s/g, ""))}
+                placeholder="Your password"
+                placeholderTextColor="#858585"
               />
               <MaterialCommunityIcons
                 name={showPassword ? "eye-off" : "eye"}

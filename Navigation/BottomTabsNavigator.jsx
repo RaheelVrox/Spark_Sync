@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomepageOne from "../Screens/HomePage/HomepageOne";
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
 import Profile from "../Screens/Profile/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
 import UploadFrontpage from "../Screens/ScanPages/UploadFrontpage";
@@ -209,7 +209,6 @@ const BottomTabsNavigator = () => {
         console.error("Error fetching user data:", error);
       }
     };
-
     fetchUserData();
   }, []);
 
@@ -217,6 +216,7 @@ const BottomTabsNavigator = () => {
     <Tab.Navigator
       initialRouteName="HomeStack"
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         headerShadowVisible: false,
         tabBarLabelStyle: { fontSize: 10 },
         tabBarActiveTintColor: "#346AFE",
@@ -252,7 +252,7 @@ const BottomTabsNavigator = () => {
           headerShown: false,
           headerTitle: "",
           tabBarIcon: ({ color, size }) => (
-            <Entypo name="home" color={color} size={size} />
+            <Entypo name="home" color={color} size={size + 5} />
           ),
         }}
       />
@@ -267,7 +267,7 @@ const BottomTabsNavigator = () => {
           headerShown: false,
           headerTitle: "",
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="plus" color={color} size={size} />
+            <AntDesign name="plus" color={color} size={size + 5} />
           ),
         }}
       />
@@ -283,7 +283,7 @@ const BottomTabsNavigator = () => {
           headerTitle: "",
           tabBarIcon: ({ color, size }) => (
             <>
-              {profile_imageCheck ? (
+              {/* {profile_imageCheck ? (
                 <Image
                   style={{
                     resizeMode: "contain",
@@ -295,9 +295,14 @@ const BottomTabsNavigator = () => {
                   source={{
                     uri: profile_image,
                   }}
-                />
-              ) : (
-                <Image
+                /> */}
+              {/* ) : ( */}
+              <Ionicons
+                name="ios-person-circle-sharp"
+                color={color}
+                size={size + 5}
+              />
+              {/* <Image
                   style={{
                     resizeMode: "contain",
                     alignSelf: "center",
@@ -306,8 +311,8 @@ const BottomTabsNavigator = () => {
                     borderRadius: 100,
                   }}
                   source={require("../assets/profile_img.png")}
-                />
-              )}
+                /> */}
+              {/* )} */}
             </>
           ),
         }}
