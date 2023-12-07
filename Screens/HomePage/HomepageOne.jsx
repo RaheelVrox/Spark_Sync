@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   Button,
+  ScrollView,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -16,7 +17,6 @@ import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { AntDesign } from "@expo/vector-icons";
 const HomepageOne = () => {
   const goBack = () => {
     navigation.goBack();
@@ -77,15 +77,15 @@ const HomepageOne = () => {
           style={{
             marginHorizontal: 24,
             paddingTop: wp(10),
-            marginBottom: 30,
+            marginBottom: wp(20),
           }}
         >
           <Text
             style={{
               fontFamily: "Roboto-Regular",
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: "600",
-              color: "#0D3559",
+              color: "#122359",
             }}
           >
             Texas Electricity Areas
@@ -100,32 +100,31 @@ const HomepageOne = () => {
           <Image
             style={{
               resizeMode: "contain",
-              // height: hp("40%"),
+              height: hp("40%"),
               width: wp("100%"),
             }}
             source={require("../../assets/Blank_map.png")}
           />
         </View>
-        <View
-          style={{
-            marginHorizontal: 24,
-            paddingTop: wp(6),
-            marginBottom: 20,
-          }}
-        >
-          <Text
+        {/* <View
             style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 18,
-              fontWeight: "600",
-              color: "#0D3559",
+              marginHorizontal: 24,
+              paddingTop: wp(5),
+              marginBottom: 25,
             }}
           >
-            Your properties
-          </Text>
-        </View>
-        {/* <TouchableOpacity>
-          <View style={styles.containerbox}>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 20,
+                fontWeight: "600",
+                color: "#122359",
+              }}
+            >
+              Your properties
+            </Text>
+          </View> */}
+        {/* <View style={styles.containerbox}>
             <View
               style={{
                 paddingRight: 15,
@@ -133,7 +132,12 @@ const HomepageOne = () => {
                 justifyContent: "center",
               }}
             >
-              <AntDesign name="minuscircle" size={24} color="#858585" />
+              <Image
+                style={{
+                  resizeMode: "contain",
+                }}
+                source={require("../../assets/check.png")}
+              />
             </View>
             <View style={styles.rightText}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -161,23 +165,82 @@ const HomepageOne = () => {
                 Congratulations! You saved 20%
               </Text>
             </View>
-          </View>
-        </TouchableOpacity> */}
+          </View> */}
+        {/* <View style={styles.containerbox}>
+            <View
+              style={{
+                paddingRight: 15,
+                paddingLeft: 15,
+                justifyContent: "center",
+              }}
+            >
+              <Entypo name="circle-with-minus" size={38} color="#858585" />
+            </View>
+            <View style={styles.rightText}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Entypo name="location-pin" size={20} color="#670097" />
+                <Text
+                  style={{
+                    fontFamily: "Roboto-Regular",
+                    fontSize: 14,
+                    fontWeight: "700",
+                    color: "#122359",
+                    marginBottom: 5,
+                  }}
+                >
+                  1234 Street Dallas, TX
+                </Text>
+              </View>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 12,
+                  fontWeight: "600",
+                  color: "#346AFE",
+                }}
+              >
+                Pending
+              </Text>
+            </View>
+          </View> */}
+        {/* <View style={styles.containerbox}>
+            <View
+              style={{
+                paddingRight: 15,
+                paddingLeft: 15,
+                justifyContent: "center",
+              }}
+            >
+              <Entypo name="circle-with-minus" size={38} color="#858585" />
+            </View>
+            <View style={styles.rightText}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Entypo name="location-pin" size={20} color="#670097" />
+                <Text
+                  style={{
+                    fontFamily: "Roboto-Regular",
+                    fontSize: 14,
+                    fontWeight: "700",
+                    color: "#122359",
+                    marginBottom: 5,
+                  }}
+                >
+                  1234 Street Dallas, TX
+                </Text>
+              </View>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 12,
+                  fontWeight: "600",
+                  color: "#346AFE",
+                }}
+              >
+                Pending
+              </Text>
+            </View>
+          </View> */}
       </View>
-
-      {/* Bottom Sheet */}
-      {/* <Modal
-        isVisible={isBottomSheetVisible}
-        animationIn="slideInUp"
-        animationOut="slideOutDown"
-        style={{ justifyContent: "flex-end", margin: 0 }}
-      >
-        <View style={styles.bottomSheetContainer}>
-          <Text style={styles.bottomSheetTitle}>Custom Bottom Sheet</Text>
-          <Text>This is your customized bottom sheet content.</Text>
-          <Button title="Close" onPress={toggleBottomSheet} />
-        </View>
-      </Modal> */}
     </>
   );
 };
@@ -214,25 +277,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     borderRadius: 10,
     height: hp("8%"),
+    marginBottom: 15,
   },
   rightText: {
-    marginLeft: 25,
+    marginLeft: 10,
     justifyContent: "center",
     alignSelf: "center",
     gap: 4,
-  },
-  bottomSheetContainer: {
-    backgroundColor: "white",
-    padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    height: hp("59%"),
-  },
-  bottomSheetTitle: {
-    fontFamily: "Roboto-Regular",
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#0D3559",
-    marginBottom: 25,
   },
 });

@@ -20,6 +20,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ApiData from "../../apiconfig";
 
 const WelcomeBack = () => {
   const [password, setPassword] = useState("");
@@ -32,7 +33,12 @@ const WelcomeBack = () => {
   const goBack = () => {
     navigation.goBack();
   };
-
+  const handleEmailChange = (text) => {
+    // Remove leading and trailing spaces from the entered email
+    const trimmedEmail = text.trim();
+    // Update the state with the trimmed email
+    setEmail(trimmedEmail.toLowerCase());
+  };
   const handleVerificationError = (errorMessage) => {
     // Display an error message to the user
     Alert.alert("Error", errorMessage);
@@ -53,16 +59,17 @@ const WelcomeBack = () => {
         return;
       }
 
-      const apiUrl = "http://192.168.18.41:5000/api/v1/user/login/";
+      const apiUrl = `${ApiData.url}/api/v1/user/login/`;
       const requestData = {
         email,
         password,
       };
-      // console.log("requestData", requestData);
+      console.log("requestData", requestData);
 
       await axios
         .post(apiUrl, requestData)
         .then((res) => {
+          console.log("logindata__:", res.data.user);
           AsyncStorage.setItem("userData", JSON.stringify(res.data.user));
           navigation.navigate("VerifyLogin");
         })
@@ -143,14 +150,16 @@ const WelcomeBack = () => {
                 fontFamily: "Roboto-Regular",
               }}
             >
-              Name
+              Email
             </Text>
             <TextInput
-              placeholder="Your Name"
+              placeholder="Your Email Address"
               style={styles.inputField}
               value={email}
-              onChangeText={(text) => setEmail(text.toLowerCase())}
+              onChangeText={handleEmailChange}
               autoCapitalize="none"
+              autoCorrect={false}
+              autoCompleteType="email"
               placeholderTextColor="#3D3D3D"
             />
           </KeyboardAvoidingView>

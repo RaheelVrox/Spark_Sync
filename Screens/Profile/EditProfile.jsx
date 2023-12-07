@@ -7,6 +7,10 @@ import {
   Image,
   KeyboardAvoidingView,
   TextInput,
+  ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
 } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
@@ -17,22 +21,26 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
+import ApiData from "../../apiconfig";
 
-const EditProfile = () => {
+const EditProfile = ({ route }) => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone_number, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [userData, setUserData] = useState(null);
   const [profile_image, setProfileImage] = useState(null);
+  const [profile_imageDisplayCheck, setProfileImageDisplayCheck] =
+    useState(null);
   const [profile_imageDisplay, setProfileImageDisplay] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-
-  console.log("userData", userData);
 
   const handleSubmit = async () => {
     try {
-      const apiUrl = `http://192.168.18.41:5000/api/v1/user/update/${userData.id}`;
+      setLoading(true);
+
+      const apiUrl = `${ApiData.url}/api/v1/user/update/${userData.id}`;
 
       const filename = profile_image?.uri.substring(
         profile_image?.uri.lastIndexOf("/") + 1
@@ -46,10 +54,11 @@ const EditProfile = () => {
       if (profile_image) {
         data.append("profile_image", {
           uri: profile_image?.uri,
-          type: "image/jpeg", // Adjust the type accordingly
-          name: filename, // Adjust the name accordingly
+          type: "image/jpeg",
+          name: filename,
         });
       }
+
       const response = await axios.post(apiUrl, data, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -59,12 +68,15 @@ const EditProfile = () => {
       const updatedUserData = { ...userData, ...response.data };
       await AsyncStorage.setItem("userData", JSON.stringify(updatedUserData));
 
-      // Navigate to the profile screen
-      navigation.navigate("Profile");
+      route.params.onProfileUpdate();
 
-      console.log("response", response);
+      // Navigate to the profile screen
+      navigation.goBack();
+      // navigation.navigate("Profile");
     } catch (error) {
       console.error("Error updating user data:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,13 +102,15 @@ const EditProfile = () => {
       try {
         const storedUserData = await AsyncStorage.getItem("userData");
         const userDataFromStorage = JSON.parse(storedUserData) || { id: null };
+        // console.log("dsadsasad", userDataFromStorage);
         setUserData(userDataFromStorage);
         setName(userDataFromStorage.name || "");
         setAddress(userDataFromStorage.address || "");
         setPhone(userDataFromStorage.phone_number || "");
         setEmail(userDataFromStorage.email || "");
+        setProfileImageDisplayCheck(userDataFromStorage?.profile_image);
         setProfileImageDisplay(
-          `http://192.168.18.41:5000/profile_image/${userDataFromStorage.profile_image}` ||
+          `${ApiData.url}/profile_image/${userDataFromStorage?.profile_image}` ||
             ""
         );
       } catch (error) {
@@ -108,145 +122,160 @@ const EditProfile = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#EEF7FE", "#FCEEFE"]}
-        start={{ x: 0, y: 0.3 }}
-        end={{ x: 0.6, y: 0.6 }}
-        style={{
-          borderBottomRightRadius: 30,
-          borderBottomLeftRadius: 30,
-        }}
-      >
-        <View style={styles.headerContainer}>
-          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <TouchableOpacity onPress={pickImage}>
-              {profile_imageDisplay ? (
-                <Image
-                  style={{
-                    resizeMode: "contain",
-                    marginBottom: 16,
-                    alignSelf: "center",
-                    width: 100,
-                    height: 100,
-                    borderRadius: 50,
-                  }}
-                  source={{ uri: profile_imageDisplay }}
-                />
-              ) : (
-                <Image
-                  style={{
-                    resizeMode: "contain",
-                    marginBottom: 16,
-                    alignSelf: "center",
-                    width: 100,
-                    height: 100,
-                    borderRadius: 50,
-                  }}
-                  source={require("../../assets/profile.png")}
-                />
-              )}
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 16,
-                fontWeight: "700",
-                color: "#122359",
-                textAlign: "center",
-              }}
-            >
-              Edit Picture
-            </Text>
-          </View>
-        </View>
-      </LinearGradient>
-      <View style={styles.detailContainer}>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Name</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Your Name"
-                style={styles.inputField}
-                value={name}
-                onChangeText={(text) => setName(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Address</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Your Address"
-                style={styles.inputField}
-                value={address}
-                onChangeText={(text) => setAddress(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Phone Number</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Phone Number"
-                style={styles.inputField}
-                value={phone_number}
-                onChangeText={(text) => setPhone(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.textBold}>Email</Text>
-          <View>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <TextInput
-                placeholder="Your Email"
-                style={styles.inputField}
-                value={email}
-                onChangeText={(text) => setEmail(text)}
-                placeholderTextColor="#3D3D3D"
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </View>
-        <TouchableOpacity
-          style={styles.Editbutton}
-          onPress={() => handleSubmit()}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <LinearGradient
+          colors={["#EEF7FE", "#FCEEFE"]}
+          start={{ x: 0, y: 0.3 }}
+          end={{ x: 0.6, y: 0.6 }}
+          style={{
+            borderBottomRightRadius: 30,
+            borderBottomLeftRadius: 30,
+          }}
         >
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "600",
-              fontFamily: "Roboto-Regular",
-              color: "#fff",
-            }}
+          <View style={styles.headerContainer}>
+            <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+              <TouchableOpacity
+                onPress={pickImage}
+                style={{
+                  width: 100,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  alignSelf: "center",
+                }}
+              >
+                {profile_imageDisplayCheck ? (
+                  <Image
+                    style={{
+                      resizeMode: "contain",
+                      marginBottom: 16,
+                      alignSelf: "center",
+                      width: 100,
+                      height: 100,
+                      borderRadius: 50,
+                    }}
+                    source={{ uri: profile_imageDisplay }}
+                  />
+                ) : (
+                  <Image
+                    style={{
+                      resizeMode: "contain",
+                      marginBottom: 16,
+                      alignSelf: "center",
+                      width: 100,
+                      height: 100,
+                      borderRadius: 50,
+                    }}
+                    source={require("../../assets/profile_img.png")}
+                  />
+                )}
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 16,
+                  fontWeight: "700",
+                  color: "#122359",
+                  textAlign: "center",
+                }}
+              >
+                Edit Picture
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+        <View style={styles.detailContainer}>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Name</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Your Name"
+                  style={styles.inputField}
+                  value={name}
+                  onChangeText={(text) => setName(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Address</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Your Address"
+                  style={styles.inputField}
+                  value={address}
+                  onChangeText={(text) => setAddress(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Phone Number</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Phone Number"
+                  style={styles.inputField}
+                  value={phone_number}
+                  onChangeText={(text) => setPhone(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Email</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Your Email"
+                  style={styles.inputField}
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
+          </View>
+          <TouchableOpacity
+            style={styles.Editbutton}
+            onPress={() => handleSubmit()}
+            disabled={loading}
           >
-            Save
-          </Text>
-        </TouchableOpacity>
+            {loading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "600",
+                  fontFamily: "Roboto-Regular",
+                  color: "#fff",
+                }}
+              >
+                Save
+              </Text>
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

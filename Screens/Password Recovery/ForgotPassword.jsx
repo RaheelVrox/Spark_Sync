@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,6 +17,10 @@ const ForgotPassword = () => {
   };
 
   const handleContinue = () => {
+    if (!selectedOption) {
+      Alert.alert("Error", "Please select a verification method");
+      return;
+    }
     if (selectedOption === "email") {
       navigation.navigate("EmailRecovery");
       // console.log("Email Recovery");

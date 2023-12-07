@@ -15,6 +15,7 @@ import {
 } from "react-native-responsive-screen";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
+import ApiData from "../../apiconfig";
 
 const UpdateBackImage = ({ route, navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -65,7 +66,7 @@ const UpdateBackImage = ({ route, navigation }) => {
       });
 
       const response = await axios.post(
-        "http://192.168.18.41:5000/api/v1/backimage/create",
+        `${ApiData.url}/api/v1/backimage/create`,
         formData,
         {
           headers: {

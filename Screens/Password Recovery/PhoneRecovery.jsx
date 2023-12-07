@@ -8,6 +8,7 @@ import {
   TextInput,
   Keyboard,
   Platform,
+  Alert,
 } from "react-native";
 import React from "react";
 import { useState } from "react";
@@ -19,18 +20,28 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
+import ApiData from "../../apiconfig";
 
 const PhoneRecovery = () => {
   const goBack = () => {
     navigation.goBack();
   };
+  const handleVerificationError = (errorMessage) => {
+    // Display an error message to the user
+    Alert.alert("Error", errorMessage);
+  };
   const navigation = useNavigation();
-  const [phone_number, setPhoneNumber] = useState("");
+  const [identifier, setPhoneNumber] = useState("");
   const handleResetPassword = async () => {
     try {
-      // const apiUrl = "http://192.168.18.41:4000/api/v1/user/forgot-password/";
+      // Basic validation to check if each part is not empty
+      if (!identifier) {
+        handleVerificationError("Please enter your number");
+        return;
+      }
+      const apiUrl = `${ApiData.url}/api/v1/user/forgot-password/`;
       const requestData = {
-        phone_number,
+        identifier,
       };
       console.log("requestData", requestData);
 
@@ -38,10 +49,11 @@ const PhoneRecovery = () => {
         .post(apiUrl, requestData)
         .then((response) => {
           console.log(response.data);
-          navigation.navigate("NewPassword");
+          navigation.navigate("PasswordVerify");
         })
         .catch((error) => {
           console.log(error);
+          handleVerificationError("Invalid phonenumber. Please try again");
         });
     } catch (error) {
       console.error("Error:", error);
@@ -50,85 +62,84 @@ const PhoneRecovery = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#EEF7FE", "#FCEEFE"]}
-        start={{ x: 0, y: 0.3 }}
-        end={{ x: 0.6, y: 0.6 }}
-        style={{
-          borderBottomRightRadius: 30,
-          borderBottomLeftRadius: 30,
-        }}
-      >
-        <View style={styles.headerContainer}>
-          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons
-                name="ios-chevron-back-sharp"
-                size={28}
-                color="#670097"
-              />
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 24,
-                fontWeight: "600",
-                color: "#0D3559",
-                marginBottom: 5,
-              }}
-            >
-              Reset Password
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 16,
-                fontWeight: "400",
-                color: "#0D3559",
-              }}
-            >
-              Enter your phone number and we will send you a code to reset your
-              password.
-            </Text>
-          </View>
-        </View>
-      </LinearGradient>
-      <View
-        style={{
-          paddingTop: wp(9),
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+      <View style={styles.container}>
+        <LinearGradient
+          colors={["#EEF7FE", "#FCEEFE"]}
+          start={{ x: 0, y: 0.3 }}
+          end={{ x: 0.6, y: 0.6 }}
+          style={{
+            borderBottomRightRadius: 30,
+            borderBottomLeftRadius: 30,
+          }}
         >
-          <Text
-            style={{
-              marginBottom: 10,
-              color: "#0D3559",
-              fontWeight: "600",
-              fontSize: 16,
-              fontFamily: "Roboto-Regular",
-            }}
+          <View style={styles.headerContainer}>
+            <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+              <TouchableOpacity style={styles.backbut} onPress={goBack}>
+                <Ionicons
+                  name="ios-chevron-back-sharp"
+                  size={28}
+                  color="#670097"
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 24,
+                  fontWeight: "600",
+                  color: "#0D3559",
+                  marginBottom: 5,
+                }}
+              >
+                Reset Password
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 16,
+                  fontWeight: "400",
+                  color: "#0D3559",
+                }}
+              >
+                Enter your phone number and we will send you a code to reset
+                your password.
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+        <View
+          style={{
+            paddingTop: wp(9),
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <KeyboardAvoidingView
+            enabled
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
-            Phone Number
-          </Text>
-          <TextInput
-            placeholder="Your Phone Number"
-            style={styles.inputField}
-            value={phone_number}
-            onChangeText={(text) => setPhoneNumber(text)}
-            placeholderTextColor="#3D3D3D"
-            keyboardType="phone-pad"
-            maxLength={11}
-          />
-        </KeyboardAvoidingView>
-      </View>
-      <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-        <View style={styles.button}>
+            <Text
+              style={{
+                marginBottom: 10,
+                color: "#0D3559",
+                fontWeight: "600",
+                fontSize: 16,
+                fontFamily: "Roboto-Regular",
+              }}
+            >
+              Phone Number
+            </Text>
+            <TextInput
+              placeholder="Your Phone Number"
+              style={styles.inputField}
+              value={identifier}
+              onChangeText={(text) => setPhoneNumber(text)}
+              placeholderTextColor="#3D3D3D"
+              keyboardType="phone-pad"
+              maxLength={13}
+            />
+          </KeyboardAvoidingView>
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
           <Text
             style={{
               fontSize: 18,
@@ -137,11 +148,10 @@ const PhoneRecovery = () => {
               color: "#fff",
             }}
           >
-            Send OPT
+            Send OTP
           </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+        </TouchableOpacity>
+      </View>
     </TouchableWithoutFeedback>
   );
 };

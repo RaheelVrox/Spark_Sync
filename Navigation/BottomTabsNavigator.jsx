@@ -1,13 +1,9 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React from "react";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { StyleSheet, Image, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomepageOne from "../Screens/HomePage/HomepageOne";
-import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import Profile from "../Screens/Profile/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
 import UploadFrontpage from "../Screens/ScanPages/UploadFrontpage";
@@ -16,6 +12,8 @@ import UpdateFrontImage from "../Screens/ScanPages/UpdateFrontImage";
 import UpdateBackImage from "../Screens/ScanPages/UpdateFrontImage";
 import UploadBackpage from "../Screens/ScanPages/UploadBackpage";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import ApiData from "../apiconfig";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -193,6 +191,28 @@ const ProfileStack = ({ navigation }) => {
 };
 const BottomTabsNavigator = () => {
   const insets = useSafeAreaInsets();
+  const [profile_image, setProfileImage] = useState(null);
+  const [profile_imageCheck, setProfileImageCheck] = useState(null);
+
+  console.log("profile_image", profile_image);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const storedUserData = await AsyncStorage.getItem("userData");
+        const dataAfterParse = JSON.parse(storedUserData);
+        setProfileImageCheck(dataAfterParse?.profile_image);
+        setProfileImage(
+          `${ApiData.url}/profile_image/${dataAfterParse?.profile_image}`
+        );
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <Tab.Navigator
       initialRouteName="HomeStack"
@@ -212,7 +232,7 @@ const BottomTabsNavigator = () => {
         tabBarStyle: [
           {
             height:
-              Platform.OS === "ios" ? 60 + insets.bottom : 60 + insets.bottom,
+              Platform.OS === "ios" ? 62 + insets.bottom : 62 + insets.bottom,
           },
         ],
         tabBarItemStyle: style.tabStyle,
@@ -262,7 +282,33 @@ const BottomTabsNavigator = () => {
           headerShown: false,
           headerTitle: "",
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="person" color={color} size={size} />
+            <>
+              {profile_imageCheck ? (
+                <Image
+                  style={{
+                    resizeMode: "contain",
+                    alignSelf: "center",
+                    width: 35,
+                    height: 35,
+                    borderRadius: 100,
+                  }}
+                  source={{
+                    uri: profile_image,
+                  }}
+                />
+              ) : (
+                <Image
+                  style={{
+                    resizeMode: "contain",
+                    alignSelf: "center",
+                    width: 35,
+                    height: 35,
+                    borderRadius: 100,
+                  }}
+                  source={require("../assets/profile_img.png")}
+                />
+              )}
+            </>
           ),
         }}
       />

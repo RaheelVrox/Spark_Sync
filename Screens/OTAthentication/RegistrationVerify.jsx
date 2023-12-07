@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ApiData from "../../apiconfig.js";
 
 const RegistrationVerify = () => {
   const navigation = useNavigation();
@@ -57,8 +58,7 @@ const RegistrationVerify = () => {
         return;
       }
 
-      const apiUrl =
-        "http://192.168.18.41:5000/api/v1/user/verify-registration/";
+      const apiUrl = `${ApiData.url}/api/v1/user/verify-registration/`;
 
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
@@ -81,7 +81,7 @@ const RegistrationVerify = () => {
 
   const handleResendCode = async () => {
     try {
-      const apiUrl = "http://192.168.18.140:5000/api/v1/user/resend-otp/";
+      const apiUrl = `${ApiData.url}/api/v1/user/resend-otp/`;
       const resendRequestData = {
         email: useremail,
       };

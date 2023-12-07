@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ApiData from "../../apiconfig.js";
 
 const VerifyLogin = () => {
   const navigation = useNavigation();
@@ -55,7 +56,7 @@ const VerifyLogin = () => {
         handleVerificationError("Please enter a valid OTP");
         return;
       }
-      const apiUrl = "http://192.168.18.41:5000/api/v1/user/verify/";
+      const apiUrl = `${ApiData.url}/api/v1/user/verify/`;
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
       };
@@ -77,7 +78,7 @@ const VerifyLogin = () => {
 
   const handleResendCode = async () => {
     try {
-      const apiUrl = "http://192.168.18.41:5000/api/v1/user/resend-otp/";
+      const apiUrl = `${ApiData.url}/api/v1/user/resend-otp/`;
       const resendRequestData = {
         email: useremail,
       };

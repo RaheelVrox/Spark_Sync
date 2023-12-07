@@ -9,7 +9,10 @@ const FrontPage = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("../../assets/newlogo.png")} />
+      <Image
+        style={styles.image}
+        source={require("../../assets/newlogo.png")}
+      />
       <View style={{ paddingTop: wp(30) }}>
         <Text style={styles.heading}>Spark Sync</Text>
       </View>
@@ -35,7 +38,10 @@ const FrontPage = () => {
           advanced algorithm can help you save by uploading your bill now!
         </Text>
       </View>
-      <TouchableOpacity style={styles.startbutton} onPress={() => navigation.navigate("LoginRegister")}>
+      <TouchableOpacity
+        style={styles.startbutton}
+        onPress={() => navigation.navigate("LoginRegister")}
+      >
         <Text
           style={{
             fontSize: 18,
@@ -52,7 +58,6 @@ const FrontPage = () => {
 };
 
 export default FrontPage;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
     width: wp("50%"),
     height: wp("60%"),
     top: 80,
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
   heading: {
     fontSize: 60,
@@ -82,6 +87,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    margin: 25
+    margin: 25,
   },
 });

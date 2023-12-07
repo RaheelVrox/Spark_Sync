@@ -23,6 +23,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ApiData from "../../apiconfig";
 
 const NewPassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -35,6 +36,10 @@ const NewPassword = () => {
   };
   const goBack = () => {
     navigation.goBack();
+  };
+  const handleVerificationError = (errorMessage) => {
+    // Display an error message to the user
+    Alert.alert("Error", errorMessage);
   };
   console.log("user_id", userdata);
   useEffect(() => {
@@ -50,11 +55,20 @@ const NewPassword = () => {
 
   const handlePasswordUpdate = async () => {
     try {
+      // Basic validation to check if each part is not empty
+      if (!newPassword) {
+        handleVerificationError("Please enter your newPassword.");
+        return;
+      }
+      if (!confirmPassword) {
+        handleVerificationError("Please enter your confirmPassword.");
+        return;
+      }
       if (newPassword !== confirmPassword) {
         Alert.alert("Error", "Passwords do not match. Please try again.");
         return;
       }
-      const apiUrl = "http://192.168.18.41:5000/api/v1/user/reset-password/";
+      const apiUrl = `${ApiData.url}/api/v1/user/reset-password/`;
       const requestData = {
         email: userdata,
         newPassword,
@@ -70,7 +84,8 @@ const NewPassword = () => {
         })
         .catch((error) => {
           console.log(error);
-          // Display an error message to the user
+          // Handle other errors if needed
+          handleVerificationError(" Please try again");
         });
     } catch (error) {
       console.error("Error:", error);

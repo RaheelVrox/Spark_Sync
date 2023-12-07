@@ -10,6 +10,7 @@ import {
   Keyboard,
   Platform,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -20,6 +21,7 @@ import {
 } from "react-native-responsive-screen";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ApiData from "../../apiconfig";
 
 const SignUP = () => {
   const navigation = useNavigation();
@@ -36,26 +38,41 @@ const SignUP = () => {
   const goBack = () => {
     navigation.goBack();
   };
-
+  const handleEmailChange = (text) => {
+    // Remove leading and trailing spaces from the entered email
+    const trimmedEmail = text.trim();
+    // Update the state with the trimmed email
+    setEmail(trimmedEmail.toLowerCase());
+  };
   const handleSignUp = async () => {
     try {
-      const apiUrl = "http://192.168.18.41:5000/api/v1/user/register/";
+      if (!name || !email || !phone_number || !password) {
+        Alert.alert("Error", "Please enter all required details");
+        return;
+      }
+      const apiUrl = `${ApiData.url}/api/v1/user/register/`;
       const requestData = {
         name,
         email,
         phone_number,
         password,
       };
-
+      console.log("Datauserssignup", requestData);
       await axios
         .post(apiUrl, requestData)
         .then(async (response) => {
-          console.log(response.data);
-          await AsyncStorage.setItem("userData", JSON.stringify(response.data));
+          console.log("signup_data::", response.data);
+          await AsyncStorage.setItem(
+            "userData",
+            JSON.stringify(response.data.newUser)
+          );
           navigation.navigate("RegistrationVerify");
         })
         .catch((error) => {
           console.log(error);
+          const errorMessage =
+            error.response?.data?.message || "Something went wrong";
+          Alert.alert("Error", errorMessage);
         });
     } catch (error) {
       console.error("Error:", error);
@@ -160,8 +177,10 @@ const SignUP = () => {
                 placeholder="Your Email Address"
                 style={styles.inputField}
                 value={email}
-                onChangeText={(text) => setEmail(text.toLowerCase())}
+                onChangeText={handleEmailChange}
                 autoCapitalize="none"
+                autoCorrect={false}
+                autoCompleteType="email"
                 placeholderTextColor="#3D3D3D"
               />
             </KeyboardAvoidingView>

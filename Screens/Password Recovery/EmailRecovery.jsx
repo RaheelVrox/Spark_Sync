@@ -21,12 +21,19 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import ApiData from "../../apiconfig";
 
 const EmailRecovery = () => {
-  const [email, setEmail] = useState("");
+  const [identifier, setEmail] = useState("");
   const navigation = useNavigation();
   const goBack = () => {
     navigation.goBack();
+  };
+  const handleEmailChange = (text) => {
+    // Remove leading and trailing spaces from the entered email
+    const trimmedEmail = text.trim();
+    // Update the state with the trimmed email
+    setEmail(trimmedEmail.toLowerCase());
   };
   const handleVerificationError = (errorMessage) => {
     // Display an error message to the user
@@ -35,20 +42,20 @@ const EmailRecovery = () => {
   const handleResetPasword = async () => {
     try {
       // Basic validation to check if each part is not empty
-      if (!email) {
+      if (!identifier) {
         handleVerificationError("Please enter your email.");
         return;
       }
-      const apiUrl = "http://192.168.18.41:5000/api/v1/user/forgot-password/";
+      const apiUrl = `${ApiData.url}/api/v1/user/forgot-password/`;
       const requestData = {
-        email,
+        identifier,
       };
       console.log("requestData", requestData);
       await axios
         .post(apiUrl, requestData)
         .then(async (response) => {
           console.log(response.data);
-          await AsyncStorage.setItem("email", email);
+          await AsyncStorage.setItem("email", identifier);
           navigation.navigate("PasswordVerify");
         })
         .catch((error) => {
@@ -132,9 +139,11 @@ const EmailRecovery = () => {
             <TextInput
               placeholder="Your Email Address"
               style={styles.inputField}
-              value={email}
-              onChangeText={(text) => setEmail(text.toLowerCase())}
+              value={identifier}
+              onChangeText={handleEmailChange}
               autoCapitalize="none"
+              autoCorrect={false}
+              autoCompleteType="email"
               placeholderTextColor="#3D3D3D"
             />
           </KeyboardAvoidingView>
