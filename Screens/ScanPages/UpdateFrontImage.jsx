@@ -15,12 +15,15 @@ import {
 } from "react-native-responsive-screen";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiData from "../../apiconfig";
 
 const UpdateFrontImage = ({ route, navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedUri, setSelectedUri] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const user_id = route.params?.Id;
 
   useEffect(() => {
     const imageUri = route.params?.imageUri;
@@ -60,12 +63,14 @@ const UpdateFrontImage = ({ route, navigation }) => {
       const filename = selectedImage.uri.substring(
         selectedImage.uri.lastIndexOf("/") + 1
       );
-
       formData.append("frontimage", {
         uri: selectedImage.uri,
         type: "image/jpeg", // Adjust the type accordingly
         name: filename, // Adjust the name accordingly
       });
+
+      formData.append("userData", user_id);
+      console.log("id:", user_id);
 
       const response = await axios.post(
         `${ApiData.url}/api/v1/frontimage/create`,

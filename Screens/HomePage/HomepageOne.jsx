@@ -1,32 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   Image,
-  Button,
-  ScrollView,
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Entypo } from "@expo/vector-icons";
-import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-const HomepageOne = () => {
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import ApiData from "../../apiconfig";
+
+const HomepageOne = ({ route }) => {
   const goBack = () => {
     navigation.goBack();
   };
   const navigation = useNavigation();
-  const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const [frontImages, setFrontImages] = useState([]);
 
-  const toggleBottomSheet = () => {
-    setBottomSheetVisible(!isBottomSheetVisible);
+  useEffect(() => {
+    fetchFrontImages();
+  }, [route.params?.selectedImage]);
+
+  const fetchFrontImages = async () => {
+    try {
+      const user_id = await AsyncStorage.getItem("userData");
+      const apiUrl = `${ApiData.url}/api/v1/frontimage/${user_id}`;
+      const response = await axios.get(apiUrl);
+      const fetchedFrontImages = response.data;
+      if (route.params?.selectedImage) {
+        setFrontImages([route.params.selectedImage, ...fetchedFrontImages]);
+      } else {
+        setFrontImages(fetchedFrontImages);
+      }
+
+      console.log("Fetched Front Images:", fetchedFrontImages);
+
+    } catch (error) {
+      console.error("Error fetching front images:", error);
+    }
   };
+
+  console.log("Front Images:", frontImages);
 
   return (
     <>
@@ -76,8 +98,8 @@ const HomepageOne = () => {
         <View
           style={{
             marginHorizontal: 24,
-            paddingTop: wp(10),
-            marginBottom: wp(20),
+            paddingTop: wp(9),
+            marginBottom: wp(9),
           }}
         >
           <Text
@@ -100,146 +122,76 @@ const HomepageOne = () => {
           <Image
             style={{
               resizeMode: "contain",
-              height: hp("40%"),
+              height: hp("37%"),
               width: wp("100%"),
             }}
             source={require("../../assets/Blank_map.png")}
           />
         </View>
-        {/* <View
+        <View
+          style={{
+            marginHorizontal: 24,
+            paddingTop: wp(4.5),
+            marginBottom: 22,
+          }}
+        >
+          <Text
             style={{
-              marginHorizontal: 24,
-              paddingTop: wp(5),
-              marginBottom: 25,
+              fontFamily: "Roboto-Regular",
+              fontSize: 20,
+              fontWeight: "600",
+              color: "#122359",
             }}
           >
+            Your properties
+          </Text>
+        </View>
+        <View style={styles.propertieontainer}>
+          <View style={{ justifyContent: "center", marginHorizontal: 11 }}>
             <Text
               style={{
+                justifyContent: "center",
                 fontFamily: "Roboto-Regular",
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: "600",
                 color: "#122359",
               }}
             >
-              Your properties
+              Property:1
             </Text>
-          </View> */}
-        {/* <View style={styles.containerbox}>
-            <View
-              style={{
-                paddingRight: 15,
-                paddingLeft: 15,
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                style={{
-                  resizeMode: "contain",
-                }}
-                source={require("../../assets/check.png")}
-              />
-            </View>
-            <View style={styles.rightText}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Entypo name="location-pin" size={20} color="#670097" />
-                <Text
-                  style={{
-                    fontFamily: "Roboto-Regular",
-                    fontSize: 14,
-                    fontWeight: "700",
-                    color: "#122359",
-                    marginBottom: 5,
-                  }}
-                >
-                  1234 Street Dallas, TX
-                </Text>
-              </View>
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 12,
-                  fontWeight: "600",
-                  color: "#346AFE",
-                }}
-              >
-                Congratulations! You saved 20%
-              </Text>
-            </View>
-          </View> */}
-        {/* <View style={styles.containerbox}>
-            <View
-              style={{
-                paddingRight: 15,
-                paddingLeft: 15,
-                justifyContent: "center",
-              }}
-            >
-              <Entypo name="circle-with-minus" size={38} color="#858585" />
-            </View>
-            <View style={styles.rightText}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Entypo name="location-pin" size={20} color="#670097" />
-                <Text
-                  style={{
-                    fontFamily: "Roboto-Regular",
-                    fontSize: 14,
-                    fontWeight: "700",
-                    color: "#122359",
-                    marginBottom: 5,
-                  }}
-                >
-                  1234 Street Dallas, TX
-                </Text>
-              </View>
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 12,
-                  fontWeight: "600",
-                  color: "#346AFE",
-                }}
-              >
-                Pending
-              </Text>
-            </View>
-          </View> */}
-        {/* <View style={styles.containerbox}>
-            <View
-              style={{
-                paddingRight: 15,
-                paddingLeft: 15,
-                justifyContent: "center",
-              }}
-            >
-              <Entypo name="circle-with-minus" size={38} color="#858585" />
-            </View>
-            <View style={styles.rightText}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Entypo name="location-pin" size={20} color="#670097" />
-                <Text
-                  style={{
-                    fontFamily: "Roboto-Regular",
-                    fontSize: 14,
-                    fontWeight: "700",
-                    color: "#122359",
-                    marginBottom: 5,
-                  }}
-                >
-                  1234 Street Dallas, TX
-                </Text>
-              </View>
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 12,
-                  fontWeight: "600",
-                  color: "#346AFE",
-                }}
-              >
-                Pending
-              </Text>
-            </View>
-          </View> */}
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-evenly",
+              marginLeft: 40,
+            }}
+          >
+            {frontImages.length > 0 ? (
+              frontImages.map((image, index) => (
+                <Image
+                  key={index}
+                  style={styles.image}
+                  source={{ uri: image.uri }}
+                />
+              ))
+            ) : (
+              <>
+                <Image
+                  style={styles.image}
+                  source={require("../../assets/frontpage.png")}
+                />
+                <View style={{ marginLeft: 20 }}>
+                  <Image
+                    style={styles.image}
+                    source={require("../../assets/frontpage.png")}
+                  />
+                </View>
+              </>
+            )}
+          </View>
+        </View>
       </View>
     </>
   );
@@ -284,5 +236,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     gap: 4,
+  },
+  propertieontainer: {
+    backgroundColor: "#EEF7FE",
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 10,
+    paddingLeft: 10,
+    flexDirection: "row",
+    marginHorizontal: 24,
+    borderRadius: 10,
+    height: hp("13%"),
+  },
+  image: {
+    width: wp("22%"),
+    height: wp("22%"),
+    resizeMode: "contain",
+    alignItems: "center",
   },
 });

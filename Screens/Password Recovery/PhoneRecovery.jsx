@@ -120,7 +120,7 @@ const PhoneRecovery = () => {
             <Text
               style={{
                 marginBottom: 10,
-                color: "#0D3559",
+                color: "#122359",
                 fontWeight: "600",
                 fontSize: 16,
                 fontFamily: "Roboto-Regular",
@@ -129,11 +129,17 @@ const PhoneRecovery = () => {
               Phone Number
             </Text>
             <TextInput
-              placeholder="Your Phone Number"
-              style={styles.inputField}
+              placeholder="Your phone number"
+              style={{
+                ...styles.inputField,
+                fontSize: 16,
+                fontFamily: "Roboto-Regular",
+                fontWeight: "400",
+                color: "#122359",
+              }}
               value={identifier}
               onChangeText={(text) => setPhoneNumber(text)}
-              placeholderTextColor="#3D3D3D"
+              placeholderTextColor="#858585"
               keyboardType="phone-pad"
               maxLength={13}
             />

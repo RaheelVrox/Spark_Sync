@@ -166,11 +166,17 @@ const NewPassword = () => {
             <View>
               <TextInput
                 secureTextEntry={!showPassword}
+                style={{
+                  ...styles.inputField,
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                  fontWeight: "400",
+                  color: "#122359",
+                }}
                 value={newPassword}
                 onChangeText={(text) => setNewPassword(text.replace(/\s/g, ""))}
-                style={styles.inputField}
                 placeholder="Your Password"
-                placeholderTextColor="#3D3D3D"
+                placeholderTextColor="#858585"
               />
               <MaterialCommunityIcons
                 name={showPassword ? "eye-off" : "eye"}
@@ -203,11 +209,17 @@ const NewPassword = () => {
             <View>
               <TextInput
                 secureTextEntry={!showPassword}
+                style={{
+                  ...styles.inputField,
+                  fontSize: 16,
+                  fontFamily: "Roboto-Regular",
+                  fontWeight: "400",
+                  color: "#122359",
+                }}
                 value={confirmPassword}
                 onChangeText={(text) =>
                   setConfirmPassword(text.replace(/\s/g, ""))
                 }
-                style={styles.inputField}
                 placeholder="Your Password"
                 placeholderTextColor="#3D3D3D"
               />

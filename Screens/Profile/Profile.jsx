@@ -40,7 +40,6 @@ const Profile = ({ route }) => {
     const userDataFromApi = JSON.parse(storedUserData)?.id;
     // console.log("userDataFrom_Api", JSON.parse(storedUserData));
     const apiUrl = `${ApiData.url}/api/v1/user/details/${userDataFromApi}`;
-
     // console.log("apiUrl", apiUrl);
     await axios
       .get(apiUrl)
@@ -115,7 +114,7 @@ const Profile = ({ route }) => {
                 fontFamily: "Roboto-Regular",
                 fontSize: 24,
                 fontWeight: "600",
-                color: "#0D3559",
+                color: "#122359",
                 textAlign: "center",
               }}
             >
@@ -126,7 +125,7 @@ const Profile = ({ route }) => {
                 fontFamily: "Roboto-Regular",
                 fontSize: 16,
                 fontWeight: "400",
-                color: "#0D3559",
+                color: "#3D3D3D",
                 textAlign: "center",
                 marginTop: 8,
               }}
@@ -167,6 +166,7 @@ const Profile = ({ route }) => {
           <TouchableOpacity>
             <Text style={styles.text}>Privacy Policy</Text>
           </TouchableOpacity>
+          <View style={styles.divider}></View>
           <TouchableOpacity onPress={handleSignOut}>
             <Text style={styles.text}>Sign Out</Text>
           </TouchableOpacity>
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     borderRadius: 10,
     marginTop: 40,
-    height: hp("30%"),
+    height: hp("31.5%"),
   },
   text: {
     fontFamily: "Roboto-Regular",
@@ -208,5 +208,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#122359",
     lineHeight: 45,
+  },
+  divider: {
+    height: 1.5,
+    width: wp("31%"),
+    backgroundColor: "#122359",
+    marginTop: 15,
+    marginBottom: 10,
   },
 });

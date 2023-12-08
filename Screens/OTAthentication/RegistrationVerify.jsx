@@ -201,7 +201,13 @@ const RegistrationVerify = () => {
               <View>
                 <TextInput
                   ref={otpInputRefs[index]}
-                  style={styles.inputField}
+                  style={{
+                    ...styles.inputField,
+                    fontSize: 24,
+                    fontFamily: "Roboto-Regular",
+                    fontWeight: "600",
+                    color: "#122359",
+                  }}
                   onChangeText={(text) => handleInputChange(text, index)}
                   value={
                     index === 0

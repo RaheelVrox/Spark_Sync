@@ -94,8 +94,8 @@ const UploadBackpage = () => {
       <View style={styles.Gallerybox}>
         <Image
           style={{
-            width: wp("15%"),
-            height: wp("15%"),
+            width: 104,
+            height: 98,
             resizeMode: "contain",
             alignSelf: "center",
           }}
@@ -104,7 +104,7 @@ const UploadBackpage = () => {
       </View>
       <View
         style={{
-          marginTop: wp(15),
+          marginTop: wp(13),
         }}
       >
         <Text
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   Gallerybox: {
-    height: hp("16%"),
-    width: wp("32%"),
+    height: 180,
+    width: 180,
     borderRadius: 10,
     backgroundColor: "#EEF7FE",
     alignItems: "center",
@@ -206,6 +206,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: wp(45),
+    marginTop: wp(36),
   },
 });

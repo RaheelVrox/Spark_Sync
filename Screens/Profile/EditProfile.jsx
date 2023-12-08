@@ -36,13 +36,36 @@ const EditProfile = ({ route }) => {
   const [profile_imageDisplay, setProfileImageDisplay] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const [isNameDirty, setIsNameDirty] = useState(false);
+  const [isAddressDirty, setIsAddressDirty] = useState(false);
+  const [isPhoneDirty, setIsPhoneDirty] = useState(false);
+  const [isEmailDirty, setIsEmailDirty] = useState(false);
 
+  const handleNameChange = (text) => {
+    setName(text);
+    setIsNameDirty(true);
+  };
+  const handleaddressChange = (text) => {
+    setAddress(text);
+    setIsAddressDirty(true);
+  };
+  const handlePhoneChange = (text) => {
+    setPhone(text);
+    setIsPhoneDirty(true);
+  };
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
+    setIsEmailDirty(true);
+  };
+  const inputColor = isNameDirty ? "#122359" : "#3D3D3D";
+  const addressInputColor = isAddressDirty ? "#122359" : "#3D3D3D";
+  const phoneInputColor = isPhoneDirty ? "#122359" : "#3D3D3D";
+  const emailInputColor = isEmailDirty ? "#122359" : "#3D3D3D";
   const handleSubmit = async () => {
     try {
       setLoading(true);
-
       const apiUrl = `${ApiData.url}/api/v1/user/update/${userData.id}`;
-
       const filename = profile_image?.uri.substring(
         profile_image?.uri.lastIndexOf("/") + 1
       );
@@ -68,12 +91,8 @@ const EditProfile = ({ route }) => {
 
       const updatedUserData = { ...userData, ...response.data };
       await AsyncStorage.setItem("userData", JSON.stringify(updatedUserData));
-
       route.params.onProfileUpdate();
-
-      // Navigate to the profile screen
       navigation.goBack();
-      // navigation.navigate("Profile");
     } catch (error) {
       console.error("Error updating user data:", error.message);
     } finally {
@@ -118,7 +137,6 @@ const EditProfile = ({ route }) => {
         console.error("Error fetching user data:", error);
       }
     };
-
     fetchUserData();
   }, []);
 
@@ -195,10 +213,16 @@ const EditProfile = ({ route }) => {
                   behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
                   <TextInput
-                    placeholder="Your Name"
-                    style={styles.inputField}
+                    placeholder="Your name"
+                    style={{
+                      ...styles.inputField,
+                      fontSize: 14,
+                      fontFamily: "Roboto-Regular",
+                      fontWeight: "400",
+                      color: inputColor,
+                    }}
                     value={name}
-                    onChangeText={(text) => setName(text)}
+                    onChangeText={handleNameChange}
                     placeholderTextColor="#3D3D3D"
                   />
                 </KeyboardAvoidingView>
@@ -212,10 +236,16 @@ const EditProfile = ({ route }) => {
                   behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
                   <TextInput
-                    placeholder="Your Address"
-                    style={styles.inputField}
+                    placeholder="Your address"
+                    style={{
+                      ...styles.inputField,
+                      fontSize: 14,
+                      fontFamily: "Roboto-Regular",
+                      fontWeight: "400",
+                      color: addressInputColor,
+                    }}
                     value={address}
-                    onChangeText={(text) => setAddress(text)}
+                    onChangeText={handleaddressChange}
                     placeholderTextColor="#3D3D3D"
                   />
                 </KeyboardAvoidingView>
@@ -229,10 +259,16 @@ const EditProfile = ({ route }) => {
                   behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
                   <TextInput
-                    placeholder="Phone Number"
-                    style={styles.inputField}
+                    placeholder="Phone number"
+                    style={{
+                      ...styles.inputField,
+                      fontSize: 14,
+                      fontFamily: "Roboto-Regular",
+                      fontWeight: "400",
+                      color: phoneInputColor,
+                    }}
                     value={phone_number}
-                    onChangeText={(text) => setPhone(text)}
+                    onChangeText={handlePhoneChange}
                     placeholderTextColor="#3D3D3D"
                   />
                 </KeyboardAvoidingView>
@@ -246,10 +282,16 @@ const EditProfile = ({ route }) => {
                   behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
                   <TextInput
-                    placeholder="Your Email"
-                    style={styles.inputField}
+                    placeholder="Your email"
+                    style={{
+                      ...styles.inputField,
+                      fontSize: 14,
+                      fontFamily: "Roboto-Regular",
+                      fontWeight: "400",
+                      color: emailInputColor,
+                    }}
                     value={email}
-                    onChangeText={(text) => setEmail(text)}
+                    onChangeText={handleEmailChange}
                     placeholderTextColor="#3D3D3D"
                   />
                 </KeyboardAvoidingView>
@@ -304,7 +346,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
-    marginHorizontal: 8,
+    marginHorizontal: 9,
     marginTop: 15,
   },
   inputField: {
@@ -323,7 +365,7 @@ const styles = StyleSheet.create({
   textBold: {
     flex: 1,
     fontFamily: "Roboto-Regular",
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "700",
     color: "#122359",
   },
