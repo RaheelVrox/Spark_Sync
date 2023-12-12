@@ -76,7 +76,8 @@ const SignUP = () => {
         .catch((error) => {
           console.log(error);
           const errorMessage =
-            error.response?.data?.message || "Something went wrong";
+            error.response?.data?.message ||
+            "Account already exists use a different email.";
           Alert.alert("Error", errorMessage);
         });
     } catch (error) {

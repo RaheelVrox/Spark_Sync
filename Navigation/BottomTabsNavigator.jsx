@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomepageOne from "../Screens/HomePage/HomepageOne";
-import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
+import { AntDesign, SimpleLineIcons, Ionicons } from "@expo/vector-icons";
 import Profile from "../Screens/Profile/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
 import UploadFrontpage from "../Screens/ScanPages/UploadFrontpage";
@@ -245,14 +245,14 @@ const BottomTabsNavigator = () => {
         name="HomeStack"
         component={HomeStack}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "HOME",
           tabBarLabelStyle: {
             fontSize: 12,
           },
           headerShown: false,
           headerTitle: "",
           tabBarIcon: ({ color, size }) => (
-            <Entypo name="home" color={color} size={size + 5} />
+            <SimpleLineIcons name="home" color={color} size={size} />
           ),
         }}
       />
@@ -260,7 +260,7 @@ const BottomTabsNavigator = () => {
         name="AddNew"
         component={AddNew}
         options={{
-          tabBarLabel: "Add New",
+          tabBarLabel: "ADD NEW",
           tabBarLabelStyle: {
             fontSize: 12,
           },
@@ -275,7 +275,7 @@ const BottomTabsNavigator = () => {
         name="ProfileStack"
         component={ProfileStack}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "PROFILE",
           tabBarLabelStyle: {
             fontSize: 12,
           },
@@ -300,7 +300,7 @@ const BottomTabsNavigator = () => {
               <Ionicons
                 name="ios-person-circle-sharp"
                 color={color}
-                size={size + 5}
+                size={size + 6}
               />
               {/* <Image
                   style={{

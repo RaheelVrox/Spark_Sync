@@ -172,7 +172,7 @@ const HomepageOne = ({ route }) => {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-evenly",
-              marginLeft: 40,
+              marginLeft: 45,
             }}
           >
             {route.params?.selectedImage ? (
@@ -183,7 +183,7 @@ const HomepageOne = ({ route }) => {
                 source={require("../../assets/frontpage.png")}
               />
             )}
-            <View style={{ marginLeft: 20 }}>
+            <View>
               <Image
                 style={styles.image}
                 source={require("../../assets/frontpage.png")}
