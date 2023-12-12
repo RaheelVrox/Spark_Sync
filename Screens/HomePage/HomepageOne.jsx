@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,33 +15,47 @@ const HomepageOne = ({ route }) => {
   const goBack = () => {
     navigation.goBack();
   };
+
   const navigation = useNavigation();
   const [frontImages, setFrontImages] = useState([]);
+  const [user_id, setuser_id] = useState("");
+  const [front_image, setfrontimage] = useState(null);
 
   useEffect(() => {
+    // console.log("Selected Image URI :", route.params?.selectedImage?.uri);
     fetchFrontImages();
+    getUserId();
   }, [route.params?.selectedImage]);
 
   const fetchFrontImages = async () => {
     try {
-      const user_id = await AsyncStorage.getItem("userData");
       const apiUrl = `${ApiData.url}/api/v1/frontimage/${user_id}`;
       const response = await axios.get(apiUrl);
       const fetchedFrontImages = response.data;
+
       if (route.params?.selectedImage) {
         setFrontImages([route.params.selectedImage, ...fetchedFrontImages]);
       } else {
         setFrontImages(fetchedFrontImages);
       }
-
+      console.log("user:", user_id);
       console.log("Fetched Front Images:", fetchedFrontImages);
-
     } catch (error) {
       console.error("Error fetching front images:", error);
     }
   };
 
-  console.log("Front Images:", frontImages);
+  const getUserId = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user_id");
+      console.log("user_id:", value);
+      if (value !== null) {
+        setuser_id(value);
+      }
+    } catch (error) {
+      console.error("Error fetching user id:", error);
+    }
+  };
 
   return (
     <>
@@ -80,7 +87,7 @@ const HomepageOne = ({ route }) => {
                   marginBottom: 5,
                 }}
               >
-                Welcome Faris
+                Welcome
               </Text>
               <Text
                 style={{
@@ -168,28 +175,20 @@ const HomepageOne = ({ route }) => {
               marginLeft: 40,
             }}
           >
-            {frontImages.length > 0 ? (
-              frontImages.map((image, index) => (
-                <Image
-                  key={index}
-                  style={styles.image}
-                  source={{ uri: image.uri }}
-                />
-              ))
+            {route.params?.selectedImage ? (
+              <Image style={styles.image} source={{ uri: front_image }} />
             ) : (
-              <>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/frontpage.png")}
-                />
-                <View style={{ marginLeft: 20 }}>
-                  <Image
-                    style={styles.image}
-                    source={require("../../assets/frontpage.png")}
-                  />
-                </View>
-              </>
+              <Image
+                style={styles.image}
+                source={require("../../assets/frontpage.png")}
+              />
             )}
+            <View style={{ marginLeft: 20 }}>
+              <Image
+                style={styles.image}
+                source={require("../../assets/frontpage.png")}
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -218,24 +217,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
-  },
-  containerbox: {
-    backgroundColor: "#F3F4FF",
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 10,
-    paddingLeft: 10,
-    flexDirection: "row",
-    marginHorizontal: 24,
-    borderRadius: 10,
-    height: hp("8%"),
-    marginBottom: 15,
-  },
-  rightText: {
-    marginLeft: 10,
-    justifyContent: "center",
-    alignSelf: "center",
-    gap: 4,
   },
   propertieontainer: {
     backgroundColor: "#EEF7FE",

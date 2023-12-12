@@ -20,17 +20,47 @@ import ApiData from "../../apiconfig";
 
 const UpdateFrontImage = ({ route, navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedUri, setSelectedUri] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [user_id, setuser_id] = useState(null);
 
-  const user_id = route.params?.Id;
+  useEffect(() => {
+    const fetchuserData = async () => {
+      try {
+        const userDataString = await AsyncStorage.getItem("userData");
+        const userData = await getuserDataFromStorage();
+
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          // console.log("fetuchdata", userData);
+          // console.log("fetuchd_id", userData.id);
+          setuser_id(userData.id);
+          await AsyncStorage.setItem("user_id:", userData.id.toString());
+          const storedUserId = await AsyncStorage.getItem("user_id");
+          console.log("Stored user_id:", storedUserId);
+        }
+      } catch (error) {
+        console.error("Error fetching login data", error);
+      }
+    };
+
+    fetchuserData();
+  }, []);
+
+  const getuserDataFromStorage = async () => {
+    try {
+      const userDataString = await AsyncStorage.getItem("userData");
+      return userDataString ? JSON.parse(userDataString) : null;
+    } catch (error) {
+      console.error("Error retrieving login data from storage", error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     const imageUri = route.params?.imageUri;
     console.log("update_image_uri", imageUri);
     if (imageUri) {
       setSelectedImage({ uri: imageUri.uri });
-      setSelectedUri(imageUri);
     }
   }, [route.params]);
 
@@ -65,12 +95,12 @@ const UpdateFrontImage = ({ route, navigation }) => {
       );
       formData.append("frontimage", {
         uri: selectedImage.uri,
-        type: "image/jpeg", // Adjust the type accordingly
-        name: filename, // Adjust the name accordingly
+        type: "image/jpeg",
+        name: filename,
       });
 
-      formData.append("userData", user_id);
-      console.log("id:", user_id);
+      formData.append("user_id", user_id);
+      console.log("user_id-:", user_id);
 
       const response = await axios.post(
         `${ApiData.url}/api/v1/frontimage/create`,
