@@ -40,7 +40,6 @@ const EditProfile = ({ route }) => {
   const [isAddressDirty, setIsAddressDirty] = useState(false);
   const [isPhoneDirty, setIsPhoneDirty] = useState(false);
   const [isEmailDirty, setIsEmailDirty] = useState(false);
-
   const handleNameChange = (text) => {
     setName(text);
     setIsNameDirty(true);
@@ -57,6 +56,9 @@ const EditProfile = ({ route }) => {
   const handleEmailChange = (text) => {
     setEmail(text);
     setIsEmailDirty(true);
+    const trimmedEmail = text.trim();
+    // Update the state with the trimmed email
+    setEmail(trimmedEmail.toLowerCase());
   };
   const inputColor = isNameDirty ? "#122359" : "#3D3D3D";
   const addressInputColor = isAddressDirty ? "#122359" : "#3D3D3D";
@@ -236,6 +238,7 @@ const EditProfile = ({ route }) => {
                   behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
                   <TextInput
+                    multiline
                     placeholder="Your address"
                     style={{
                       ...styles.inputField,
@@ -243,6 +246,7 @@ const EditProfile = ({ route }) => {
                       fontFamily: "Roboto-Regular",
                       fontWeight: "400",
                       color: addressInputColor,
+                      height: hp("7.5%"),
                     }}
                     value={address}
                     onChangeText={handleaddressChange}
@@ -283,15 +287,20 @@ const EditProfile = ({ route }) => {
                 >
                   <TextInput
                     placeholder="Your email"
+                    multiline
                     style={{
                       ...styles.inputField,
                       fontSize: 14,
                       fontFamily: "Roboto-Regular",
                       fontWeight: "400",
                       color: emailInputColor,
+                      height: hp("7.5%"),
                     }}
                     value={email}
                     onChangeText={handleEmailChange}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    autoCompleteType="email"
                     placeholderTextColor="#3D3D3D"
                   />
                 </KeyboardAvoidingView>
@@ -340,14 +349,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     borderRadius: 10,
     marginTop: 40,
-    height: hp("38%"),
+    height: hp("44.6%"),
   },
   rowContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
     marginHorizontal: 9,
-    marginTop: 15,
+    marginTop: 17,
   },
   inputField: {
     height: hp("5%"),
@@ -379,7 +388,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: 30,
+    marginTop: 34,
   },
 });
 

@@ -122,7 +122,7 @@ const LoginRegister = () => {
             textAlign: "center",
           }}
         >
-          Spark Sync
+          SparkSync
         </Text>
       </View>
 

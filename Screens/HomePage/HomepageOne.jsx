@@ -83,7 +83,7 @@ const HomepageOne = ({ route }) => {
                   fontFamily: "Roboto-Regular",
                   fontSize: 24,
                   fontWeight: "600",
-                  color: "#0D3559",
+                  color: "#122359",
                   marginBottom: 5,
                 }}
               >
@@ -94,7 +94,7 @@ const HomepageOne = ({ route }) => {
                   fontFamily: "Roboto-Regular",
                   fontSize: 16,
                   fontWeight: "400",
-                  color: "#0D3559",
+                  color: "#3D3D3D",
                 }}
               >
                 Review all your properties.

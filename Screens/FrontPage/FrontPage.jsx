@@ -14,7 +14,7 @@ const FrontPage = () => {
         source={require("../../assets/newlogo.png")}
       />
       <View style={{ paddingTop: wp(30) }}>
-        <Text style={styles.heading}>Spark Sync</Text>
+        <Text style={styles.heading}>SparkSync</Text>
       </View>
       <View
         style={{
@@ -32,6 +32,7 @@ const FrontPage = () => {
             fontWeight: "400",
             textAlign: "center",
             lineHeight: 30,
+            color: "#4D4D4D",
           }}
         >
           Wholesale electric price is yours with Spark Sync. See how our
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     fontWeight: "400",
     fontFamily: "Montserrat-ExtraBold",
-    color: "#0D3559",
+    color: "#122359",
   },
   startbutton: {
     width: wp("88%"),

@@ -125,7 +125,7 @@ const SignUP = () => {
                     fontFamily: "Roboto-Regular",
                     fontSize: 16,
                     fontWeight: "400",
-                    color: "#122359",
+                    color: "#3D3D3D",
                   }}
                 >
                   It only takes a minute to create your account
