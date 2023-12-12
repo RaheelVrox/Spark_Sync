@@ -206,6 +206,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: wp(36),
+    marginTop: wp(35.5),
   },
 });

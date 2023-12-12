@@ -24,18 +24,13 @@ const HomepageOne = ({ route }) => {
   };
 
   const navigation = useNavigation();
-  // const [frontImages, setFrontImages] = useState([]);
   const [user_id, setuser_id] = useState("");
-
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [propertiesData, setPropertiesData] = useState([]);
 
   // console.log("user_id", user_id);
 
   useEffect(() => {
-    // console.log("Selected Image URI :", route.params?.selectedImage?.uri);
-
     getUserId();
   }, [route.params?.selectedImage]);
 
@@ -44,12 +39,6 @@ const HomepageOne = ({ route }) => {
       const apiUrl = `${ApiData.url}/api/v1/frontimage/${value}`;
       const response = await axios.get(apiUrl);
       const fetchedFrontImages = response.data;
-
-      // if (route.params?.selectedImage) {
-      //   setfrontimage([route.params.selectedImage, ...fetchedFrontImages]);
-      // } else {
-      //   setfrontimage(fetchedFrontImages);
-      // }
       console.log("user:", value);
       setPropertiesData(fetchedFrontImages?.properties);
 
@@ -103,7 +92,7 @@ const HomepageOne = ({ route }) => {
                       fontFamily: "Roboto-Regular",
                       fontSize: 24,
                       fontWeight: "600",
-                      color: "#0D3559",
+                      color: "#122359",
                       marginBottom: 5,
                     }}
                   >
@@ -114,7 +103,7 @@ const HomepageOne = ({ route }) => {
                       fontFamily: "Roboto-Regular",
                       fontSize: 16,
                       fontWeight: "400",
-                      color: "#0D3559",
+                      color: "#3D3D3D",
                     }}
                   >
                     Review all your properties.
@@ -158,7 +147,7 @@ const HomepageOne = ({ route }) => {
             <View
               style={{
                 marginHorizontal: 24,
-                paddingTop: wp(4.5),
+                paddingTop: wp(4),
                 marginBottom: 22,
               }}
             >
@@ -173,7 +162,11 @@ const HomepageOne = ({ route }) => {
                 Your properties
               </Text>
             </View>
-            <ScrollView contentContainerStyle={styles.propertieontainer}>
+            <ScrollView
+              contentContainerStyle={styles.propertieontainer}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            >
               {propertiesData &&
                 propertiesData?.map((el, idx) => {
                   return (
@@ -201,7 +194,8 @@ const HomepageOne = ({ route }) => {
                           flexDirection: "row",
                           alignItems: "center",
                           justifyContent: "space-evenly",
-                          marginLeft: 40,
+                          marginLeft: wp(6),
+                          gap: 20,
                         }}
                       >
                         <Image
@@ -210,15 +204,12 @@ const HomepageOne = ({ route }) => {
                             uri: `${ApiData.url}/front_image/${el.front_image_url}`,
                           }}
                         />
-
-                        <View style={{ marginLeft: 20 }}>
-                          <Image
-                            style={styles.image}
-                            source={{
-                              uri: `${ApiData.url}/back_image/${el.back_image_url}`,
-                            }}
-                          />
-                        </View>
+                        <Image
+                          style={styles.image}
+                          source={{
+                            uri: `${ApiData.url}/back_image/${el.back_image_url}`,
+                          }}
+                        />
                       </View>
                     </View>
                   );
@@ -270,6 +261,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: "#FCEEFE",
   },
 });

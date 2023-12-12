@@ -99,13 +99,13 @@ const WelcomeBack = () => {
         >
           <View style={styles.headerContainer}>
             <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-              {/* <TouchableOpacity style={styles.backbut} onPress={goBack}>
+              <TouchableOpacity style={styles.backbut} onPress={goBack}>
                 <Ionicons
                   name="ios-chevron-back-sharp"
                   size={28}
                   color="#670097"
                 />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
               <Text
                 style={{
                   fontFamily: "Roboto-Regular",

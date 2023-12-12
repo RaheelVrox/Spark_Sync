@@ -64,8 +64,8 @@ const VerifyLogin = () => {
         .post(apiUrl, requestData)
         .then(async (response) => {
           console.log(response);
-          // navigation.navigate("BottomTabsNavigator");
-          navigation.navigate("UploadFrontpage");
+          navigation.navigate("BottomTabsNavigator");
+          // navigation.navigate("UploadFrontpage");
         })
         .catch((error) => {
           console.log(error);

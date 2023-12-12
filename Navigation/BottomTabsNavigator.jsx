@@ -1,6 +1,10 @@
 import { StyleSheet, Image, Platform } from "react-native";
 import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomepageOne from "../Screens/HomePage/HomepageOne";
 import { AntDesign, SimpleLineIcons, Ionicons } from "@expo/vector-icons";
@@ -224,20 +228,30 @@ const BottomTabsNavigator = () => {
         tabBarBackground: () => (
           <LinearGradient
             colors={["#EEF7FE", "#FCEEFE"]}
-            style={{ flex: 1 }}
+            style={{
+              flex: 1,
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
+              backgroundColor: "#fff",
+              borderColor: "#fff",
+            }}
             start={{ x: 0, y: 0.3 }}
             end={{ x: 0.6, y: 0.6 }}
           />
         ),
         tabBarStyle: [
+          style.tabStyleProp,
           {
             height:
-              Platform.OS === "ios" ? 62 + insets.bottom : 62 + insets.bottom,
+              Platform.OS === "ios" ? 72 + insets.bottom : 72 + insets.bottom,
+            backgroundColor: "#fff",
+            borderColor: "#fff",
           },
         ],
         tabBarItemStyle: style.tabStyle,
         headerStyle: {
           backgroundColor: "transparent",
+          borderColor: "#fff",
         },
       }}
     >
@@ -324,6 +338,13 @@ export default BottomTabsNavigator;
 const style = StyleSheet.create({
   tabStyle: {
     backgroundColor: "transparent",
-    paddingBottom: 5,
+    paddingBottom: 7,
+  },
+  tabStyleProp: {
+    elevation: 20,
+    height: Platform.OS === "ios" ? wp(20) : wp(17),
+    marginBottom: Platform.OS === "ios" ? -5 : wp(0),
+    position: "relative",
+    borderRadius: wp(2),
   },
 });
