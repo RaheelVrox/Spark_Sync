@@ -111,7 +111,7 @@ const WelcomeBack = () => {
                   fontFamily: "Roboto-Regular",
                   fontSize: 24,
                   fontWeight: "600",
-                  color: "#0D3559",
+                  color: "#122359",
                   marginBottom: 5,
                 }}
               >
@@ -122,7 +122,7 @@ const WelcomeBack = () => {
                   fontFamily: "Roboto-Regular",
                   fontSize: 16,
                   fontWeight: "400",
-                  color: "#0D3559",
+                  color: "#3D3D3D",
                 }}
               >
                 Enter your email address and password
@@ -200,7 +200,7 @@ const WelcomeBack = () => {
                 placeholderTextColor="#858585"
               />
               <MaterialCommunityIcons
-                name={showPassword ? "eye-off" : "eye"}
+               name={showPassword ? "eye" : "eye-off"}
                 size={26}
                 color="#346AFE"
                 style={{

@@ -122,7 +122,7 @@ const NewPassword = () => {
                   fontFamily: "Roboto-Regular",
                   fontSize: 24,
                   fontWeight: "600",
-                  color: "#0D3559",
+                  color: "#122359",
                   marginBottom: 5,
                 }}
               >
@@ -133,7 +133,7 @@ const NewPassword = () => {
                   fontFamily: "Roboto-Regular",
                   fontSize: 16,
                   fontWeight: "400",
-                  color: "#0D3559",
+                  color: "#3D3D3D",
                 }}
               >
                 Enter your new password
@@ -179,7 +179,7 @@ const NewPassword = () => {
                 placeholderTextColor="#858585"
               />
               <MaterialCommunityIcons
-                name={showPassword ? "eye-off" : "eye"}
+                name={showPassword ? "eye" : "eye-off"}
                 size={26}
                 color="#346AFE"
                 style={{
@@ -221,10 +221,10 @@ const NewPassword = () => {
                   setConfirmPassword(text.replace(/\s/g, ""))
                 }
                 placeholder="Your Password"
-                placeholderTextColor="#3D3D3D"
+                placeholderTextColor="#858585"
               />
               <MaterialCommunityIcons
-                name={showPassword ? "eye-off" : "eye"}
+                name={showPassword ? "eye" : "eye-off"}
                 size={26}
                 color="#346AFE"
                 style={{

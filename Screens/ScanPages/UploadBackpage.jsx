@@ -64,7 +64,7 @@ const UploadBackpage = () => {
                 fontFamily: "Roboto-Regular",
                 fontSize: 24,
                 fontWeight: "600",
-                color: "#0D3559",
+                color: "#122359",
                 marginBottom: 5,
               }}
             >
@@ -75,7 +75,7 @@ const UploadBackpage = () => {
                 fontFamily: "Roboto-Regular",
                 fontSize: 16,
                 fontWeight: "400",
-                color: "#0D3559",
+                color: "#3D3D3D",
               }}
             >
               Please upload the front part of your bill

@@ -152,7 +152,7 @@ const VerifyLogin = () => {
                   fontFamily: "Roboto-Regular",
                   fontSize: 24,
                   fontWeight: "600",
-                  color: "#0D3559",
+                  color: "#122359",
                   marginBottom: 5,
                 }}
               >
@@ -163,7 +163,7 @@ const VerifyLogin = () => {
                   fontFamily: "Roboto-Regular",
                   fontSize: 16,
                   fontWeight: "400",
-                  color: "#0D3559",
+                  color: "#3D3D3D",
                 }}
               >
                 Enter OTP Code sent to your email.
@@ -173,7 +173,7 @@ const VerifyLogin = () => {
                   fontFamily: "Roboto-Regular",
                   fontSize: 16,
                   fontWeight: "400",
-                  color: "#0D3559",
+                  color: "#3D3D3D",
                 }}
               >
                 The code will expire in 01:30

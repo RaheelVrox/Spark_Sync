@@ -68,7 +68,7 @@ const ForgotPassword = () => {
                 fontFamily: "Roboto-Regular",
                 fontSize: 16,
                 fontWeight: "400",
-                color: "#122359",
+                color: "#3D3D3D",
               }}
             >
               Select verification method, and we will send a verification code

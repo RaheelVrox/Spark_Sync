@@ -120,18 +120,24 @@ const Profile = ({ route }) => {
             >
               {userData?.name || "Loading..."}
             </Text>
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 16,
-                fontWeight: "400",
-                color: "#3D3D3D",
-                textAlign: "center",
-                marginTop: 8,
-              }}
-            >
-              {userData?.address || "Address not found!"}
-            </Text>
+            <View>
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 16,
+                  fontWeight: "400",
+                  color: "#3D3D3D",
+                  textAlign: "center",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  alignSelf: "center",
+                  marginHorizontal: 8,
+                  marginTop: 8,
+                }}
+              >
+                {userData?.address || "Address not found!"}
+              </Text>
+            </View>
           </View>
           <TouchableOpacity
             onPress={handleEditProfile}
@@ -151,7 +157,7 @@ const Profile = ({ route }) => {
         </View>
       </LinearGradient>
       <View style={styles.detailContainer}>
-        <View style={{ marginHorizontal: 16, paddingTop: 16 }}>
+        <View style={{ marginHorizontal: 16, paddingTop: 2 }}>
           <TouchableOpacity
             onPress={() => navigation.navigate("ForgotPassword")}
           >
@@ -184,7 +190,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   headerContainer: {
-    height: hp("36%"),
+    height: hp("37%"),
     width: wp("100%"),
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
@@ -200,20 +206,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     borderRadius: 10,
     marginTop: 40,
-    height: hp("31.5%"),
+    height: hp("31.6%"),
   },
   text: {
     fontFamily: "Roboto-Regular",
     fontSize: 16,
     fontWeight: "600",
     color: "#122359",
-    lineHeight: 45,
+    lineHeight: 48,
   },
   divider: {
     height: 1.5,
     width: wp("31%"),
     backgroundColor: "#122359",
     marginTop: 15,
-    marginBottom: 10,
+    marginBottom: 11,
   },
 });
