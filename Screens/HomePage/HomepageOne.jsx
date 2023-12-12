@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,29 +24,36 @@ const HomepageOne = ({ route }) => {
   };
 
   const navigation = useNavigation();
-  const [frontImages, setFrontImages] = useState([]);
+  // const [frontImages, setFrontImages] = useState([]);
   const [user_id, setuser_id] = useState("");
-  const [front_image, setfrontimage] = useState(null);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [propertiesData, setPropertiesData] = useState([]);
+
+  // console.log("user_id", user_id);
 
   useEffect(() => {
     // console.log("Selected Image URI :", route.params?.selectedImage?.uri);
-    fetchFrontImages();
+
     getUserId();
   }, [route.params?.selectedImage]);
 
-  const fetchFrontImages = async () => {
+  const fetchFrontImages = async (value) => {
     try {
-      const apiUrl = `${ApiData.url}/api/v1/frontimage/${user_id}`;
+      const apiUrl = `${ApiData.url}/api/v1/frontimage/${value}`;
       const response = await axios.get(apiUrl);
       const fetchedFrontImages = response.data;
 
-      if (route.params?.selectedImage) {
-        setFrontImages([route.params.selectedImage, ...fetchedFrontImages]);
-      } else {
-        setFrontImages(fetchedFrontImages);
-      }
-      console.log("user:", user_id);
-      console.log("Fetched Front Images:", fetchedFrontImages);
+      // if (route.params?.selectedImage) {
+      //   setfrontimage([route.params.selectedImage, ...fetchedFrontImages]);
+      // } else {
+      //   setfrontimage(fetchedFrontImages);
+      // }
+      console.log("user:", value);
+      setPropertiesData(fetchedFrontImages?.properties);
+
+      console.log("Fetched Front Images:", fetchedFrontImages?.properties);
     } catch (error) {
       console.error("Error fetching front images:", error);
     }
@@ -47,10 +61,14 @@ const HomepageOne = ({ route }) => {
 
   const getUserId = async () => {
     try {
-      const value = await AsyncStorage.getItem("user_id");
-      console.log("user_id:", value);
-      if (value !== null) {
-        setuser_id(value);
+      const value = await AsyncStorage.getItem("userData");
+      const storedUserData = await AsyncStorage.getItem("userData");
+      const userDataFromStorage = JSON.parse(storedUserData) || { id: null };
+
+      console.log("asdasdasdas:", userDataFromStorage);
+      if (userDataFromStorage !== null) {
+        setuser_id(userDataFromStorage?.id);
+        fetchFrontImages(userDataFromStorage?.id);
       }
     } catch (error) {
       console.error("Error fetching user id:", error);
@@ -59,139 +77,156 @@ const HomepageOne = ({ route }) => {
 
   return (
     <>
-      <View style={styles.container}>
-        <LinearGradient
-          colors={["#EEF7FE", "#FCEEFE"]}
-          start={{ x: 0, y: 0.3 }}
-          end={{ x: 0.6, y: 0.6 }}
-          style={{
-            borderBottomRightRadius: 30,
-            borderBottomLeftRadius: 30,
-          }}
-        >
-          <View style={styles.headerContainer}>
-            <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-              <TouchableOpacity style={styles.backbut} onPress={goBack}>
-                <Ionicons
-                  name="ios-chevron-back-sharp"
-                  size={28}
-                  color="#670097"
-                />
-              </TouchableOpacity>
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 24,
-                  fontWeight: "600",
-                  color: "#0D3559",
-                  marginBottom: 5,
-                }}
-              >
-                Welcome
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 16,
-                  fontWeight: "400",
-                  color: "#0D3559",
-                }}
-              >
-                Review all your properties.
-              </Text>
-            </View>
-          </View>
-        </LinearGradient>
-        <View
-          style={{
-            marginHorizontal: 24,
-            paddingTop: wp(9),
-            marginBottom: wp(9),
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 20,
-              fontWeight: "600",
-              color: "#122359",
-            }}
-          >
-            Texas Electricity Areas
-          </Text>
-        </View>
-        <View
-          style={{
-            alignItems: "center",
-            alignSelf: "center",
-          }}
-        >
-          <Image
-            style={{
-              resizeMode: "contain",
-              height: hp("37%"),
-              width: wp("100%"),
-            }}
-            source={require("../../assets/Blank_map.png")}
-          />
-        </View>
-        <View
-          style={{
-            marginHorizontal: 24,
-            paddingTop: wp(4.5),
-            marginBottom: 22,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 20,
-              fontWeight: "600",
-              color: "#122359",
-            }}
-          >
-            Your properties
-          </Text>
-        </View>
-        <View style={styles.propertieontainer}>
-          <View style={{ justifyContent: "center", marginHorizontal: 11 }}>
-            <Text
+      {isLoading === true ? null : (
+        <>
+          <View style={styles.container}>
+            <LinearGradient
+              colors={["#EEF7FE", "#FCEEFE"]}
+              start={{ x: 0, y: 0.3 }}
+              end={{ x: 0.6, y: 0.6 }}
               style={{
-                justifyContent: "center",
-                fontFamily: "Roboto-Regular",
-                fontSize: 18,
-                fontWeight: "600",
-                color: "#122359",
+                borderBottomRightRadius: 30,
+                borderBottomLeftRadius: 30,
               }}
             >
-              Property:1
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-evenly",
-              marginLeft: 40,
-            }}
-          >
-            {route.params?.selectedImage ? (
-              <Image style={styles.image} source={{ uri: front_image }} />
-            ) : (
+              <View style={styles.headerContainer}>
+                <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+                  <TouchableOpacity style={styles.backbut} onPress={goBack}>
+                    <Ionicons
+                      name="ios-chevron-back-sharp"
+                      size={28}
+                      color="#670097"
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      fontFamily: "Roboto-Regular",
+                      fontSize: 24,
+                      fontWeight: "600",
+                      color: "#0D3559",
+                      marginBottom: 5,
+                    }}
+                  >
+                    Welcome
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: "Roboto-Regular",
+                      fontSize: 16,
+                      fontWeight: "400",
+                      color: "#0D3559",
+                    }}
+                  >
+                    Review all your properties.
+                  </Text>
+                </View>
+              </View>
+            </LinearGradient>
+            <View
+              style={{
+                marginHorizontal: 24,
+                paddingTop: wp(9),
+                marginBottom: wp(9),
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 20,
+                  fontWeight: "600",
+                  color: "#122359",
+                }}
+              >
+                Texas Electricity Areas
+              </Text>
+            </View>
+            <View
+              style={{
+                alignItems: "center",
+                alignSelf: "center",
+              }}
+            >
               <Image
-                style={styles.image}
-                source={require("../../assets/frontpage.png")}
-              />
-            )}
-            <View style={{ marginLeft: 20 }}>
-              <Image
-                style={styles.image}
-                source={require("../../assets/frontpage.png")}
+                style={{
+                  resizeMode: "contain",
+                  height: hp("37%"),
+                  width: wp("100%"),
+                }}
+                source={require("../../assets/Blank_map.png")}
               />
             </View>
+            <View
+              style={{
+                marginHorizontal: 24,
+                paddingTop: wp(4.5),
+                marginBottom: 22,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 20,
+                  fontWeight: "600",
+                  color: "#122359",
+                }}
+              >
+                Your properties
+              </Text>
+            </View>
+            <ScrollView contentContainerStyle={styles.propertieontainer}>
+              {propertiesData &&
+                propertiesData?.map((el, idx) => {
+                  return (
+                    <View key={idx + 1} style={{ flexDirection: "row" }}>
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          marginHorizontal: 11,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            justifyContent: "center",
+                            fontFamily: "Roboto-Regular",
+                            fontSize: 18,
+                            fontWeight: "600",
+                            color: "#122359",
+                          }}
+                        >
+                          Property: {idx + 1}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          marginLeft: 40,
+                        }}
+                      >
+                        <Image
+                          style={styles.image}
+                          source={{
+                            uri: `${ApiData.url}/front_image/${el.front_image_url}`,
+                          }}
+                        />
+
+                        <View style={{ marginLeft: 20 }}>
+                          <Image
+                            style={styles.image}
+                            source={{
+                              uri: `${ApiData.url}/back_image/${el.back_image_url}`,
+                            }}
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  );
+                })}
+            </ScrollView>
           </View>
-        </View>
-      </View>
+        </>
+      )}
     </>
   );
 };
@@ -234,5 +269,7 @@ const styles = StyleSheet.create({
     height: wp("22%"),
     resizeMode: "contain",
     alignItems: "center",
+    borderWidth: 1,
+    borderColor: "black",
   },
 });
