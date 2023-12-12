@@ -15,11 +15,46 @@ import {
 } from "react-native-responsive-screen";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiData from "../../apiconfig";
 
-const UpdateBackImage = ({ route, navigation }) => {
+const UpdateFrontImage = ({ route, navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [user_id, setuser_id] = useState(null);
+
+  useEffect(() => {
+    const fetchuserData = async () => {
+      try {
+        const userDataString = await AsyncStorage.getItem("userData");
+        const userData = await getuserDataFromStorage();
+
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          // console.log("fetuchdata", userData);
+          // console.log("fetuchd_id", userData.id);
+          setuser_id(userData.id);
+          await AsyncStorage.setItem("user_id:", userData.id.toString());
+          const storedUserId = await AsyncStorage.getItem("user_id");
+          console.log("Stored user_id:", storedUserId);
+        }
+      } catch (error) {
+        console.error("Error fetching login data", error);
+      }
+    };
+
+    fetchuserData();
+  }, []);
+
+  const getuserDataFromStorage = async () => {
+    try {
+      const userDataString = await AsyncStorage.getItem("userData");
+      return userDataString ? JSON.parse(userDataString) : null;
+    } catch (error) {
+      console.error("Error retrieving login data from storage", error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     const imageUri = route.params?.imageUri;
@@ -54,16 +89,18 @@ const UpdateBackImage = ({ route, navigation }) => {
     setLoading(true);
 
     try {
+      const formData = new FormData();
       const filename = selectedImage.uri.substring(
         selectedImage.uri.lastIndexOf("/") + 1
       );
-
-      const formData = new FormData();
       formData.append("backimage", {
         uri: selectedImage.uri,
-        type: "image/jpeg", // Adjust the type accordingly
-        name: filename, // Adjust the name accordingly
+        type: "image/jpeg",
+        name: filename,
       });
+
+      formData.append("user_id", user_id);
+      console.log("user_id-:", user_id);
 
       const response = await axios.post(
         `${ApiData.url}/api/v1/backimage/create`,
@@ -128,9 +165,7 @@ const UpdateBackImage = ({ route, navigation }) => {
         </Text>
       </View>
       <View style={styles.buttonContainer}>
-        {loading ? (
-          <ActivityIndicator size="large" color="#002896" />
-        ) : (
+        {!loading ? (
           <>
             <TouchableOpacity
               onPress={uploadImage}
@@ -159,13 +194,15 @@ const UpdateBackImage = ({ route, navigation }) => {
               <Text style={styles.buttonText}>Decline</Text>
             </TouchableOpacity>
           </>
+        ) : (
+          <ActivityIndicator size="large" color="#002896" />
         )}
       </View>
     </SafeAreaView>
   );
 };
 
-export default UpdateBackImage;
+export default UpdateFrontImage;
 
 const styles = StyleSheet.create({
   container: {

@@ -62,19 +62,27 @@ const SignUP = () => {
         phone_number,
         password,
       };
-      console.log("Datauserssignup", requestData);
       await axios
         .post(apiUrl, requestData)
         .then(async (response) => {
           console.log("signup_data::", response.data);
-          await AsyncStorage.setItem(
-            "userData",
-            JSON.stringify(response.data.newUser)
-          );
-          navigation.navigate("RegistrationVerify");
+
+          if (response.data.message === "User with this email already exist!") {
+            Alert.alert("Error", response.data.message);
+          } else {
+            await AsyncStorage.setItem(
+              "userData",
+              JSON.stringify(response.data.newUser)
+            );
+            console.log("response", response);
+            navigation.navigate("RegistrationVerify");
+          }
         })
         .catch((error) => {
           console.log(error);
+
+          console.log("error", error);
+
           const errorMessage =
             error.response?.data?.message ||
             "Account already exists use a different email.";
@@ -264,7 +272,7 @@ const SignUP = () => {
                   placeholderTextColor="#858585"
                 />
                 <MaterialCommunityIcons
-                  name={showPassword ? "eye-off" : "eye"}
+                  name={showPassword ? "eye" : "eye-off"}
                   size={26}
                   color="#346AFE"
                   style={{
