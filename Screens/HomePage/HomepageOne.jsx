@@ -103,7 +103,7 @@ const HomepageOne = ({ route }) => {
       </LinearGradient>
       {isLoading ? (
         <View style={styles.loader}>
-          <ActivityIndicator size="large" color="#346AFE" />
+          <ActivityIndicator size={73} color="#346AFE" />
         </View>
       ) : (
         <>
@@ -143,7 +143,7 @@ const HomepageOne = ({ route }) => {
           <View
             style={{
               marginHorizontal: 24,
-              paddingTop: wp(4),
+              paddingTop: wp(3),
               marginBottom: 22,
             }}
           >

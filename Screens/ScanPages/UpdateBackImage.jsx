@@ -195,7 +195,7 @@ const UpdateFrontImage = ({ route, navigation }) => {
             </TouchableOpacity>
           </>
         ) : (
-          <ActivityIndicator size="large" color="#002896" />
+          <ActivityIndicator size="large" color="#346AFE" />
         )}
       </View>
     </SafeAreaView>

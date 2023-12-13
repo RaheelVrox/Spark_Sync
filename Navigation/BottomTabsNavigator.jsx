@@ -350,7 +350,6 @@ const style = StyleSheet.create({
     elevation: 20,
     height: Platform.OS === "ios" ? wp(20) : wp(17),
     marginBottom: Platform.OS === "ios" ? -5 : wp(0),
-    position: "relative",
-    borderRadius: wp(2),
+    position: "relative"
   },
 });
