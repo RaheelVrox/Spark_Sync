@@ -28,8 +28,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA_ROLL"],
-      "package": "com.raheelmubarik12.Spark_Sync"
+      "permissions": ["CAMERA_ROLL"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
