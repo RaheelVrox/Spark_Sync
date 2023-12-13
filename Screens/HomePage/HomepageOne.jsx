@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -25,200 +26,194 @@ const HomepageOne = ({ route }) => {
 
   const navigation = useNavigation();
   const [user_id, setuser_id] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [propertiesData, setPropertiesData] = useState([]);
 
-  // console.log("user_id", user_id);
-
   useEffect(() => {
-    getUserId();
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const value = await AsyncStorage.getItem("userData");
+        const storedUserData = await AsyncStorage.getItem("userData");
+        const userDataFromStorage = JSON.parse(storedUserData) || { id: null };
+
+        if (userDataFromStorage !== null) {
+          setuser_id(userDataFromStorage?.id);
+          const apiUrl = `${ApiData.url}/api/v1/frontimage/${userDataFromStorage?.id}`;
+          const response = await axios.get(apiUrl);
+          const fetchedFrontImages = response.data;
+          setPropertiesData(fetchedFrontImages?.properties);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        // Hide the loader after a specific duration (3 seconds)
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      }
+    };
+
+    fetchData();
   }, [route.params?.selectedImage]);
 
-  const fetchFrontImages = async (value) => {
-    try {
-      const apiUrl = `${ApiData.url}/api/v1/frontimage/${value}`;
-      const response = await axios.get(apiUrl);
-      const fetchedFrontImages = response.data;
-      console.log("user:", value);
-      setPropertiesData(fetchedFrontImages?.properties);
-
-      console.log("Fetched Front Images:", fetchedFrontImages?.properties);
-    } catch (error) {
-      console.error("Error fetching front images:", error);
-    }
-  };
-
-  const getUserId = async () => {
-    try {
-      const value = await AsyncStorage.getItem("userData");
-      const storedUserData = await AsyncStorage.getItem("userData");
-      const userDataFromStorage = JSON.parse(storedUserData) || { id: null };
-
-      console.log("asdasdasdas:", userDataFromStorage);
-      if (userDataFromStorage !== null) {
-        setuser_id(userDataFromStorage?.id);
-        fetchFrontImages(userDataFromStorage?.id);
-      }
-    } catch (error) {
-      console.error("Error fetching user id:", error);
-    }
-  };
-
   return (
-    <>
-      {isLoading === true ? null : (
-        <>
-          <View style={styles.container}>
-            <LinearGradient
-              colors={["#EEF7FE", "#FCEEFE"]}
-              start={{ x: 0, y: 0.3 }}
-              end={{ x: 0.6, y: 0.6 }}
-              style={{
-                borderBottomRightRadius: 30,
-                borderBottomLeftRadius: 30,
-              }}
-            >
-              <View style={styles.headerContainer}>
-                <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-                  <TouchableOpacity style={styles.backbut} onPress={goBack}>
-                    <Ionicons
-                      name="ios-chevron-back-sharp"
-                      size={28}
-                      color="#670097"
-                    />
-                  </TouchableOpacity>
-                  <Text
-                    style={{
-                      fontFamily: "Roboto-Regular",
-                      fontSize: 24,
-                      fontWeight: "600",
-                      color: "#122359",
-                      marginBottom: 5,
-                    }}
-                  >
-                    Welcome
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: "Roboto-Regular",
-                      fontSize: 16,
-                      fontWeight: "400",
-                      color: "#3D3D3D",
-                    }}
-                  >
-                    Review all your properties.
-                  </Text>
-                </View>
-              </View>
-            </LinearGradient>
-            <View
-              style={{
-                marginHorizontal: 24,
-                paddingTop: wp(9),
-                marginBottom: wp(9),
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 20,
-                  fontWeight: "600",
-                  color: "#122359",
-                }}
-              >
-                Texas Electricity Areas
-              </Text>
-            </View>
-            <View
-              style={{
-                alignItems: "center",
-                alignSelf: "center",
-              }}
-            >
-              <Image
-                style={{
-                  resizeMode: "contain",
-                  height: hp("37%"),
-                  width: wp("100%"),
-                }}
-                source={require("../../assets/Blank_map.png")}
+    <View style={styles.container}>
+      <LinearGradient
+        colors={["#EEF7FE", "#FCEEFE"]}
+        start={{ x: 0, y: 0.3 }}
+        end={{ x: 0.6, y: 0.6 }}
+        style={{
+          borderBottomRightRadius: 30,
+          borderBottomLeftRadius: 30,
+        }}
+      >
+        <View style={styles.headerContainer}>
+          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+            <TouchableOpacity style={styles.backbut} onPress={goBack}>
+              <Ionicons
+                name="ios-chevron-back-sharp"
+                size={28}
+                color="#670097"
               />
-            </View>
-            <View
+            </TouchableOpacity>
+            <Text
               style={{
-                marginHorizontal: 24,
-                paddingTop: wp(4),
-                marginBottom: 22,
+                fontFamily: "Roboto-Regular",
+                fontSize: 24,
+                fontWeight: "600",
+                color: "#122359",
+                marginBottom: 5,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 20,
-                  fontWeight: "600",
-                  color: "#122359",
-                }}
-              >
-                Your properties
-              </Text>
-            </View>
-            <ScrollView
-              contentContainerStyle={styles.propertieontainer}
-              horizontal
-              showsHorizontalScrollIndicator={false}
+              Welcome
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 16,
+                fontWeight: "400",
+                color: "#3D3D3D",
+              }}
             >
-              {propertiesData &&
-                propertiesData?.map((el, idx) => {
-                  return (
-                    <View key={idx + 1} style={{ flexDirection: "row" }}>
-                      <View
+              Review all your properties.
+            </Text>
+          </View>
+        </View>
+      </LinearGradient>
+      {isLoading ? (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#346AFE" />
+        </View>
+      ) : (
+        <>
+          <View
+            style={{
+              marginHorizontal: 24,
+              paddingTop: wp(9),
+              marginBottom: wp(9),
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 20,
+                fontWeight: "600",
+                color: "#122359",
+              }}
+            >
+              Texas Electricity Areas
+            </Text>
+          </View>
+          <View
+            style={{
+              alignItems: "center",
+              alignSelf: "center",
+            }}
+          >
+            <Image
+              style={{
+                resizeMode: "contain",
+                height: hp("37%"),
+                width: wp("100%"),
+              }}
+              source={require("../../assets/Blank_map.png")}
+            />
+          </View>
+          <View
+            style={{
+              marginHorizontal: 24,
+              paddingTop: wp(4),
+              marginBottom: 22,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Roboto-Regular",
+                fontSize: 20,
+                fontWeight: "600",
+                color: "#122359",
+              }}
+            >
+              Your properties
+            </Text>
+          </View>
+          <ScrollView
+            contentContainerStyle={styles.propertieontainer}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {propertiesData &&
+              propertiesData?.map((el, idx) => {
+                return (
+                  <View key={idx + 1} style={{ flexDirection: "row" }}>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        marginHorizontal: 11,
+                      }}
+                    >
+                      <Text
                         style={{
                           justifyContent: "center",
-                          marginHorizontal: 11,
+                          fontFamily: "Roboto-Regular",
+                          fontSize: 18,
+                          fontWeight: "600",
+                          color: "#122359",
                         }}
                       >
-                        <Text
-                          style={{
-                            justifyContent: "center",
-                            fontFamily: "Roboto-Regular",
-                            fontSize: 18,
-                            fontWeight: "600",
-                            color: "#122359",
-                          }}
-                        >
-                          Property: {idx + 1}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
-                          marginLeft: wp(6),
-                          gap: 20,
-                        }}
-                      >
-                        <Image
-                          style={styles.image}
-                          source={{
-                            uri: `${ApiData.url}/front_image/${el.front_image_url}`,
-                          }}
-                        />
-                        <Image
-                          style={styles.image}
-                          source={{
-                            uri: `${ApiData.url}/back_image/${el.back_image_url}`,
-                          }}
-                        />
-                      </View>
+                        Property: {idx + 1}
+                      </Text>
                     </View>
-                  );
-                })}
-            </ScrollView>
-          </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-evenly",
+                        marginLeft: wp(6),
+                        gap: 20,
+                      }}
+                    >
+                      <Image
+                        style={styles.image}
+                        source={{
+                          uri: `${ApiData.url}/front_image/${el.front_image_url}`,
+                        }}
+                      />
+                      <Image
+                        style={styles.image}
+                        source={{
+                          uri: `${ApiData.url}/back_image/${el.back_image_url}`,
+                        }}
+                      />
+                    </View>
+                  </View>
+                );
+              })}
+          </ScrollView>
         </>
       )}
-    </>
+    </View>
   );
 };
 
@@ -262,5 +257,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#FCEEFE",
+  },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

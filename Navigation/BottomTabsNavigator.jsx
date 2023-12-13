@@ -18,6 +18,7 @@ import UploadBackpage from "../Screens/ScanPages/UploadBackpage";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiData from "../apiconfig";
+import ForgotPassword from "../Screens/Password Recovery/ForgotPassword";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -189,6 +190,11 @@ const ProfileStack = ({ navigation }) => {
         }}
         name="EditProfile"
         component={EditProfile}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="ForgotPassword"
+        component={ForgotPassword}
       />
     </Stack.Navigator>
   );
