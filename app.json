@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "usesAppleSignIn": true,
@@ -21,14 +23,18 @@
       "infoPlist": {
         "NSCameraUsageDescription": "We need access to your camera",
         "NSPhotoLibraryUsageDescription": "We need access to your photo library"
-      }
+      },
+      "bundleIdentifier": "com.munozr1.SparkSync"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA_ROLL"]
+      "permissions": [
+        "CAMERA_ROLL"
+      ],
+      "package": "com.raheelmubarik12.Spark_Sync"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -38,7 +44,9 @@
         "projectId": "6f255227-8668-4c9a-9ba3-e01891337c86"
       }
     },
-    "plugins": ["expo-apple-authentication"],
+    "plugins": [
+      "expo-apple-authentication"
+    ],
     "schema": "SparkSync"
   }
 }
