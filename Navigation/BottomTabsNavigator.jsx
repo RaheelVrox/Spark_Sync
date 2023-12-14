@@ -19,6 +19,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiData from "../apiconfig";
 import ForgotPassword from "../Screens/Password Recovery/ForgotPassword";
+import LoginRegister from "../Screens/LoginRegister/LoginRegister";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -192,9 +193,20 @@ const ProfileStack = ({ navigation }) => {
         component={EditProfile}
       />
       <Stack.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          tabBarVisible: false, // Hide the bottom tab bar on this screen
+        }}
         name="ForgotPassword"
         component={ForgotPassword}
+      />
+      <Stack.Screen
+        options={({ route }) => ({
+          headerShown: false,
+          tabBarVisible: false, // Hide tab bar on the first screen (Profile)
+        })}
+        name="LoginRegister"
+        component={LoginRegister}
       />
     </Stack.Navigator>
   );
@@ -303,36 +315,11 @@ const BottomTabsNavigator = () => {
           headerTitle: "",
           tabBarIcon: ({ color, size }) => (
             <>
-              {/* {profile_imageCheck ? (
-                <Image
-                  style={{
-                    resizeMode: "contain",
-                    alignSelf: "center",
-                    width: 35,
-                    height: 35,
-                    borderRadius: 100,
-                  }}
-                  source={{
-                    uri: profile_image,
-                  }}
-                /> */}
-              {/* ) : ( */}
               <Ionicons
                 name="ios-person-circle-sharp"
                 color={color}
                 size={size + 6}
               />
-              {/* <Image
-                  style={{
-                    resizeMode: "contain",
-                    alignSelf: "center",
-                    width: 35,
-                    height: 35,
-                    borderRadius: 100,
-                  }}
-                  source={require("../assets/profile_img.png")}
-                /> */}
-              {/* )} */}
             </>
           ),
         }}
@@ -350,6 +337,6 @@ const style = StyleSheet.create({
     elevation: 20,
     height: Platform.OS === "ios" ? wp(20) : wp(17),
     marginBottom: Platform.OS === "ios" ? -5 : wp(0),
-    position: "relative"
+    position: "relative",
   },
 });

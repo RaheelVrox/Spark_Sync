@@ -253,7 +253,7 @@ const WelcomeBack = () => {
           style={{
             justifyContent: "center",
             alignItems: "center",
-            paddingTop: wp(5),
+            // paddingTop: wp(5),
             flexDirection: "row",
             flex: 1,
           }}
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: wp(55),
+    marginTop: wp(45),
   },
 });
 

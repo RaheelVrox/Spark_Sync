@@ -55,7 +55,7 @@ const HomepageOne = ({ route }) => {
     };
 
     fetchData();
-  }, [route.params?.selectedImage]);
+  }, [route]);
 
   return (
     <View style={styles.container}>
@@ -107,109 +107,124 @@ const HomepageOne = ({ route }) => {
         </View>
       ) : (
         <>
-          <View
-            style={{
-              marginHorizontal: 24,
-              paddingTop: wp(9),
-              marginBottom: wp(9),
-            }}
-          >
-            <Text
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View
               style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 20,
-                fontWeight: "600",
-                color: "#122359",
+                marginHorizontal: 24,
+                paddingTop: wp(9),
+                marginBottom: wp(9),
               }}
             >
-              Texas Electricity Areas
-            </Text>
-          </View>
-          <View
-            style={{
-              alignItems: "center",
-              alignSelf: "center",
-            }}
-          >
-            <Image
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 20,
+                  fontWeight: "600",
+                  color: "#122359",
+                }}
+              >
+                Texas Electricity Areas
+              </Text>
+            </View>
+            <View
               style={{
-                resizeMode: "contain",
-                height: hp("37%"),
-                width: wp("100%"),
-              }}
-              source={require("../../assets/Blank_map.png")}
-            />
-          </View>
-          <View
-            style={{
-              marginHorizontal: 24,
-              paddingTop: wp(3),
-              marginBottom: 22,
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 20,
-                fontWeight: "600",
-                color: "#122359",
+                alignItems: "center",
+                alignSelf: "center",
               }}
             >
-              Your properties
-            </Text>
-          </View>
-          <ScrollView
-            contentContainerStyle={styles.propertieontainer}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          >
-            {propertiesData &&
-              propertiesData?.map((el, idx) => {
-                return (
-                  <View key={idx + 1} style={{ flexDirection: "row" }}>
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        marginHorizontal: 11,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          justifyContent: "center",
-                          fontFamily: "Roboto-Regular",
-                          fontSize: 18,
-                          fontWeight: "600",
-                          color: "#122359",
-                        }}
-                      >
-                        Property: {idx + 1}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-evenly",
-                        marginLeft: wp(6),
-                        gap: 20,
-                      }}
-                    >
-                      <Image
-                        style={styles.image}
-                        source={{
-                          uri: `${ApiData.url}/front_image/${el.front_image_url}`,
-                        }}
-                      />
-                      <Image
-                        style={styles.image}
-                        source={{
-                          uri: `${ApiData.url}/back_image/${el.back_image_url}`,
-                        }}
-                      />
-                    </View>
-                  </View>
-                );
-              })}
+              <Image
+                style={{
+                  resizeMode: "contain",
+                  height: hp("35%"),
+                  width: wp("100%"),
+                }}
+                source={require("../../assets/Blank_map.png")}
+              />
+            </View>
+            <View
+              style={{
+                marginHorizontal: 24,
+                paddingTop: wp(3),
+                marginBottom: 22,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Roboto-Regular",
+                  fontSize: 20,
+                  fontWeight: "600",
+                  color: "#122359",
+                }}
+              >
+                Your properties
+              </Text>
+            </View>
+            {propertiesData.length !== 0 ? (
+              <>
+                <View style={styles.propertieontainer}>
+                  {propertiesData &&
+                    propertiesData?.map((el, idx) => {
+                      return (
+                        <View key={idx + 1} style={{ flexDirection: "row" }}>
+                          <View
+                            style={{
+                              justifyContent: "center",
+                              marginHorizontal: 11,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                justifyContent: "center",
+                                fontFamily: "Roboto-Regular",
+                                fontSize: 18,
+                                fontWeight: "600",
+                                color: "#122359",
+                              }}
+                            >
+                              Property: {idx + 1}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-evenly",
+                              marginLeft: wp(6),
+                              gap: 20,
+                            }}
+                          >
+                            <Image
+                              style={styles.image}
+                              source={{
+                                uri: `${ApiData.url}/front_image/${el.front_image_url}`,
+                              }}
+                            />
+                            <Image
+                              style={styles.image}
+                              source={{
+                                uri: `${ApiData.url}/back_image/${el.back_image_url}`,
+                              }}
+                            />
+                          </View>
+                        </View>
+                      );
+                    })}
+                </View>
+              </>
+            ) : (
+              <View style={{ justifyContent: "center", alignSelf: "center" }}>
+                <Text
+                  style={{
+                    fontFamily: "Roboto-Regular",
+                    fontSize: 16,
+                    fontWeight: "300",
+                    color: "#122359",
+                  }}
+                >
+                  NO Proerties Found
+                </Text>
+              </View>
+            )}
           </ScrollView>
         </>
       )}

@@ -14,7 +14,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import * as Google from "expo-auth-session/providers/google";
+// import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import AuthApple from ".../../../components/Auth";
 
@@ -23,76 +23,11 @@ const LoginRegister = () => {
   const [token, setToken] = useState("");
   const [userInfo, setUserInfo] = useState(null);
 
-  const handleGooglePress = () => {
-    promptAsync();
-  };
+  // const handleGooglePress = () => {
+  //   promptAsync();
+  // };
   const handleEmailPress = () => {
     navigation.navigate("SignUP");
-  };
-
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId:
-      "540523955446-jkfj5mos0c2sda6sdoefki6e2io7if0t.apps.googleusercontent.com",
-    webClientId:
-      "540523955446-i933in45ugmauu2bptr7feru6oafq0jn.apps.googleusercontent.com",
-    iosClientId:
-      "540523955446-d87qjngbbrd52356tuitujekmgiheepa.apps.googleusercontent.com",
-  });
-
-  useEffect(() => {
-    handleEffect();
-  }, [response, token]);
-
-  async function handleEffect() {
-    const user = await getLocalUser();
-    // console.log("Local_User:", user);
-
-    if (!user) {
-      if (response?.type === "success") {
-        // console.log("Authentication Response:", response);
-        setToken(response.authentication.accessToken);
-        getUserInfo(response.authentication.accessToken);
-      } else {
-        // console.log("Authentication Response:", response);
-      }
-    } else {
-      setUserInfo(user);
-      // console.log("Loaded locally:", user);
-    }
-  }
-
-  const getLocalUser = async () => {
-    const data = await AsyncStorage.getItem("@user");
-    if (!data) return null;
-    return JSON.parse(data);
-  };
-
-  const getUserInfo = async (token) => {
-    if (!token) return;
-
-    try {
-      const response = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      if (!response.ok) {
-        console.error(
-          "UserInfo API Error:",
-          response.status,
-          response.statusText
-        );
-        return;
-      }
-
-      const user = await response.json();
-      await AsyncStorage.setItem("@user", JSON.stringify(user));
-      setUserInfo(user);
-    } catch (error) {
-      console.error("UserInfo Fetch Error:", error);
-    }
   };
 
   return (
@@ -152,7 +87,8 @@ const LoginRegister = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => handleGooglePress()}>
+        <TouchableOpacity onPress={() => {}}>
+          {/* <TouchableOpacity onPress={() => handleGooglePress()}> */}
           <View style={{ paddingTop: 21 }}>
             <View style={styles.registerContainer}>
               <Image
@@ -169,7 +105,7 @@ const LoginRegister = () => {
                 placeholder="Continue with Google"
                 placeholderTextColor="#0D3559"
                 editable={false}
-                disabled={!request}
+                // disabled={!request}
               />
             </View>
           </View>
@@ -229,46 +165,29 @@ const LoginRegister = () => {
       </View>
       <View
         style={{
-          justifyContent: "center",
-          alignItems: "center",
-          paddingTop: wp(38),
+          flex: 1,
+          position: "absolute",
+          bottom: 10,
+          alignSelf: "center",
           marginHorizontal: 24,
         }}
       >
         <Text
           style={{
+            textAlign: "center",
             fontFamily: "Roboto-Regular",
             fontSize: 14,
             fontWeight: "400",
-            color: "#3D3D3D",
           }}
         >
           By continuing, you accept the{" "}
-          <Text
-            style={{
-              fontFamily: "Roboto-Regular",
-              fontSize: 14,
-              fontWeight: "400",
-              color: "#346AFE",
-              lineHeight: 30,
-              textDecorationLine: "underline",
-            }}
-          >
+          <Text style={{ color: "#346AFE", textDecorationLine: "underline" }}>
             Term of Use
           </Text>{" "}
-          and
-        </Text>
-        <Text
-          style={{
-            fontFamily: "Roboto-Regular",
-            fontSize: 14,
-            fontWeight: "400",
-            color: "#346AFE",
-            lineHeight: 30,
-            textDecorationLine: "underline",
-          }}
-        >
-          Privacy Policy
+          and{" "}
+          <Text style={{ color: "#346AFE", textDecorationLine: "underline" }}>
+            Privacy Policy
+          </Text>
         </Text>
       </View>
     </View>
@@ -282,7 +201,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: "#fff",
-    paddingTop: 45,
+    // paddingTop: 45,
   },
   image: {
     width: wp("40%"),

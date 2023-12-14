@@ -110,7 +110,15 @@ const SignUP = () => {
             }}
           >
             <View style={styles.headerContainer}>
-              <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "coloum",
+                  marginLeft: 24,
+                  alignItems: "flex-start",
+                  justifyContent: "center",
+                }}
+              >
                 <TouchableOpacity style={styles.backbut} onPress={goBack}>
                   <Ionicons
                     name="ios-chevron-back-sharp"
@@ -127,7 +135,7 @@ const SignUP = () => {
                     marginBottom: 5,
                   }}
                 >
-                  Sign Up
+                  Welcome Back
                 </Text>
                 <Text
                   style={{
@@ -137,14 +145,14 @@ const SignUP = () => {
                     color: "#3D3D3D",
                   }}
                 >
-                  It only takes a minute to create your account
+                  Enter your email address and password
                 </Text>
               </View>
             </View>
           </LinearGradient>
           <View
             style={{
-              paddingTop: wp(11),
+              paddingTop: wp(5),
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -256,12 +264,19 @@ const SignUP = () => {
               >
                 Password
               </Text>
-              <View>
+              <View
+                style={{
+                  ...styles.inputField,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
                 <TextInput
                   secureTextEntry={!showPassword}
                   placeholder="Your password"
                   style={{
-                    ...styles.inputField,
+                    // ...styles.inputField,
+                    width: wp(73),
                     fontSize: 16,
                     fontFamily: "Roboto-Regular",
                     fontWeight: "400",
@@ -275,11 +290,13 @@ const SignUP = () => {
                   name={showPassword ? "eye" : "eye-off"}
                   size={26}
                   color="#346AFE"
-                  style={{
-                    position: "absolute",
-                    alignSelf: "flex-end",
-                    padding: 18,
-                  }}
+                  style={
+                    {
+                      // position: "absolute",
+                      // alignSelf: "flex-end",
+                      // padding: 18,
+                    }
+                  }
                   onPress={toggleShowPassword}
                 />
               </View>
@@ -362,7 +379,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     borderColor: "#EEF7FE",
-    marginBottom: wp("5%"),
+    marginBottom: wp(4),
     paddingLeft: wp(4),
     backgroundColor: "#F3F4FF",
     fontWeight: "600",

@@ -205,129 +205,127 @@ const EditProfile = ({ route }) => {
             </View>
           </View>
         </LinearGradient>
-        <ScrollView>
-          <View style={styles.detailContainer}>
-            <View style={styles.rowContainer}>
-              <Text style={styles.textBold}>Name</Text>
-              <View>
-                <KeyboardAvoidingView
-                  enabled
-                  behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                  <TextInput
-                    placeholder="Your name"
-                    style={{
-                      ...styles.inputField,
-                      fontSize: 14,
-                      fontFamily: "Roboto-Regular",
-                      fontWeight: "400",
-                      color: inputColor,
-                    }}
-                    value={name}
-                    onChangeText={handleNameChange}
-                    placeholderTextColor="#3D3D3D"
-                  />
-                </KeyboardAvoidingView>
-              </View>
-            </View>
-            <View style={styles.rowContainer}>
-              <Text style={styles.textBold}>Address</Text>
-              <View>
-                <KeyboardAvoidingView
-                  enabled
-                  behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                  <TextInput
-                    multiline
-                    placeholder="Your address"
-                    style={{
-                      ...styles.inputField,
-                      fontSize: 14,
-                      fontFamily: "Roboto-Regular",
-                      fontWeight: "400",
-                      color: addressInputColor,
-                      height: hp("7.5%"),
-                    }}
-                    value={address}
-                    onChangeText={handleaddressChange}
-                    placeholderTextColor="#3D3D3D"
-                  />
-                </KeyboardAvoidingView>
-              </View>
-            </View>
-            <View style={styles.rowContainer}>
-              <Text style={styles.textBold}>Phone Number</Text>
-              <View>
-                <KeyboardAvoidingView
-                  enabled
-                  behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                  <TextInput
-                    placeholder="Phone number"
-                    style={{
-                      ...styles.inputField,
-                      fontSize: 14,
-                      fontFamily: "Roboto-Regular",
-                      fontWeight: "400",
-                      color: phoneInputColor,
-                    }}
-                    value={phone_number}
-                    onChangeText={handlePhoneChange}
-                    placeholderTextColor="#3D3D3D"
-                  />
-                </KeyboardAvoidingView>
-              </View>
-            </View>
-            <View style={styles.rowContainer}>
-              <Text style={styles.textBold}>Email</Text>
-              <View>
-                <KeyboardAvoidingView
-                  enabled
-                  behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                  <TextInput
-                    placeholder="Your email"
-                    multiline
-                    style={{
-                      ...styles.inputField,
-                      fontSize: 14,
-                      fontFamily: "Roboto-Regular",
-                      fontWeight: "400",
-                      color: emailInputColor,
-                      height: hp("7.5%"),
-                    }}
-                    value={email}
-                    onChangeText={handleEmailChange}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    autoCompleteType="email"
-                    placeholderTextColor="#3D3D3D"
-                  />
-                </KeyboardAvoidingView>
-              </View>
-            </View>
-            <TouchableOpacity
-              style={styles.Editbutton}
-              onPress={() => handleSubmit()}
-              disabled={loading}
-            >
-              {loading ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Text
+        <View style={styles.detailContainer}>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Name</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Your name"
                   style={{
+                    ...styles.inputField,
                     fontSize: 14,
-                    fontWeight: "600",
                     fontFamily: "Roboto-Regular",
-                    color: "#fff",
+                    fontWeight: "400",
+                    color: inputColor,
                   }}
-                >
-                  Save
-                </Text>
-              )}
-            </TouchableOpacity>
+                  value={name}
+                  onChangeText={handleNameChange}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
           </View>
-        </ScrollView>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Address</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  multiline
+                  placeholder="Your address"
+                  style={{
+                    ...styles.inputField,
+                    fontSize: 14,
+                    fontFamily: "Roboto-Regular",
+                    fontWeight: "400",
+                    color: addressInputColor,
+                    height: hp("7.5%"),
+                  }}
+                  value={address}
+                  onChangeText={handleaddressChange}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Phone Number</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Phone number"
+                  style={{
+                    ...styles.inputField,
+                    fontSize: 14,
+                    fontFamily: "Roboto-Regular",
+                    fontWeight: "400",
+                    color: phoneInputColor,
+                  }}
+                  value={phone_number}
+                  onChangeText={handlePhoneChange}
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textBold}>Email</Text>
+            <View>
+              <KeyboardAvoidingView
+                enabled
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  placeholder="Your email"
+                  multiline
+                  style={{
+                    ...styles.inputField,
+                    fontSize: 14,
+                    fontFamily: "Roboto-Regular",
+                    fontWeight: "400",
+                    color: emailInputColor,
+                    height: hp("7.5%"),
+                  }}
+                  value={email}
+                  onChangeText={handleEmailChange}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoCompleteType="email"
+                  placeholderTextColor="#3D3D3D"
+                />
+              </KeyboardAvoidingView>
+            </View>
+          </View>
+          <TouchableOpacity
+            style={styles.Editbutton}
+            onPress={() => handleSubmit()}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "600",
+                  fontFamily: "Roboto-Regular",
+                  color: "#fff",
+                }}
+              >
+                Save
+              </Text>
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -339,17 +337,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   headerContainer: {
-    height: hp("25%"),
     width: wp("100%"),
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 20,
   },
   detailContainer: {
     backgroundColor: "#EEF7FE",
     marginHorizontal: 24,
     borderRadius: 10,
     marginTop: 40,
-    height: hp("44.6%"),
+    paddingBottom: 30,
   },
   rowContainer: {
     flexDirection: "row",

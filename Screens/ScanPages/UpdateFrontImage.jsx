@@ -128,8 +128,8 @@ const UpdateFrontImage = ({ route, navigation }) => {
       {selectedImage ? (
         <Image
           style={{
-            width: wp("100%"),
-            height: wp("100%"),
+            width: wp(80),
+            height: wp(80),
             resizeMode: "contain",
             alignSelf: "center",
           }}
@@ -149,21 +149,20 @@ const UpdateFrontImage = ({ route, navigation }) => {
         </TouchableOpacity>
       )}
 
-      <View>
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 24,
-            fontWeight: "600",
-            fontFamily: "Roboto-Regular",
-            color: "#122359",
-            marginHorizontal: 24,
-            marginTop: 60,
-          }}
-        >
-          Would you like to proceed with this image?
-        </Text>
-      </View>
+      <Text
+        style={{
+          textAlign: "center",
+          fontSize: 24,
+          fontWeight: "600",
+          fontFamily: "Roboto-Regular",
+          color: "#122359",
+          marginHorizontal: 24,
+          marginTop: 100,
+        }}
+      >
+        Would you like to proceed with this image?
+      </Text>
+
       <View style={styles.buttonContainer}>
         {!loading ? (
           <>
@@ -212,9 +211,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 80,
-    marginHorizontal: 35,
+    justifyContent: "space-evenly",
+    width: wp(100),
+    position: "absolute",
+    bottom: 15,
   },
   buttonText: {
     fontFamily: "Roboto-Regular",

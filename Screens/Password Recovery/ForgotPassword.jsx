@@ -111,7 +111,7 @@ const ForgotPassword = () => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => setSelectedOption("phone")}
           style={styles.containerbox}
         >
@@ -144,7 +144,7 @@ const ForgotPassword = () => {
               Sent to your phone number
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <TouchableOpacity style={styles.button} onPress={handleContinue}>
         <Text

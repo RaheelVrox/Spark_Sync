@@ -42,7 +42,12 @@ const StackNavigation = () => {
   }, [navigation]);
 
   return (
-    <Stack.Navigator initialRouteName="FrontPage">
+    <Stack.Navigator
+      initialRouteName="FrontPage"
+      screenOptions={{
+        animation: "slide_from_right",
+      }}
+    >
       {userData === null ? (
         <>
           <Stack.Screen
@@ -137,6 +142,11 @@ const StackNavigation = () => {
             options={{ headerShown: false }}
             name="BottomTabsNavigator"
             component={BottomTabsNavigator}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="LoginRegister"
+            component={LoginRegister}
           />
         </>
       )}

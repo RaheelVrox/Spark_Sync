@@ -160,7 +160,7 @@ const PasswordVerify = () => {
                   marginBottom: 5,
                 }}
               >
-                Verify Login
+                Verify
               </Text>
               <Text
                 style={{
@@ -171,16 +171,6 @@ const PasswordVerify = () => {
                 }}
               >
                 Enter OTP Code sent to your email.
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 16,
-                  fontWeight: "400",
-                  color: "#3D3D3D",
-                }}
-              >
-                The code will expire in 01:30
               </Text>
             </View>
           </View>
@@ -319,6 +309,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: hp("48%"),
+    marginTop: hp("40%"),
   },
 });

@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: hp("48%"),
+    marginTop: hp("40%"),
   },
 });
 

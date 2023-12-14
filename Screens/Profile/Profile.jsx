@@ -10,6 +10,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Updates from "expo-updates";
 import ApiData from "../../apiconfig.js";
+import RNRestart from "react-native-restart";
 
 const Profile = ({ route }) => {
   const navigation = useNavigation();
@@ -26,8 +27,11 @@ const Profile = ({ route }) => {
 
   const handleSignOut = async () => {
     try {
-      await AsyncStorage.removeItem("userData");
-      await Updates.reloadAsync();
+      await AsyncStorage.clear();
+      // await Updates.reloadAsync();
+      RNRestart.restart();
+      // navigation.navigate("LoginRegister");
+      Restart();
     } catch (error) {
       console.error("Error logging out:", error.message);
     }
@@ -77,67 +81,65 @@ const Profile = ({ route }) => {
         }}
       >
         <View style={styles.headerContainer}>
-          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            {userData?.profile_image ? (
-              <>
-                <Image
-                  style={{
-                    resizeMode: "contain",
-                    marginBottom: 16,
-                    alignSelf: "center",
-                    width: 100,
-                    height: 100,
-                    borderRadius: 100,
-                  }}
-                  source={{
-                    uri: profileImage,
-                  }}
-                />
-              </>
-            ) : (
-              <>
-                <Image
-                  style={{
-                    resizeMode: "contain",
-                    marginBottom: 16,
-                    alignSelf: "center",
-                    width: 100,
-                    height: 100,
-                    borderRadius: 50,
-                  }}
-                  source={require("../../assets/profile_img.png")}
-                />
-              </>
-            )}
+          {userData?.profile_image ? (
+            <>
+              <Image
+                style={{
+                  resizeMode: "contain",
+                  marginBottom: 16,
+                  alignSelf: "center",
+                  width: 100,
+                  height: 100,
+                  borderRadius: 100,
+                }}
+                source={{
+                  uri: profileImage,
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <Image
+                style={{
+                  resizeMode: "contain",
+                  marginBottom: 16,
+                  alignSelf: "center",
+                  width: 100,
+                  height: 100,
+                  borderRadius: 50,
+                }}
+                source={require("../../assets/profile_img.png")}
+              />
+            </>
+          )}
+          <Text
+            style={{
+              fontFamily: "Roboto-Regular",
+              fontSize: 24,
+              fontWeight: "600",
+              color: "#122359",
+              textAlign: "center",
+            }}
+          >
+            {userData?.name || "Loading..."}
+          </Text>
+          <View>
             <Text
               style={{
                 fontFamily: "Roboto-Regular",
-                fontSize: 24,
-                fontWeight: "600",
-                color: "#122359",
+                fontSize: 16,
+                fontWeight: "400",
+                color: "#3D3D3D",
                 textAlign: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                marginHorizontal: 8,
+                marginTop: 8,
               }}
             >
-              {userData?.name || "Loading..."}
+              {userData?.address || "Address not found!"}
             </Text>
-            <View>
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 16,
-                  fontWeight: "400",
-                  color: "#3D3D3D",
-                  textAlign: "center",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  marginHorizontal: 8,
-                  marginTop: 8,
-                }}
-              >
-                {userData?.address || "Address not found!"}
-              </Text>
-            </View>
           </View>
           <TouchableOpacity
             onPress={handleEditProfile}
@@ -194,6 +196,9 @@ const styles = StyleSheet.create({
     width: wp("100%"),
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonText: {
     fontFamily: "Roboto-Regular",
@@ -206,7 +211,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     borderRadius: 10,
     marginTop: 40,
-    height: hp("31.6%"),
+    // height:
   },
   text: {
     fontFamily: "Roboto-Regular",

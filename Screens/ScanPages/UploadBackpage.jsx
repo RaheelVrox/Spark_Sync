@@ -78,78 +78,51 @@ const UploadBackpage = () => {
                 color: "#3D3D3D",
               }}
             >
-              Please upload the front part of your bill
+              Please upload the back part of your bill
             </Text>
           </View>
         </View>
       </LinearGradient>
-      <View>
+      <View style={{ flex: 1, position: "relative" }}>
+        <View>
+          <View
+            style={{
+              alignSelf: "center",
+              paddingTop: wp(15),
+            }}
+          />
+        </View>
+        <View style={styles.Gallerybox}>
+          <Image
+            style={{
+              width: 100,
+              height: 98,
+              resizeMode: "contain",
+              alignSelf: "center",
+            }}
+            source={require("../../assets/Gallery.png")}
+          />
+        </View>
         <View
           style={{
-            alignSelf: "center",
-            paddingTop: wp(15),
-          }}
-        />
-      </View>
-      <View style={styles.Gallerybox}>
-        <Image
-          style={{
-            width: 104,
-            height: 98,
-            resizeMode: "contain",
-            alignSelf: "center",
-          }}
-          source={require("../../assets/Gallery.png")}
-        />
-      </View>
-      <View
-        style={{
-          marginTop: wp(13),
-        }}
-      >
-        <Text
-          style={{
-            fontFamily: "Roboto-Regular",
-            fontSize: 16,
-            fontWeight: "400",
-            color: "#3D3D3D",
-            marginHorizontal: 24,
-            textAlign: "center",
-            lineHeight: 30,
-          }}
-        >
-          Please upload a high-quality image in either JPG or PNG format. The
-          maximum file size allowed is 10MB.
-        </Text>
-      </View>
-      {/* <TouchableOpacity onPress={pickImage}>
-        <View
-          style={{
-            width: wp("88%"),
-            height: hp("7%"),
-            borderRadius: 10,
-            borderWidth: 1,
-            borderColor: "#EEF7FE",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#EEF7FE",
-            alignSelf: "center",
-            marginTop: wp(20),
+            marginTop: wp(13),
           }}
         >
           <Text
             style={{
-              fontSize: 18,
-              fontWeight: "600",
               fontFamily: "Roboto-Regular",
-              color: "#002896",
+              fontSize: 16,
+              fontWeight: "400",
+              color: "#3D3D3D",
+              marginHorizontal: 24,
+              textAlign: "center",
+              lineHeight: 30,
             }}
           >
-            Retake the picture
+            Please upload a high-quality image in either JPG or PNG format. The
+            maximum file size allowed is 10MB.
           </Text>
         </View>
-      </TouchableOpacity> */}
-      <View>
         <TouchableOpacity onPress={pickImage} style={styles.button}>
           <Text
             style={{
@@ -197,6 +170,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   button: {
+    flex: 1,
     width: wp("88%"),
     height: hp("7%"),
     borderRadius: 10,
@@ -206,6 +180,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#346AFE",
     alignSelf: "center",
-    marginTop: wp(35.5),
+    position: "absolute",
+    bottom: 10,
   },
 });

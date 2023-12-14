@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import StackNavigation from "./Navigation/StackNavigation";
+import { StatusBar } from "expo-status-bar";
 
 // import * as SplashScreen from 'expo-splash-screen';
 // SplashScreen.preventAutoHideAsync();
@@ -25,9 +26,12 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer onLayout={onLayoutRootView}>
-      <StackNavigation />
-    </NavigationContainer>
+    <>
+      <StatusBar />
+      <NavigationContainer onLayout={onLayoutRootView}>
+        <StackNavigation />
+      </NavigationContainer>
+    </>
   );
 };
 
