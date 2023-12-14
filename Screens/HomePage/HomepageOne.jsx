@@ -69,21 +69,21 @@ const HomepageOne = ({ route }) => {
         }}
       >
         <View style={styles.headerContainer}>
-          <View style={{ marginHorizontal: 24, paddingTop: wp(15) }}>
-            <TouchableOpacity style={styles.backbut} onPress={goBack}>
+          <View style={{ marginHorizontal: 24 }}>
+            {/* <TouchableOpacity style={styles.backbut} onPress={goBack}>
               <Ionicons
                 name="ios-chevron-back-sharp"
                 size={28}
                 color="#670097"
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <Text
               style={{
                 fontFamily: "Roboto-Regular",
                 fontSize: 24,
                 fontWeight: "600",
                 color: "#122359",
-                marginBottom: 5,
+                marginTop: 20,
               }}
             >
               Welcome
@@ -94,6 +94,7 @@ const HomepageOne = ({ route }) => {
                 fontSize: 16,
                 fontWeight: "400",
                 color: "#3D3D3D",
+                
               }}
             >
               Review all your properties.
@@ -181,7 +182,7 @@ const HomepageOne = ({ route }) => {
                                 color: "#122359",
                               }}
                             >
-                              Property: {idx + 1}
+                              Property {idx + 1}:
                             </Text>
                           </View>
                           <View
@@ -221,7 +222,7 @@ const HomepageOne = ({ route }) => {
                     color: "#122359",
                   }}
                 >
-                  NO Proerties Found
+                  No Proerties added yet!   
                 </Text>
               </View>
             )}
@@ -240,10 +241,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   headerContainer: {
-    height: hp("25%"),
+    height: hp("20%"),
     width: wp("100%"),
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
+    justifyContent: "center",
   },
   backbut: {
     height: hp("5.5%"),

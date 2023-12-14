@@ -87,8 +87,7 @@ const LoginRegister = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => {}}>
-          {/* <TouchableOpacity onPress={() => handleGooglePress()}> */}
+        {/* <TouchableOpacity onPress={() => {}}>
           <View style={{ paddingTop: 21 }}>
             <View style={styles.registerContainer}>
               <Image
@@ -109,7 +108,7 @@ const LoginRegister = () => {
               />
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={handleEmailPress}>
           <View style={{ paddingTop: 21 }}>
             <View style={styles.registerContainer}>
@@ -121,7 +120,7 @@ const LoginRegister = () => {
               />
               <TextInput
                 style={styles.textInput}
-                placeholder="Continue with Email"
+                placeholder="Register with Email"
                 placeholderTextColor="#0D3559"
                 editable={false}
               />

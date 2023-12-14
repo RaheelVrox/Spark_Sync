@@ -11,6 +11,7 @@ import {
   Platform,
   ScrollView,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -24,6 +25,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiData from "../../apiconfig";
 
 const SignUP = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -44,14 +47,18 @@ const SignUP = () => {
     setEmail(trimmedEmail.toLowerCase());
   };
   const handleSignUp = async () => {
+    setIsLoading(true);
+
     try {
       if (!name || !email || !phone_number || !password) {
         Alert.alert("Error", "Please enter all required details");
+        setIsLoading(false);
         return;
       }
 
       if (password.length < 8) {
         Alert.alert("Error", "Password must be at least 8 characters long");
+        setIsLoading(false);
         return;
       }
 
@@ -69,12 +76,14 @@ const SignUP = () => {
 
           if (response.data.message === "User with this email already exist!") {
             Alert.alert("Error", response.data.message);
+            setIsLoading(false);
           } else {
             await AsyncStorage.setItem(
               "userData",
               JSON.stringify(response.data.newUser)
             );
             console.log("response", response);
+            setIsLoading(false);
             navigation.navigate("RegistrationVerify");
           }
         })
@@ -87,6 +96,7 @@ const SignUP = () => {
             error.response?.data?.message ||
             "Account already exists use a different email.";
           Alert.alert("Error", errorMessage);
+          setIsLoading(false);
         });
     } catch (error) {
       console.error("Error:", error);
@@ -135,7 +145,7 @@ const SignUP = () => {
                     marginBottom: 5,
                   }}
                 >
-                  Welcome Back
+                  Sign Up
                 </Text>
                 <Text
                   style={{
@@ -145,7 +155,7 @@ const SignUP = () => {
                     color: "#3D3D3D",
                   }}
                 >
-                  Enter your email address and password
+                  It only takes a minute to create your account
                 </Text>
               </View>
             </View>
@@ -302,18 +312,35 @@ const SignUP = () => {
               </View>
             </KeyboardAvoidingView>
           </View>
-          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-            <Text
+          {isLoading ? (
+            <View
               style={{
-                fontSize: 18,
-                fontWeight: "600",
-                fontFamily: "Roboto-Regular",
-                color: "#fff",
+                width: wp("88%"),
+                borderRadius: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                alignSelf: "center",
+                marginTop: 20,
               }}
             >
-              Create Account
-            </Text>
-          </TouchableOpacity>
+              <ActivityIndicator size={50} color="#346AFE" />
+            </View>
+          ) : (
+            <>
+              <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "600",
+                    fontFamily: "Roboto-Regular",
+                    color: "#fff",
+                  }}
+                >
+                  Create Account
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
           <View
             style={{
               justifyContent: "center",

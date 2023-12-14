@@ -28,10 +28,10 @@ const Profile = ({ route }) => {
   const handleSignOut = async () => {
     try {
       await AsyncStorage.clear();
-      // await Updates.reloadAsync();
-      RNRestart.restart();
+      await Updates.reloadAsync();
+      // RNRestart.restart();
       // navigation.navigate("LoginRegister");
-      Restart();
+      // Restart();
     } catch (error) {
       console.error("Error logging out:", error.message);
     }
