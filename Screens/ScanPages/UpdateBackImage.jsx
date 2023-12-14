@@ -102,19 +102,23 @@ const UpdateFrontImage = ({ route, navigation }) => {
       formData.append("user_id", user_id);
       console.log("user_id-:", user_id);
 
-      const response = await axios.post(
-        `${ApiData.url}/api/v1/backimage/create`,
-        formData,
-        {
+      await axios
+        .post(`${ApiData.url}/api/v1/backimage/create`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
-      );
+        })
+        .then((res) => {
+          navigation.navigate("AddNew");
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
 
-      console.log("Image upload response:", response);
-      console.log("Image uploaded successfully:", response.data);
-      navigation.navigate("BottomTabsNavigator");
+      // console.log("Image upload response:", response);
+      // console.log("Image uploaded successfully:", response.data);
     } catch (error) {
       console.error("Error uploading image", error);
       Alert.alert("Error uploading image. Please try again.");

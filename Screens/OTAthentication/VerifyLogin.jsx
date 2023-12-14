@@ -168,7 +168,7 @@ const VerifyLogin = () => {
               >
                 Enter OTP Code sent to your email.
               </Text>
-              <Text
+              {/* <Text
                 style={{
                   fontFamily: "Roboto-Regular",
                   fontSize: 16,
@@ -177,7 +177,7 @@ const VerifyLogin = () => {
                 }}
               >
                 The code will expire in 01:30
-              </Text>
+              </Text> */}
             </View>
           </View>
         </LinearGradient>
