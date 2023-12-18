@@ -41,7 +41,7 @@ const FrontPage = () => {
       </View>
       <TouchableOpacity
         style={styles.startbutton}
-        onPress={() => navigation.navigate("LoginRegister")}
+        onPress={() => navigation.navigate("SignUP")}
       >
         <Text
           style={{
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: "900",
     fontWeight: "400",
-    fontFamily: "Montserrat-ExtraBold",
+    fontFamily: "Roboto-Regular",
     color: "#122359",
   },
   startbutton: {

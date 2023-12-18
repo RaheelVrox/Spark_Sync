@@ -41,11 +41,9 @@ const NewPassword = () => {
     // Display an error message to the user
     Alert.alert("Error", errorMessage);
   };
-  console.log("user_id", userdata);
   useEffect(() => {
     const getUserID = async () => {
       const value = await AsyncStorage.getItem("email");
-      console.log("value", value);
       if (value !== null) {
         setUserdata(value);
       }
@@ -78,16 +76,14 @@ const NewPassword = () => {
         newPassword,
         confirmPassword,
       };
-      console.log("requestData", requestData);
       await axios
         .post(apiUrl, requestData)
         .then((response) => {
-          console.log(response.data);
           // await AsyncStorage.setItem("userData", JSON.stringify(response.data));
           navigation.navigate("WelcomeBack");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           // Handle other errors if needed
           handleVerificationError(" Please try again");
         });

@@ -36,11 +36,9 @@ const PasswordVerify = () => {
     navigation.goBack();
   };
 
-  console.log("user_email", useremail);
   useEffect(() => {
     const getUserID = async () => {
       const value = await AsyncStorage.getItem("email");
-      console.log("value", value);
       if (value !== null) {
         setUseremail(value);
       }
@@ -64,15 +62,12 @@ const PasswordVerify = () => {
       const requestData = {
         otp: otp1 + otp2 + otp3 + otp4,
       };
-      console.log("requestData", requestData);
       await axios
         .post(apiUrl, requestData)
         .then(async (response) => {
-          console.log(response);
           navigation.navigate("NewPassword");
         })
         .catch((error) => {
-          console.log(error);
           handleVerificationError("Invalid OTP: Please try again");
         });
     } catch (error) {
@@ -88,11 +83,9 @@ const PasswordVerify = () => {
       };
       await axios
         .post(apiUrl, resendRequestData)
-        .then((response) => {
-          console.log(response);
-        })
+        .then((response) => {})
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     } catch (error) {
       console.error("Error:", error);

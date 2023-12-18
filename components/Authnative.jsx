@@ -19,19 +19,19 @@ export function Auth() {
       if (credential.identityToken) {
         // Handle the received credential
         // Uncomment and modify the following Supabase code if needed
-        const { error, data: { user } } = await supabase.auth.signInWithIdToken({
-          provider: 'apple',
+        const {
+          error,
+          data: { user },
+        } = await supabase.auth.signInWithIdToken({
+          provider: "apple",
           token: credential.identityToken,
         });
-        console.log(JSON.stringify({ error, user }, null, 2));
         if (!error) {
           // User is signed in.
         }
       } else {
         throw new Error("No identityToken.");
       }
-
-      console.log("Credential Data:", credential);
     } catch (e) {
       if (e.code === "ERR_REQUEST_CANCELED") {
         // handle that the user canceled the sign-in flow

@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "Spark_Sync",
-    "slug": "Spark_Sync",
-    "version": "1.0.0",
+    "slug": "spark-sync",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -24,7 +24,7 @@
         "NSCameraUsageDescription": "We need access to your camera",
         "NSPhotoLibraryUsageDescription": "We need access to your photo library"
       },
-      "bundleIdentifier": "com.munozr1.SparkSync"
+      "bundleIdentifier": "com.sparksync"
     },
     "android": {
       "adaptiveIcon": {
@@ -33,20 +33,19 @@
       },
       "permissions": [
         "CAMERA_ROLL"
-      ],
-      "package": "com.raheelmubarik12.Spark_Sync"
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "6f255227-8668-4c9a-9ba3-e01891337c86"
+        "projectId": "c6c3e316-bc77-46ee-b2fd-3a2ffbc4031d"
       }
     },
     "plugins": [
       "expo-apple-authentication"
     ],
-    "schema": "SparkSync"
+    "owner": "zanaenvrox"
   }
 }

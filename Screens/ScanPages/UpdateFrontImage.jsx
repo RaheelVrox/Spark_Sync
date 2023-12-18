@@ -36,7 +36,7 @@ const UpdateFrontImage = ({ route, navigation }) => {
           setuser_id(userData.id);
           await AsyncStorage.setItem("user_id:", userData.id.toString());
           const storedUserId = await AsyncStorage.getItem("user_id");
-          console.log("Stored user_id:", storedUserId);
+          // console.log("Stored user_id:", storedUserId);
         }
       } catch (error) {
         console.error("Error fetching login data", error);
@@ -58,7 +58,7 @@ const UpdateFrontImage = ({ route, navigation }) => {
 
   useEffect(() => {
     const imageUri = route.params?.imageUri;
-    console.log("update_image_uri", imageUri);
+    // console.log("update_image_uri", imageUri);
     if (imageUri) {
       setSelectedImage({ uri: imageUri.uri });
     }
@@ -100,7 +100,7 @@ const UpdateFrontImage = ({ route, navigation }) => {
       });
 
       formData.append("user_id", user_id);
-      console.log("user_id-:", user_id);
+      // console.log("user_id-:", user_id);
 
       const response = await axios.post(
         `${ApiData.url}/api/v1/frontimage/create`,
@@ -112,8 +112,8 @@ const UpdateFrontImage = ({ route, navigation }) => {
         }
       );
 
-      console.log("Image upload response:", response);
-      console.log("Image uploaded successfully:", response.data);
+      // console.log("Image upload response:", response);
+      // console.log("Image uploaded successfully:", response.data);
       navigation.navigate("UploadBackpage");
     } catch (error) {
       console.error("Error uploading image", error);

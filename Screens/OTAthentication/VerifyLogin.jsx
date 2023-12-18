@@ -38,11 +38,9 @@ const VerifyLogin = () => {
   const handleVerificationError = (errorMessage) => {
     Alert.alert("Error", errorMessage);
   };
-  console.log("user_email", useremail);
   useEffect(() => {
     const getUserID = async () => {
       const value = await AsyncStorage.getItem("email");
-      console.log("value", value);
       if (value !== null) {
         setUseremail(value);
       }
@@ -63,12 +61,11 @@ const VerifyLogin = () => {
       await axios
         .post(apiUrl, requestData)
         .then(async (response) => {
-          console.log(response);
           navigation.navigate("BottomTabsNavigator");
           // navigation.navigate("UploadFrontpage");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           handleVerificationError("Invalid OTP: Please try again");
         });
     } catch (error) {
@@ -85,10 +82,9 @@ const VerifyLogin = () => {
       await axios
         .post(apiUrl, resendRequestData)
         .then((response) => {
-          console.log(response);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     } catch (error) {
       console.error("Error:", error);

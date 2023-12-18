@@ -11,15 +11,18 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Updates from "expo-updates";
 import ApiData from "../../apiconfig.js";
 import RNRestart from "react-native-restart";
+import { useUserData } from "../../UserDataContext.js";
 
 const Profile = ({ route }) => {
+  const { setUserData } = useUserData();
+
   const navigation = useNavigation();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserDataSt] = useState(null);
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   // console.log("userDatadsadsadsadsa", userData);
 
-  console.log(loading);
+  // console.log(loading);
 
   useEffect(() => {
     setLoading(!loading);
@@ -27,8 +30,10 @@ const Profile = ({ route }) => {
 
   const handleSignOut = async () => {
     try {
-      await AsyncStorage.clear();
-      await Updates.reloadAsync();
+      setUserData(null);
+
+      // await AsyncStorage.clear();
+      // await Updates.reloadAsync();
       // RNRestart.restart();
       // navigation.navigate("LoginRegister");
       // Restart();
@@ -48,12 +53,12 @@ const Profile = ({ route }) => {
     await axios
       .get(apiUrl)
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         let data = res.data || res;
         let image = `${ApiData.url}/profile_image/${data?.profile_image}`;
         setProfileImage(image);
-        console.log("data", data);
-        setUserData(data);
+        // console.log("data", data);
+        setUserDataSt(data);
       })
       .catch((err) => {});
   };

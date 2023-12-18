@@ -28,7 +28,7 @@ const UploadBackpage = () => {
       if (!result.canceled) {
         const selectedUri = result.assets[0];
         setSelectedImageUri(selectedUri);
-        console.log("Image selected:", selectedUri);
+        // console.log("Image selected:", selectedUri);
         // Navigate to the next screen
         navigation.navigate("UpdateBackImage", {
           imageUri: selectedUri,

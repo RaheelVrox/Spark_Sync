@@ -18,7 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiData from "../../apiconfig";
 
-const UpdateFrontImage = ({ route, navigation }) => {
+const UpdateBackImage = ({ route, navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [user_id, setuser_id] = useState(null);
@@ -36,7 +36,7 @@ const UpdateFrontImage = ({ route, navigation }) => {
           setuser_id(userData.id);
           await AsyncStorage.setItem("user_id:", userData.id.toString());
           const storedUserId = await AsyncStorage.getItem("user_id");
-          console.log("Stored user_id:", storedUserId);
+          // console.log("Stored user_id:", storedUserId);
         }
       } catch (error) {
         console.error("Error fetching login data", error);
@@ -58,7 +58,7 @@ const UpdateFrontImage = ({ route, navigation }) => {
 
   useEffect(() => {
     const imageUri = route.params?.imageUri;
-    console.log("update_image_uri", imageUri);
+    // console.log("update_image_uri", imageUri);
     if (imageUri) {
       setSelectedImage({ uri: imageUri.uri });
     }
@@ -100,7 +100,7 @@ const UpdateFrontImage = ({ route, navigation }) => {
       });
 
       formData.append("user_id", user_id);
-      console.log("user_id-:", user_id);
+      // console.log("user_id-:", user_id);
 
       await axios
         .post(`${ApiData.url}/api/v1/backimage/create`, formData, {
@@ -109,11 +109,11 @@ const UpdateFrontImage = ({ route, navigation }) => {
           },
         })
         .then((res) => {
-          navigation.navigate("AddNew");
+          navigation.navigate("BottomTabsNavigator");
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setLoading(false);
         });
 
@@ -206,7 +206,7 @@ const UpdateFrontImage = ({ route, navigation }) => {
   );
 };
 
-export default UpdateFrontImage;
+export default UpdateBackImage;
 
 const styles = StyleSheet.create({
   container: {

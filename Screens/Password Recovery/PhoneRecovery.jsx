@@ -43,16 +43,16 @@ const PhoneRecovery = () => {
       const requestData = {
         identifier,
       };
-      console.log("requestData", requestData);
+      // console.log("requestData", requestData);
 
       await axios
         .post(apiUrl, requestData)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           navigation.navigate("PasswordVerify");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           handleVerificationError("Invalid phonenumber. Please try again");
         });
     } catch (error) {

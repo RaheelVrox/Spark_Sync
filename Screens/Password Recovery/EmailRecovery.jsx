@@ -50,16 +50,14 @@ const EmailRecovery = () => {
       const requestData = {
         identifier,
       };
-      console.log("requestData", requestData);
       await axios
         .post(apiUrl, requestData)
         .then(async (response) => {
-          console.log(response.data);
           await AsyncStorage.setItem("email", identifier);
           navigation.navigate("PasswordVerify");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           // Handle other errors if needed
           handleVerificationError("Invalid email. Please try again");
         });

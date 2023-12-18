@@ -21,8 +21,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiData from "../../apiconfig";
+import { useUserData } from "../../UserDataContext";
 
 const WelcomeBack = () => {
+  const { setUserData } = useUserData();
+
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -45,8 +48,6 @@ const WelcomeBack = () => {
   };
 
   const handleLogin = async () => {
-    console.log("dsadsadsadsadsadssad");
-
     try {
       // Basic validation to check if each part is not empty
       if (!email) {
@@ -64,13 +65,12 @@ const WelcomeBack = () => {
         email,
         password,
       };
-      console.log("requestData", requestData);
 
       await axios
         .post(apiUrl, requestData)
         .then((res) => {
-          console.log("logindata__:", res.data.user);
-          AsyncStorage.setItem("userData", JSON.stringify(res.data.user));
+          // AsyncStorage.setItem("userData", JSON.stringify(res.data.user));
+          setUserData(res.data.user);
           navigation.navigate("VerifyLogin");
         })
         .catch((error) => {
@@ -159,7 +159,7 @@ const WelcomeBack = () => {
                 fontSize: 16,
                 fontFamily: "Roboto-Regular",
                 fontWeight: "400",
-                color:"#122359"
+                color: "#122359",
               }}
               value={email}
               onChangeText={handleEmailChange}
@@ -192,7 +192,7 @@ const WelcomeBack = () => {
                   fontSize: 16,
                   fontFamily: "Roboto-Regular",
                   fontWeight: "400",
-                  color:"#122359"
+                  color: "#122359",
                 }}
                 value={password}
                 onChangeText={(text) => setPassword(text.replace(/\s/g, ""))}
@@ -200,7 +200,7 @@ const WelcomeBack = () => {
                 placeholderTextColor="#858585"
               />
               <MaterialCommunityIcons
-               name={showPassword ? "eye" : "eye-off"}
+                name={showPassword ? "eye" : "eye-off"}
                 size={26}
                 color="#346AFE"
                 style={{

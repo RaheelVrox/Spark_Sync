@@ -45,9 +45,9 @@ export default function FrontPageScan() {
 
         callGoogleVisionAsync(base64)
           .then((data) => {
-            console.log("data", data?.responses);
-            console.log("HERE");
-            console.log("data", data?.responses.textAnnotations);
+            // console.log("data", data?.responses);
+            // console.log("HERE");
+            // console.log("data", data?.responses.textAnnotations);
             var text = "";
             var locale = null;
             data.responses.forEach((response) => {

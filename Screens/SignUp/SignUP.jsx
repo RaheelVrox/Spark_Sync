@@ -23,8 +23,11 @@ import {
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiData from "../../apiconfig";
+import { useUserData } from "../../UserDataContext";
 
 const SignUP = () => {
+  const { setUserData } = useUserData();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
@@ -72,25 +75,28 @@ const SignUP = () => {
       await axios
         .post(apiUrl, requestData)
         .then(async (response) => {
-          console.log("signup_data::", response.data);
+          // console.log("signup_data::", response.data);
 
           if (response.data.message === "User with this email already exist!") {
             Alert.alert("Error", response.data.message);
             setIsLoading(false);
           } else {
-            await AsyncStorage.setItem(
-              "userData",
-              JSON.stringify(response.data.newUser)
-            );
-            console.log("response", response);
+            // await AsyncStorage.setItem(
+            //   "userData",
+            //   JSON.stringify(response.data.newUser)
+            // );
+
+            setUserData(response.data.newUser);
+
+            // console.log("response", response);
             setIsLoading(false);
             navigation.navigate("RegistrationVerify");
           }
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
 
-          console.log("error", error);
+          // console.log("error", error);
 
           const errorMessage =
             error.response?.data?.message ||

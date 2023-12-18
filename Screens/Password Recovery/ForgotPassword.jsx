@@ -23,12 +23,9 @@ const ForgotPassword = () => {
     }
     if (selectedOption === "email") {
       navigation.navigate("EmailRecovery");
-      // console.log("Email Recovery");
     } else if (selectedOption === "phone") {
       navigation.navigate("PhoneRecovery");
-      // console.log("Phone Recovery");
     } else {
-      console.log("Please select a verification method");
     }
   };
 

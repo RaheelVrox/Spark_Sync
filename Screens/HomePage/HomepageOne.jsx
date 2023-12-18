@@ -33,7 +33,6 @@ const HomepageOne = ({ route }) => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const value = await AsyncStorage.getItem("userData");
         const storedUserData = await AsyncStorage.getItem("userData");
         const userDataFromStorage = JSON.parse(storedUserData) || { id: null };
 
@@ -47,15 +46,52 @@ const HomepageOne = ({ route }) => {
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        // Hide the loader after a specific duration (3 seconds)
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
+        // Hide the loader after fetching data
+        setIsLoading(false);
       }
     };
 
+    // Fetch data when the component mounts
     fetchData();
-  }, [route]);
+
+    // Subscribe to the focus event to refetch data when the screen is focused
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchData();
+    });
+
+    // Cleanup the subscription when the component unmounts
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const value = await AsyncStorage.getItem("userData");
+  //       const storedUserData = await AsyncStorage.getItem("userData");
+  //       const userDataFromStorage = JSON.parse(storedUserData) || { id: null };
+
+  //       if (userDataFromStorage !== null) {
+  //         setuser_id(userDataFromStorage?.id);
+  //         const apiUrl = `${ApiData.url}/api/v1/frontimage/${userDataFromStorage?.id}`;
+  //         const response = await axios.get(apiUrl);
+  //         const fetchedFrontImages = response.data;
+  //         setPropertiesData(fetchedFrontImages?.properties);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     } finally {
+  //       // Hide the loader after a specific duration (3 seconds)
+  //       setTimeout(() => {
+  //         setIsLoading(false);
+  //       }, 2000);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -94,7 +130,6 @@ const HomepageOne = ({ route }) => {
                 fontSize: 16,
                 fontWeight: "400",
                 color: "#3D3D3D",
-                
               }}
             >
               Review all your properties.
@@ -162,11 +197,11 @@ const HomepageOne = ({ route }) => {
             </View>
             {propertiesData.length !== 0 ? (
               <>
-                <View style={styles.propertieontainer}>
-                  {propertiesData &&
-                    propertiesData?.map((el, idx) => {
-                      return (
-                        <View key={idx + 1} style={{ flexDirection: "row" }}>
+                {propertiesData &&
+                  propertiesData?.map((el, idx) => {
+                    return (
+                      <View style={styles.propertieontainer} key={idx}>
+                        <View style={{ flexDirection: "row" }}>
                           <View
                             style={{
                               justifyContent: "center",
@@ -208,9 +243,9 @@ const HomepageOne = ({ route }) => {
                             />
                           </View>
                         </View>
-                      );
-                    })}
-                </View>
+                      </View>
+                    );
+                  })}
               </>
             ) : (
               <View style={{ justifyContent: "center", alignSelf: "center" }}>
@@ -222,7 +257,7 @@ const HomepageOne = ({ route }) => {
                     color: "#122359",
                   }}
                 >
-                  No Proerties added yet!   
+                  No Proerties added yet!
                 </Text>
               </View>
             )}
@@ -262,10 +297,11 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingRight: 10,
     paddingLeft: 10,
-    flexDirection: "row",
+    flexDirection: "coloum",
     marginHorizontal: 24,
     borderRadius: 10,
     height: hp("13%"),
+    marginBottom: 20,
   },
   image: {
     width: wp("22%"),

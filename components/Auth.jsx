@@ -35,7 +35,7 @@ export default function AuthApple() {
       setUserToken(credential);
       SecureStore.setItemAsync("apple-credentials", JSON.stringify(credential));
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -43,7 +43,6 @@ export default function AuthApple() {
     const credentialState = await AppleAuthentication.getCredentialStateAsync(
       userToken.user
     );
-    console.log("credentialstate:", credentialState);
   };
 
   const logout = async () => {
@@ -72,7 +71,6 @@ export default function AuthApple() {
       );
     } else {
       const identityToken = userToken.identityToken;
-      console.log("identity_Token:", identityToken);
       if (identityToken) {
         const parts = identityToken
           .split(".")
@@ -80,7 +78,6 @@ export default function AuthApple() {
             Buffer.from(part.replace(/-/g, "+").replace(/_/g, "/"), "base64")
           );
         const decodedPayload = JSON.parse(parts[1].toString("utf-8"));
-        console.log("Decoded_identity_Token :", decodedPayload);
         const current = Date.now() / 1000;
 
         return (
