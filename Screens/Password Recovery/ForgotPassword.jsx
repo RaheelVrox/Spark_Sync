@@ -75,7 +75,10 @@ const ForgotPassword = () => {
       </LinearGradient>
       <View style={{ flex: 1, paddingTop: wp(9) }}>
         <TouchableOpacity
-          onPress={() => setSelectedOption("email")}
+          onPress={() => {
+            setSelectedOption("email");
+            handleContinue();
+          }}
           style={styles.containerbox}
         >
           <View style={styles.leftBox}>
@@ -143,7 +146,7 @@ const ForgotPassword = () => {
           </View>
         </TouchableOpacity> */}
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleContinue}>
+      {/* <TouchableOpacity style={styles.button} onPress={handleContinue}>
         <Text
           style={{
             fontSize: 18,
@@ -154,7 +157,7 @@ const ForgotPassword = () => {
         >
           Continue
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
