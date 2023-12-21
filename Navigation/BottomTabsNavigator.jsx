@@ -13,7 +13,7 @@ import EditProfile from "../Screens/Profile/EditProfile";
 import UploadFrontpage from "../Screens/ScanPages/UploadFrontpage";
 import { LinearGradient } from "expo-linear-gradient";
 import UpdateFrontImage from "../Screens/ScanPages/UpdateFrontImage";
-import UpdateBackImage from "../Screens/ScanPages/UpdateFrontImage";
+import UpdateBackImage from "../Screens/ScanPages/UpdateBackImage";
 import UploadBackpage from "../Screens/ScanPages/UploadBackpage";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";

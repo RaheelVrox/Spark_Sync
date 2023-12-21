@@ -93,6 +93,8 @@ const UpdateBackImage = ({ route, navigation }) => {
       const filename = selectedImage.uri.substring(
         selectedImage.uri.lastIndexOf("/") + 1
       );
+
+      console.log("user_id", user_id);
       formData.append("backimage", {
         uri: selectedImage.uri,
         type: "image/jpeg",
@@ -109,7 +111,8 @@ const UpdateBackImage = ({ route, navigation }) => {
           },
         })
         .then((res) => {
-          navigation.navigate("BottomTabsNavigator");
+          navigation.navigate("HomeStack", { screen: "HomepageOne" });
+          // console.log("dasdasdas");
           setLoading(false);
         })
         .catch((err) => {

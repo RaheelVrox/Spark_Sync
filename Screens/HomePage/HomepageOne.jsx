@@ -195,7 +195,7 @@ const HomepageOne = ({ route }) => {
                 Your properties
               </Text>
             </View>
-            {propertiesData.length !== 0 ? (
+            {propertiesData?.length !== 0 ? (
               <>
                 {propertiesData &&
                   propertiesData?.map((el, idx) => {
