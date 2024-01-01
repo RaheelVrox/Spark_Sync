@@ -107,7 +107,12 @@ const UpdateBackImage = ({ route, navigation }) => {
       setUploadMessage("");
 
       // Navigation logic after successful upload
-      navigation.navigate("HomeStack", { screen: "HomepageOne" });
+      navigation.navigate("HomeStack", {
+        screen: "HomepageOne",
+        params: {
+          showAlert: true,
+        },
+      });
     } catch (error) {
       console.error("Error uploading image", error);
       setUploadMessage("Error uploading image. Please try again.");

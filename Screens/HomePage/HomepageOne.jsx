@@ -26,6 +26,17 @@ const HomepageOne = ({ route }) => {
     navigation.goBack();
   };
 
+  console.log("dasdsadsa", route?.params?.showAlert);
+
+  useEffect(() => {
+    if (route?.params?.showAlert) {
+      Alert.alert(
+        "Thank You",
+        "Your bill has been submitted. Our sales representative will contact you soon."
+      );
+    }
+  }, [route?.params]);
+
   const navigation = useNavigation();
   const [user_id, setuser_id] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -44,10 +55,6 @@ const HomepageOne = ({ route }) => {
           const response = await axios.get(apiUrl);
           const fetchedFrontImages = response.data;
           setPropertiesData(fetchedFrontImages?.properties);
-          Alert.alert(
-            "Thank You",
-            "Your bill has been submitted. Our sales representative will contact you soon."
-          );
         }
       } catch (error) {
         console.error("Error fetching data:", error);
