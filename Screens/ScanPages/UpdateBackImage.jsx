@@ -5,7 +5,6 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Alert,
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,6 +21,7 @@ const UpdateBackImage = ({ route, navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [user_id, setuser_id] = useState(null);
+  const [uploadMessage, setUploadMessage] = useState("");
 
   useEffect(() => {
     const fetchuserData = async () => {
@@ -31,12 +31,8 @@ const UpdateBackImage = ({ route, navigation }) => {
 
         if (userDataString) {
           const userData = JSON.parse(userDataString);
-          // console.log("fetuchdata", userData);
-          // console.log("fetuchd_id", userData.id);
           setuser_id(userData.id);
           await AsyncStorage.setItem("user_id:", userData.id.toString());
-          const storedUserId = await AsyncStorage.getItem("user_id");
-          // console.log("Stored user_id:", storedUserId);
         }
       } catch (error) {
         console.error("Error fetching login data", error);
@@ -58,7 +54,6 @@ const UpdateBackImage = ({ route, navigation }) => {
 
   useEffect(() => {
     const imageUri = route.params?.imageUri;
-    // console.log("update_image_uri", imageUri);
     if (imageUri) {
       setSelectedImage({ uri: imageUri.uri });
     }
@@ -82,19 +77,19 @@ const UpdateBackImage = ({ route, navigation }) => {
 
   const uploadImage = async () => {
     if (!selectedImage) {
-      Alert.alert("Please select an image before uploading.");
+      setUploadMessage("Please select an image before uploading.");
       return;
     }
 
     setLoading(true);
 
     try {
+      setUploadMessage("Uploading image. Please wait...");
       const formData = new FormData();
       const filename = selectedImage.uri.substring(
         selectedImage.uri.lastIndexOf("/") + 1
       );
 
-      console.log("user_id", user_id);
       formData.append("backimage", {
         uri: selectedImage.uri,
         type: "image/jpeg",
@@ -102,29 +97,20 @@ const UpdateBackImage = ({ route, navigation }) => {
       });
 
       formData.append("user_id", user_id);
-      // console.log("user_id-:", user_id);
 
-      await axios
-        .post(`${ApiData.url}/api/v1/backimage/create`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          navigation.navigate("HomeStack", { screen: "HomepageOne" });
-          // console.log("dasdasdas");
-          setLoading(false);
-        })
-        .catch((err) => {
-          // console.log(err);
-          setLoading(false);
-        });
+      await axios.post(`${ApiData.url}/api/v1/backimage/create`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-      // console.log("Image upload response:", response);
-      // console.log("Image uploaded successfully:", response.data);
+      setUploadMessage("");
+
+      // Navigation logic after successful upload
+      navigation.navigate("HomeStack", { screen: "HomepageOne" });
     } catch (error) {
       console.error("Error uploading image", error);
-      Alert.alert("Error uploading image. Please try again.");
+      setUploadMessage("Error uploading image. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -157,9 +143,7 @@ const UpdateBackImage = ({ route, navigation }) => {
       )}
 
       <View style={styles.buttonContainer}>
-        <View style={{
-          marginBottom: 20
-        }}>  
+        <View style={{ marginBottom: 20 }}>
           <Text
             style={{
               textAlign: "center",
@@ -171,15 +155,19 @@ const UpdateBackImage = ({ route, navigation }) => {
               marginTop: 100,
             }}
           >
-            Would you like to proceed with this image?
+            {uploadMessage
+              ? uploadMessage
+              : "Would you like to proceed with this image?"}
           </Text>
         </View>
-        <View style={{
+        <View
+          style={{
             flexDirection: "row",
             justifyContent: "space-around",
-            alignItems:"center",
+            alignItems: "center",
             width: wp(100),
-        }}>
+          }}
+        >
           {!loading ? (
             <>
               <TouchableOpacity
@@ -227,9 +215,9 @@ const styles = StyleSheet.create({
     paddingTop: wp("25%"),
   },
   buttonContainer: {
-    flexDirection: "coloum",
+    flexDirection: "column",
     justifyContent: "center",
-    alignItems:"center",
+    alignItems: "center",
     width: wp(100),
     position: "absolute",
     bottom: 15,

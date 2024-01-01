@@ -8,6 +8,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Platform,
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -43,6 +44,10 @@ const HomepageOne = ({ route }) => {
           const response = await axios.get(apiUrl);
           const fetchedFrontImages = response.data;
           setPropertiesData(fetchedFrontImages?.properties);
+          Alert.alert(
+            "Thank You",
+            "Your bill has been submitted. Our sales representative will contact you soon."
+          );
         }
       } catch (error) {
         console.error("Error fetching data:", error);
