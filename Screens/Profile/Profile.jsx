@@ -227,8 +227,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1.5,
-    width: wp("31%"),
-    backgroundColor: "#122359",
+    backgroundColor: "#2a2a2a",
     marginTop: 15,
     marginBottom: 11,
   },

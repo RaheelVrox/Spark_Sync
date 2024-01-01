@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -65,34 +66,6 @@ const HomepageOne = ({ route }) => {
     };
   }, [navigation]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const value = await AsyncStorage.getItem("userData");
-  //       const storedUserData = await AsyncStorage.getItem("userData");
-  //       const userDataFromStorage = JSON.parse(storedUserData) || { id: null };
-
-  //       if (userDataFromStorage !== null) {
-  //         setuser_id(userDataFromStorage?.id);
-  //         const apiUrl = `${ApiData.url}/api/v1/frontimage/${userDataFromStorage?.id}`;
-  //         const response = await axios.get(apiUrl);
-  //         const fetchedFrontImages = response.data;
-  //         setPropertiesData(fetchedFrontImages?.properties);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     } finally {
-  //       // Hide the loader after a specific duration (3 seconds)
-  //       setTimeout(() => {
-  //         setIsLoading(false);
-  //       }, 2000);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [navigation]);
-
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -100,26 +73,19 @@ const HomepageOne = ({ route }) => {
         start={{ x: 0, y: 0.3 }}
         end={{ x: 0.6, y: 0.6 }}
         style={{
-          borderBottomRightRadius: 30,
-          borderBottomLeftRadius: 30,
+          borderBottomRightRadius: Platform.OS === "ios" ? 30 : 0,
+          borderBottomLeftRadius: Platform.OS === "ios" ? 30 : 0,
         }}
       >
         <View style={styles.headerContainer}>
-          <View style={{ marginHorizontal: 24 }}>
-            {/* <TouchableOpacity style={styles.backbut} onPress={goBack}>
-              <Ionicons
-                name="ios-chevron-back-sharp"
-                size={28}
-                color="#670097"
-              />
-            </TouchableOpacity> */}
+          <View style={{ marginHorizontal: wp(4) }}>
             <Text
               style={{
                 fontFamily: "Roboto-Regular",
-                fontSize: 24,
+                fontSize: wp(6),
                 fontWeight: "600",
                 color: "#122359",
-                marginTop: 20,
+                marginTop: hp(2),
               }}
             >
               Welcome
@@ -127,7 +93,7 @@ const HomepageOne = ({ route }) => {
             <Text
               style={{
                 fontFamily: "Roboto-Regular",
-                fontSize: 16,
+                fontSize: wp(3.5),
                 fontWeight: "400",
                 color: "#3D3D3D",
               }}
@@ -146,7 +112,7 @@ const HomepageOne = ({ route }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View
               style={{
-                marginHorizontal: 24,
+                marginHorizontal: wp(4),
                 paddingTop: wp(9),
                 marginBottom: wp(9),
               }}
@@ -154,7 +120,7 @@ const HomepageOne = ({ route }) => {
               <Text
                 style={{
                   fontFamily: "Roboto-Regular",
-                  fontSize: 20,
+                  fontSize: wp(5),
                   fontWeight: "600",
                   color: "#122359",
                 }}
@@ -179,15 +145,15 @@ const HomepageOne = ({ route }) => {
             </View>
             <View
               style={{
-                marginHorizontal: 24,
+                marginHorizontal: wp(4),
                 paddingTop: wp(3),
-                marginBottom: 22,
+                marginBottom: wp(5),
               }}
             >
               <Text
                 style={{
                   fontFamily: "Roboto-Regular",
-                  fontSize: 20,
+                  fontSize: wp(5),
                   fontWeight: "600",
                   color: "#122359",
                 }}
@@ -199,20 +165,21 @@ const HomepageOne = ({ route }) => {
               <>
                 {propertiesData &&
                   propertiesData?.map((el, idx) => {
+                    console.log("Property", el);
                     return (
                       <View style={styles.propertieontainer} key={idx}>
                         <View style={{ flexDirection: "row" }}>
                           <View
                             style={{
                               justifyContent: "center",
-                              marginHorizontal: 11,
+                              marginHorizontal: wp(2),
                             }}
                           >
                             <Text
                               style={{
                                 justifyContent: "center",
                                 fontFamily: "Roboto-Regular",
-                                fontSize: 18,
+                                fontSize: wp(4),
                                 fontWeight: "600",
                                 color: "#122359",
                               }}
@@ -222,23 +189,24 @@ const HomepageOne = ({ route }) => {
                           </View>
                           <View
                             style={{
+                              width: "60%",
                               flexDirection: "row",
                               alignItems: "center",
                               justifyContent: "space-evenly",
                               marginLeft: wp(6),
-                              gap: 20,
+                              gap: wp(5),
                             }}
                           >
                             <Image
                               style={styles.image}
                               source={{
-                                uri: `${ApiData.url}/front_image/${el.front_image_url}`,
+                                uri: `${ApiData.url}/front_image/${el?.front_image_url}`,
                               }}
                             />
                             <Image
                               style={styles.image}
                               source={{
-                                uri: `${ApiData.url}/back_image/${el.back_image_url}`,
+                                uri: `${ApiData.url}/back_image/${el?.back_image_url}`,
                               }}
                             />
                           </View>
@@ -252,12 +220,12 @@ const HomepageOne = ({ route }) => {
                 <Text
                   style={{
                     fontFamily: "Roboto-Regular",
-                    fontSize: 16,
+                    fontSize: wp(3),
                     fontWeight: "300",
                     color: "#122359",
                   }}
                 >
-                  No Proerties added yet!
+                  No Properties added yet!
                 </Text>
               </View>
             )}
@@ -278,35 +246,26 @@ const styles = StyleSheet.create({
   headerContainer: {
     height: hp("20%"),
     width: wp("100%"),
-    borderBottomRightRadius: 30,
-    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: Platform.OS === "ios" ? 30 : 0,
+    borderBottomLeftRadius: Platform.OS === "ios" ? 30 : 0,
     justifyContent: "center",
-  },
-  backbut: {
-    height: hp("5.5%"),
-    width: wp("11%"),
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
   },
   propertieontainer: {
     backgroundColor: "#EEF7FE",
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 10,
-    paddingLeft: 10,
-    flexDirection: "coloum",
-    marginHorizontal: 24,
-    borderRadius: 10,
+    paddingTop: wp(2),
+    paddingBottom: wp(2),
+    paddingRight: wp(2),
+    paddingLeft: wp(2),
+    flexDirection: "row",
+    marginHorizontal: wp(4),
+    borderRadius: wp(2),
     height: hp("13%"),
-    marginBottom: 20,
+    marginBottom: wp(5),
   },
   image: {
-    width: wp("22%"),
-    height: wp("22%"),
     resizeMode: "contain",
+    width: wp("35%"),
+    height: hp("10%"),
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#FCEEFE",

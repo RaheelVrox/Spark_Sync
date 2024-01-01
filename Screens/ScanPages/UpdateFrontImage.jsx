@@ -149,53 +149,63 @@ const UpdateFrontImage = ({ route, navigation }) => {
         </TouchableOpacity>
       )}
 
-      <Text
-        style={{
-          textAlign: "center",
-          fontSize: 24,
-          fontWeight: "600",
-          fontFamily: "Roboto-Regular",
-          color: "#122359",
-          marginHorizontal: 24,
-          marginTop: 100,
-        }}
-      >
-        Would you like to proceed with this image?
-      </Text>
-
       <View style={styles.buttonContainer}>
-        {!loading ? (
-          <>
-            <TouchableOpacity
-              onPress={uploadImage}
-              style={{
-                width: wp("27%"),
-                height: hp("6.5%"),
-                backgroundColor: "#002896",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 10,
-              }}
-            >
-              <Text style={styles.buttonText}>Accept</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: wp("27%"),
-                height: hp("6.5%"),
-                backgroundColor: "#858585",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 10,
-              }}
-              onPress={() => navigation.navigate("UploadFrontpage")}
-            >
-              <Text style={styles.buttonText}>Decline</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <ActivityIndicator size="large" color="#346AFE" />
-        )}
+        <View style={{
+          marginBottom: 10
+        }}>  
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 24,
+              fontWeight: "600",
+              fontFamily: "Roboto-Regular",
+              color: "#122359",
+              marginHorizontal: 24,
+              marginTop: 100,
+            }}
+          >
+            Would you like to proceed with this image?
+          </Text>
+        </View>
+        <View style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems:"center",
+            width: wp(100),
+        }}>
+          {!loading ? (
+            <>
+              <TouchableOpacity
+                onPress={uploadImage}
+                style={{
+                  width: wp("27%"),
+                  height: hp("6.5%"),
+                  backgroundColor: "#002896",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 10,
+                }}
+              >
+                <Text style={styles.buttonText}>Accept</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  width: wp("27%"),
+                  height: hp("6.5%"),
+                  backgroundColor: "#858585",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 10,
+                }}
+                onPress={() => navigation.navigate("UploadFrontpage")}
+              >
+                <Text style={styles.buttonText}>Decline</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <ActivityIndicator size="large" color="#346AFE" />
+          )}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -210,8 +220,9 @@ const styles = StyleSheet.create({
     paddingTop: wp("25%"),
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    flexDirection: "coloum",
+    justifyContent: "center",
+    alignItems:"center",
     width: wp(100),
     position: "absolute",
     bottom: 15,
