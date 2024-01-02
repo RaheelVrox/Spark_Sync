@@ -181,6 +181,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#346AFE",
     alignSelf: "center",
     position: "absolute",
-    bottom: 20,
+    bottom: 40,
   },
 });

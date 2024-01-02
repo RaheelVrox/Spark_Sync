@@ -171,6 +171,7 @@ const UpdateBackImage = ({ route, navigation }) => {
             justifyContent: "space-around",
             alignItems: "center",
             width: wp(100),
+            marginBottom: 30,
           }}
         >
           {!loading ? (

@@ -238,44 +238,59 @@ const HomepageOne = ({ route }) => {
 
       {/* Custom modal for initial alert */}
       <Modal isVisible={showInitialAlert} onBackdropPress={hideInitialAlert}>
-        <View
-          style={{ backgroundColor: "#EEF7FE", padding: 20, borderRadius: 10 }}
+        <LinearGradient
+          colors={["#EEF7FE", "#FCEEFE"]}
+          start={{ x: 0, y: 0.3 }}
+          end={{ x: 0.6, y: 0.6 }}
+          style={{
+            // backgroundColor: "#EEF7FE",
+            padding: 20,
+            borderRadius: 10,
+          }}
         >
-          <Text
+          {/* <View
             style={{
-              color: "#122359",
-              fontFamily: "Roboto-Regular",
-              fontSize: 18,
-              fontWeight: "700",
-              marginBottom: 10,
+              backgroundColor: "#EEF7FE",
+              padding: 20,
+              borderRadius: 10,
             }}
-          >
-            Thank You
-          </Text>
-          <Text
-            style={{
-              color: "#122359",
-              fontFamily: "Roboto-Regular",
-              fontSize: 14,
-              fontWeight: "400",
-              lineHeight: 20,
-            }}
-          >
-            Your bill has been submitted.Our sales representative will contact
-            you soon.
-          </Text>
-          <TouchableOpacity
-            onPress={hideInitialAlert}
-            style={{
-              flexDirection: "row",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Text style={{ color: "blue", fontSize: 16, fontWeight: "400" }}>
-              OK
+          > */}
+            <Text
+              style={{
+                color: "#122359",
+                fontFamily: "Roboto-Regular",
+                fontSize: 18,
+                fontWeight: "700",
+                marginBottom: 10,
+              }}
+            >
+              Thank You!
             </Text>
-          </TouchableOpacity>
-        </View>
+            <Text
+              style={{
+                color: "#122359",
+                fontFamily: "Roboto-Regular",
+                fontSize: 14,
+                fontWeight: "400",
+                lineHeight: 20,
+              }}
+            >
+              Your bill has been submitted successfully. Our sales representative will contact
+              you soon.
+            </Text>
+            <TouchableOpacity
+              onPress={hideInitialAlert}
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Text style={{ color: "blue", fontSize: 16, fontWeight: "400" }}>
+                OK
+              </Text>
+            </TouchableOpacity>
+          {/* </View> */}
+        </LinearGradient>
       </Modal>
     </View>
   );

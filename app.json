@@ -25,7 +25,7 @@
         "NSPhotoLibraryUsageDescription": "We need access to your photo library"
       },
       "bundleIdentifier": "com.sparksync",
-      "buildNumber": "6"
+      "buildNumber": "7"
     },
     "android": {
       "adaptiveIcon": {
@@ -36,7 +36,7 @@
         "CAMERA_ROLL"
       ],
       "package": "com.sparksync",
-      "versionCode": 5
+      "versionCode": 6
     },
     "web": {
       "favicon": "./assets/icon.png"

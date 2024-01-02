@@ -33,7 +33,7 @@ const RegistrationVerify = () => {
 
   const otpInputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const goBack = () => {
-    navigation.goBack();
+    navigation.navigate("WelcomrBack")
   };
   useEffect(() => {
     const getUserID = async () => {

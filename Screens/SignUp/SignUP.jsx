@@ -60,11 +60,11 @@ const SignUP = () => {
         return;
       }
 
-      if (password.length < 8) {
-        Alert.alert("Error", "Password must be at least 8 characters long");
-        setIsLoading(false);
-        return;
-      }
+      // if (password.length < 8) {
+      //   Alert.alert("Error", "Password must be at least 8 characters long");
+      //   setIsLoading(false);
+      //   return;
+      // }
 
       const apiUrl = `${ApiData.url}/api/v1/user/register/`;
       const requestData = {
@@ -78,7 +78,7 @@ const SignUP = () => {
         .then(async (response) => {
           // console.log("signup_data::", response.data);
 
-          if (response.data.message === "User with this email already exist!") {
+          if (response.data.message === "User with this email is already exist!") {
             Alert.alert("Error", response.data.message);
             setIsLoading(false);
           } else {
