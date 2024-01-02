@@ -2,7 +2,7 @@
   "expo": {
     "name": "Spark_Sync",
     "slug": "spark-sync",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "usesAppleSignIn": true,
@@ -23,16 +25,18 @@
         "NSPhotoLibraryUsageDescription": "We need access to your photo library"
       },
       "bundleIdentifier": "com.sparksync",
-      "buildNumber": "3"
+      "buildNumber": "6"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA_ROLL"],
+      "permissions": [
+        "CAMERA_ROLL"
+      ],
       "package": "com.sparksync",
-      "versionCode": 2
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/icon.png"
@@ -42,7 +46,9 @@
         "projectId": "c6c3e316-bc77-46ee-b2fd-3a2ffbc4031d"
       }
     },
-    "plugins": ["expo-apple-authentication"],
+    "plugins": [
+      "expo-apple-authentication"
+    ],
     "owner": "zanaenvrox"
   }
 }

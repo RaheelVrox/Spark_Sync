@@ -24,6 +24,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiData from "../../apiconfig";
 import { useUserData } from "../../UserDataContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUP = () => {
   const { setUserData } = useUserData();
@@ -110,281 +111,302 @@ const SignUP = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      keyboardShouldPersistTaps="handled"
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <LinearGradient
-            colors={["#EEF7FE", "#FCEEFE"]}
-            start={{ x: 0, y: 0.3 }}
-            end={{ x: 0.6, y: 0.6 }}
-            style={{
-              borderBottomRightRadius: 30,
-              borderBottomLeftRadius: 30,
-            }}
+    <View style={styles.container}>
+      <>
+        <KeyboardAvoidingView
+          // style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "position" : "height"}
+        >
+          {/* <SafeAreaView> */}
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps="handled"
           >
-            <View style={styles.headerContainer}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "coloum",
-                  marginLeft: 24,
-                  alignItems: "flex-start",
-                  justifyContent: "center",
-                }}
-              >
-                <TouchableOpacity style={styles.backbut} onPress={goBack}>
-                  <Ionicons
-                    name="ios-chevron-back-sharp"
-                    size={28}
-                    color="#670097"
-                  />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    fontFamily: "Roboto-Regular",
-                    fontSize: 24,
-                    fontWeight: "600",
-                    color: "#122359",
-                    marginBottom: 5,
-                  }}
-                >
-                  Sign Up
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: "Roboto-Regular",
-                    fontSize: 16,
-                    fontWeight: "400",
-                    color: "#3D3D3D",
-                  }}
-                >
-                  It only takes a minute to create your account
-                </Text>
-              </View>
-            </View>
-          </LinearGradient>
-          <View
-            style={{
-              paddingTop: wp(5),
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <Text
-                style={{
-                  marginBottom: 10,
-                  color: "#122359",
-                  fontWeight: "600",
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                }}
-              >
-                Name
-              </Text>
-              <TextInput
-                placeholder="Your name"
-                style={{
-                  ...styles.inputField,
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                  fontWeight: "400",
-                  color: "#122359",
-                }}
-                value={name}
-                onChangeText={(text) => setName(text)}
-                placeholderTextColor="#858585"
-              />
-            </KeyboardAvoidingView>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <Text
-                style={{
-                  marginBottom: 10,
-                  color: "#122359",
-                  fontWeight: "600",
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                }}
-              >
-                Email
-              </Text>
-              <TextInput
-                placeholder="Your email address"
-                style={{
-                  ...styles.inputField,
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                  fontWeight: "400",
-                  color: "#122359",
-                }}
-                value={email}
-                onChangeText={handleEmailChange}
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoCompleteType="email"
-                placeholderTextColor="#858585"
-              />
-            </KeyboardAvoidingView>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <Text
-                style={{
-                  marginBottom: 10,
-                  color: "#122359",
-                  fontWeight: "600",
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                }}
-              >
-                Phone
-              </Text>
-              <TextInput
-                placeholder="Your phone number"
-                style={{
-                  ...styles.inputField,
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                  fontWeight: "400",
-                  color: "#122359",
-                }}
-                value={phone_number}
-                onChangeText={(text) => setPhoneNumber(text)}
-                maxLength={11}
-                placeholderTextColor="#858585"
-                keyboardType="phone-pad"
-              />
-            </KeyboardAvoidingView>
-            <KeyboardAvoidingView
-              enabled
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <Text
-                style={{
-                  marginBottom: 10,
-                  color: "#122359",
-                  fontWeight: "600",
-                  fontSize: 16,
-                  fontFamily: "Roboto-Regular",
-                }}
-              >
-                Password
-              </Text>
-              <View
-                style={{
-                  ...styles.inputField,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <TextInput
-                  secureTextEntry={!showPassword}
-                  placeholder="Your password"
-                  style={{
-                    // ...styles.inputField,
-                    width: wp(73),
-                    fontSize: 16,
-                    fontFamily: "Roboto-Regular",
-                    fontWeight: "400",
-                    color: "#122359",
-                  }}
-                  value={password}
-                  onChangeText={(text) => setPassword(text.replace(/\s/g, ""))}
-                  placeholderTextColor="#858585"
-                />
-                <MaterialCommunityIcons
-                  name={showPassword ? "eye" : "eye-off"}
-                  size={26}
-                  color="#346AFE"
-                  style={
-                    {
-                      // position: "absolute",
-                      // alignSelf: "flex-end",
-                      // padding: 18,
-                    }
-                  }
-                  onPress={toggleShowPassword}
-                />
-              </View>
-            </KeyboardAvoidingView>
-          </View>
-          {isLoading ? (
-            <View
-              style={{
-                width: wp("88%"),
-                borderRadius: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                alignSelf: "center",
-                marginTop: 20,
-              }}
-            >
-              <ActivityIndicator size={50} color="#346AFE" />
-            </View>
-          ) : (
             <>
-              <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "600",
-                    fontFamily: "Roboto-Regular",
-                    color: "#fff",
-                  }}
-                >
-                  Create Account
-                </Text>
-              </TouchableOpacity>
+              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <>
+                  <LinearGradient
+                    colors={["#EEF7FE", "#FCEEFE"]}
+                    start={{ x: 0, y: 0.3 }}
+                    end={{ x: 0.6, y: 0.6 }}
+                    style={{
+                      borderBottomRightRadius: 30,
+                      borderBottomLeftRadius: 30,
+                    }}
+                  >
+                    <View style={styles.headerContainer}>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "coloum",
+                          marginLeft: 24,
+                          alignItems: "flex-start",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <TouchableOpacity
+                          style={styles.backbut}
+                          onPress={goBack}
+                        >
+                          <Ionicons
+                            name="ios-chevron-back-sharp"
+                            size={28}
+                            color="#670097"
+                          />
+                        </TouchableOpacity>
+                        <Text
+                          style={{
+                            fontFamily: "Roboto-Regular",
+                            fontSize: 24,
+                            fontWeight: "600",
+                            color: "#122359",
+                            marginBottom: 5,
+                          }}
+                        >
+                          Sign Up
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: "Roboto-Regular",
+                            fontSize: 16,
+                            fontWeight: "400",
+                            color: "#3D3D3D",
+                          }}
+                        >
+                          It only takes a minute to create your account
+                        </Text>
+                      </View>
+                    </View>
+                  </LinearGradient>
+                  <View
+                    style={{
+                      paddingTop: wp(5),
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <KeyboardAvoidingView
+                      enabled
+                      behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    >
+                      <Text
+                        style={{
+                          marginBottom: 10,
+                          color: "#122359",
+                          fontWeight: "600",
+                          fontSize: 16,
+                          fontFamily: "Roboto-Regular",
+                        }}
+                      >
+                        Name
+                      </Text>
+                      <TextInput
+                        placeholder="Your name"
+                        style={{
+                          ...styles.inputField,
+                          fontSize: 16,
+                          fontFamily: "Roboto-Regular",
+                          fontWeight: "400",
+                          color: "#122359",
+                        }}
+                        value={name}
+                        onChangeText={(text) => setName(text)}
+                        placeholderTextColor="#858585"
+                      />
+                    </KeyboardAvoidingView>
+                    <KeyboardAvoidingView
+                      enabled
+                      behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    >
+                      <Text
+                        style={{
+                          marginBottom: 10,
+                          color: "#122359",
+                          fontWeight: "600",
+                          fontSize: 16,
+                          fontFamily: "Roboto-Regular",
+                        }}
+                      >
+                        Email
+                      </Text>
+                      <TextInput
+                        placeholder="Your email address"
+                        style={{
+                          ...styles.inputField,
+                          fontSize: 16,
+                          fontFamily: "Roboto-Regular",
+                          fontWeight: "400",
+                          color: "#122359",
+                        }}
+                        value={email}
+                        onChangeText={handleEmailChange}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        autoCompleteType="email"
+                        placeholderTextColor="#858585"
+                      />
+                    </KeyboardAvoidingView>
+                    <KeyboardAvoidingView
+                      enabled
+                      behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    >
+                      <Text
+                        style={{
+                          marginBottom: 10,
+                          color: "#122359",
+                          fontWeight: "600",
+                          fontSize: 16,
+                          fontFamily: "Roboto-Regular",
+                        }}
+                      >
+                        Phone
+                      </Text>
+                      <TextInput
+                        placeholder="Your phone number"
+                        style={{
+                          ...styles.inputField,
+                          fontSize: 16,
+                          fontFamily: "Roboto-Regular",
+                          fontWeight: "400",
+                          color: "#122359",
+                        }}
+                        value={phone_number}
+                        onChangeText={(text) => setPhoneNumber(text)}
+                        maxLength={11}
+                        placeholderTextColor="#858585"
+                        keyboardType="phone-pad"
+                      />
+                    </KeyboardAvoidingView>
+                    <KeyboardAvoidingView
+                      enabled
+                      behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    >
+                      <Text
+                        style={{
+                          marginBottom: 10,
+                          color: "#122359",
+                          fontWeight: "600",
+                          fontSize: 16,
+                          fontFamily: "Roboto-Regular",
+                        }}
+                      >
+                        Password
+                      </Text>
+                      <View
+                        style={{
+                          ...styles.inputField,
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <TextInput
+                          secureTextEntry={!showPassword}
+                          placeholder="Your password"
+                          style={{
+                            // ...styles.inputField,
+                            width: wp(73),
+                            fontSize: 16,
+                            fontFamily: "Roboto-Regular",
+                            fontWeight: "400",
+                            color: "#122359",
+                          }}
+                          value={password}
+                          onChangeText={(text) =>
+                            setPassword(text.replace(/\s/g, ""))
+                          }
+                          placeholderTextColor="#858585"
+                        />
+                        <MaterialCommunityIcons
+                          name={showPassword ? "eye" : "eye-off"}
+                          size={26}
+                          color="#346AFE"
+                          style={
+                            {
+                              // position: "absolute",
+                              // alignSelf: "flex-end",
+                              // padding: 18,
+                            }
+                          }
+                          onPress={toggleShowPassword}
+                        />
+                      </View>
+                    </KeyboardAvoidingView>
+                  </View>
+                  {isLoading ? (
+                    <View
+                      style={{
+                        width: wp("88%"),
+                        borderRadius: 10,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        alignSelf: "center",
+                        marginTop: 20,
+                      }}
+                    >
+                      <ActivityIndicator size={50} color="#346AFE" />
+                    </View>
+                  ) : (
+                    <>
+                      <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleSignUp}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            fontWeight: "600",
+                            fontFamily: "Roboto-Regular",
+                            color: "#fff",
+                          }}
+                        >
+                          Create Account
+                        </Text>
+                      </TouchableOpacity>
+                    </>
+                  )}
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingTop: wp(5),
+                      flexDirection: "row",
+                      flex: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "Roboto-Regular",
+                        fontSize: 14,
+                        fontWeight: "600",
+                        color: "#3D3D3D",
+                      }}
+                    >
+                      Already have an account?
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("WelcomeBack")}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Roboto-Regular",
+                          fontSize: 14,
+                          fontWeight: "600",
+                          color: "#346AFE",
+                        }}
+                      >
+                        {" "}
+                        Log in
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              </TouchableWithoutFeedback>
             </>
-          )}
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              paddingTop: wp(5),
-              flexDirection: "row",
-              flex: 1,
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: "Roboto-Regular",
-                fontSize: 14,
-                fontWeight: "600",
-                color: "#3D3D3D",
-              }}
-            >
-              Already have an account?
-            </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("WelcomeBack")}
-            >
-              <Text
-                style={{
-                  fontFamily: "Roboto-Regular",
-                  fontSize: 14,
-                  fontWeight: "600",
-                  color: "#346AFE",
-                }}
-              >
-                {" "}
-                Log in
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </ScrollView>
+          </ScrollView>
+          {/* </SafeAreaView> */}
+        </KeyboardAvoidingView>
+      </>
+    </View>
   );
 };
 
