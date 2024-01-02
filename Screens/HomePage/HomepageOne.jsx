@@ -8,39 +8,31 @@ import {
   ScrollView,
   ActivityIndicator,
   Platform,
-  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import Modal from "react-native-modal";
 import ApiData from "../../apiconfig";
 
 const HomepageOne = ({ route }) => {
-  const goBack = () => {
-    navigation.goBack();
-  };
-
-  console.log("dasdsadsa", route?.params?.showAlert);
-
-  useEffect(() => {
-    if (route?.params?.showAlert) {
-      Alert.alert(
-        "Thank You",
-        "Your bill has been submitted. Our sales representative will contact you soon."
-      );
-    }
-  }, [route?.params]);
-
   const navigation = useNavigation();
   const [user_id, setuser_id] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [propertiesData, setPropertiesData] = useState([]);
+  const [showInitialAlert, setShowInitialAlert] = useState(false);
+
+  useEffect(() => {
+    // Show initial alert when showAlert is true
+    if (route?.params?.showAlert) {
+      setShowInitialAlert(true);
+    }
+  }, [route?.params]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,24 +51,24 @@ const HomepageOne = ({ route }) => {
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        // Hide the loader after fetching data
         setIsLoading(false);
       }
     };
 
-    // Fetch data when the component mounts
     fetchData();
 
-    // Subscribe to the focus event to refetch data when the screen is focused
     const unsubscribe = navigation.addListener("focus", () => {
       fetchData();
     });
 
-    // Cleanup the subscription when the component unmounts
     return () => {
       unsubscribe();
     };
   }, [navigation]);
+
+  const hideInitialAlert = () => {
+    setShowInitialAlert(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -110,14 +102,14 @@ const HomepageOne = ({ route }) => {
                 color: "#3D3D3D",
               }}
             >
-              Review all your properties.
+              Review all your properties
             </Text>
           </View>
         </View>
       </LinearGradient>
       {isLoading ? (
         <View style={styles.loader}>
-          <ActivityIndicator size={73} color="#346AFE" />
+          <ActivityIndicator size={75} color="#346AFE" />
         </View>
       ) : (
         <>
@@ -177,7 +169,6 @@ const HomepageOne = ({ route }) => {
               <>
                 {propertiesData &&
                   propertiesData?.map((el, idx) => {
-                    console.log("Property", el);
                     return (
                       <View style={styles.propertieontainer} key={idx}>
                         <View style={{ flexDirection: "row" }}>
@@ -196,7 +187,7 @@ const HomepageOne = ({ route }) => {
                                 color: "#122359",
                               }}
                             >
-                              Property {idx + 1}:
+                              Property{idx + 1}:
                             </Text>
                           </View>
                           <View
@@ -244,6 +235,48 @@ const HomepageOne = ({ route }) => {
           </ScrollView>
         </>
       )}
+
+      {/* Custom modal for initial alert */}
+      <Modal isVisible={showInitialAlert} onBackdropPress={hideInitialAlert}>
+        <View
+          style={{ backgroundColor: "#EEF7FE", padding: 20, borderRadius: 10 }}
+        >
+          <Text
+            style={{
+              color: "#122359",
+              fontFamily: "Roboto-Regular",
+              fontSize: 18,
+              fontWeight: "700",
+              marginBottom: 10,
+            }}
+          >
+            Thank You
+          </Text>
+          <Text
+            style={{
+              color: "#122359",
+              fontFamily: "Roboto-Regular",
+              fontSize: 14,
+              fontWeight: "400",
+              lineHeight: 20,
+            }}
+          >
+            Your bill has been submitted.Our sales representative will contact
+            you soon.
+          </Text>
+          <TouchableOpacity
+            onPress={hideInitialAlert}
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Text style={{ color: "blue", fontSize: 16, fontWeight: "400" }}>
+              OK
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 };

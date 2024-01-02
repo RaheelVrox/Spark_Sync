@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: wp(100),
     position: "absolute",
-    bottom: 15,
+    bottom: 25,
   },
   buttonText: {
     fontFamily: "Roboto-Regular",

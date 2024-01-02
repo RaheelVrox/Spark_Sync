@@ -46,9 +46,18 @@ const HomeStack = ({}) => {
 };
 
 const AddNew = ({ navigation }) => {
+  useEffect(() => {
+    const unsubscribeFocus = navigation.addListener("focus", () => {
+      navigation.navigate("AddNew", { screen: "UploadFrontpage" });
+    });
+    return () => {
+      unsubscribeFocus();
+    };
+  }, []);
+
   return (
     <Stack.Navigator
-      initialRouteName="AddNew"
+      initialRouteName="UploadFrontpage"
       screenOptions={{
         headerShadowVisibl: false,
       }}
@@ -141,7 +150,18 @@ const AddNew = ({ navigation }) => {
     </Stack.Navigator>
   );
 };
+
 const ProfileStack = ({ navigation }) => {
+  useEffect(() => {
+    const unsubscribeFocus = navigation.addListener("focus", () => {
+      // Reset the navigation state to Profile when the EditProfile screen is focused
+      navigation.navigate("Profile");
+    });
+    return () => {
+      unsubscribeFocus();
+    };
+  }, [navigation]);
+
   return (
     <Stack.Navigator
       initialRouteName="Profile"

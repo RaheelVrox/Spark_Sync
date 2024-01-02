@@ -315,6 +315,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//  {"email": "raheelkhn96@gmail.com ",
-//  "name": "Sparksync", "password": "1234",
-//  "phone_number": "03034040912"}
+
